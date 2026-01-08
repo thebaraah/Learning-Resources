@@ -1,0 +1,9 @@
+Name: Bob Snodgrass
+Age: 29
+Location: Somewhere between my couch and the refrigerator
+Hobbies: 
+  - Professional Netflix watcher 
+  - Amateur sock collector
+  - Expert at avoiding phone calls
+  - Teaching my houseplants the art of photosynthesis (they're slow learners)
+
