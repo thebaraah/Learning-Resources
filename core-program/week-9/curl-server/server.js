@@ -1,11 +1,15 @@
 import chalk from 'chalk';
 import cors from 'cors';
 import express from 'express';
+import os from 'os';
 
 const app = express();
 const PORT = 3000;
 
-const users = [];
+const users = [
+  { id: 1, ip: getLocalIP(), name: 'admin', greeting: "I'm the boss!" },
+];
+
 const methodChalks = {
   GET: chalk.green,
   POST: chalk.blue,
@@ -18,6 +22,20 @@ app.use(express.json());
 
 // Set global JSON indentation to 2 spaces
 app.set('json spaces', 2);
+
+function getLocalIP() {
+  const interfaces = os.networkInterfaces();
+
+  for (const name of Object.keys(interfaces)) {
+    for (const iface of interfaces[name]) {
+      // Skip internal (loopback) and non-IPv4 addresses
+      if (iface.family === 'IPv4' && !iface.internal) {
+        return iface.address;
+      }
+    }
+  }
+  return 'localhost';
+}
 
 const generateId = () =>
   users.length > 0 ? users[users.length - 1].id + 1 : 1;
@@ -46,12 +64,7 @@ const printGreeting = (user, req) => {
   if (requestingUser) {
     console.log(
       methodColor(method.padEnd(6)) +
-        ` User ${user.name} says: ${user.greeting}, as requested by user ${requestingUser.name}`
-    );
-  } else {
-    console.log(
-      methodColor(method.padEnd(6)) +
-        ` Unknown user (IP: ${ip}) says: ${user.greeting}`
+        ` At the request of user ${requestingUser.name}, user ${user.name} says: ${user.greeting}`
     );
   }
 };
@@ -99,6 +112,11 @@ app.post('/users', async (req, res) => {
 
 // GET a user by ID
 app.get('/users/:id', (req, res) => {
+  const ip = getIP4Address(req.ip);
+  const requestingUser = findUserByIP(ip);
+  if (!requestingUser) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
   const user = findUserById(req.params.id);
   if (!user) {
     res.status(404).json({ error: 'User not found' });
@@ -149,5 +167,8 @@ app.delete('/users/:id', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(chalk.green(`Server is running on http://localhost:${PORT}`));
-  console.log(chalk.yellow('Press Ctrl+C to stop the server'));
+  console.log(
+    chalk.green(`Accessible on local network at http://${getLocalIP()}:${PORT}`)
+  );
+  console.log(chalk.yellow('Press Ctrl+C to stop the server\n'));
 });
