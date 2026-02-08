@@ -75,11 +75,11 @@ export default class WebSocketClient {
     const currentState = this.#state.get();
     const posts = currentState.posts || [];
 
-    // Add timestamp for display purposes
+    // Preserve timestamp and isNew flag from server
     const postWithTimestamp = {
       ...post,
-      timestamp: new Date().toISOString(),
-      isNew: true,
+      timestamp: post.timestamp || new Date().toISOString(),
+      isNew: post.isNew !== false, // Default to true if not specified
     };
 
     this.#state.update({

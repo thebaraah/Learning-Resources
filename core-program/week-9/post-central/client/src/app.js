@@ -37,8 +37,10 @@ class App {
     // Initialize posts view
     this.#postsView = new PostsView(postsContainer, this.#state);
 
-    // Connect to WebSocket - adjust URL if your server is on a different port
-    const wsUrl = 'ws://localhost:3000';
+    // Connect to WebSocket using current hostname (supports localhost and local IP)
+    const hostname = window.location.hostname || 'localhost';
+    const port = window.location.port || '3000';
+    const wsUrl = `ws://${hostname}:${port}`;
     this.#wsClient = new WebSocketClient(wsUrl, this.#state);
     this.#wsClient.connect();
   }

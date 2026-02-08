@@ -8,7 +8,12 @@ export const getAllPosts = () => posts;
 export const findPostById = (id) => posts.find((p) => p.id === parseInt(id));
 
 export const createPost = (username, text) => {
-  const post = { id: generatePostId(), user: username, text };
+  const post = {
+    id: generatePostId(),
+    user: username,
+    text,
+    timestamp: new Date().toISOString(),
+  };
   posts.push(post);
   return post;
 };

@@ -19,7 +19,7 @@ export const createPost = (req, res) => {
     return res.status(400).json({ error: 'Text is required' });
   }
   const post = createPostService(user.user, text);
-  broadcast('post:create', post);
+  broadcast('post:create', { ...post, isNew: true });
   res.json(post);
 };
 

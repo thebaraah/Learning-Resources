@@ -1,7 +1,28 @@
+import { getAllPosts } from '../services/postService.js';
+
 let websocketServer;
 
 export const initializeWebSocket = (wss) => {
   websocketServer = wss;
+
+  // Handle new client connections
+  wss.on('connection', (ws) => {
+    console.log('New WebSocket client connected');
+
+    // Send all existing posts to the newly connected client
+    const posts = getAllPosts();
+    posts.forEach((post) => {
+      const message = JSON.stringify({
+        type: 'post:create',
+        data: { ...post, isNew: false },
+      });
+      ws.send(message);
+    });
+
+    ws.on('close', () => {
+      console.log('WebSocket client disconnected');
+    });
+  });
 };
 
 export const broadcast = (type, data) => {
