@@ -4,15 +4,24 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "post-server": "node --watch post-central/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
+  "dependencies": {
+    "chalk": "^5.6.2",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "morgan": "^1.10.1",
+    "ws": "^8.19.0"
+  },
   "devDependencies": {
-    "@eslint/js": "^9.39.2",
-    "eslint": "^9.39.2",
-    "globals": "^16.5.0"
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.0.0",
+    "globals": "^17.3.0",
+    "prettier": "^3.8.1"
   }
 }
