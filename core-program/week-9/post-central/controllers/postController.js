@@ -2,11 +2,22 @@ import {
   createPost as createPostService,
   deletePost as deletePostService,
   findPostById,
+  getPostsByUser,
   updatePost as updatePostService,
 } from '../services/postService.js';
 import { findUserByIP } from '../services/userService.js';
 import { getIP4Address } from '../utils/network.js';
 import { broadcast } from '../utils/websocket.js';
+
+export const getMyPosts = (req, res) => {
+  const ip = getIP4Address(req.ip);
+  const user = findUserByIP(ip);
+  if (!user) {
+    return res.status(403).json({ error: 'User not registered' });
+  }
+  const posts = getPostsByUser(user.user);
+  res.json(posts);
+};
 
 export const createPost = (req, res) => {
   const ip = getIP4Address(req.ip);

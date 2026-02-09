@@ -1,6 +1,7 @@
 import express from 'express';
 import {
   deleteUser,
+  getMe,
   getUsers,
   registerUser,
 } from '../controllers/userController.js';
@@ -69,6 +70,30 @@ router.get('/', getUsers);
  *               $ref: '#/components/schemas/Error'
  */
 router.post('/register', registerUser);
+
+/**
+ * @openapi
+ * /users/me:
+ *   get:
+ *     summary: Get current user
+ *     description: Returns the user associated with the requesting IP address
+ *     tags:
+ *       - Users
+ *     responses:
+ *       200:
+ *         description: The current user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       404:
+ *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.get('/me', getMe);
 
 /**
  * @openapi

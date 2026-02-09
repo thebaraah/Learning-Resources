@@ -2,10 +2,37 @@ import express from 'express';
 import {
   createPost,
   deletePost,
+  getMyPosts,
   updatePost,
 } from '../controllers/postController.js';
 
 const router = express.Router();
+
+/**
+ * @openapi
+ * /posts/me:
+ *   get:
+ *     summary: Get my posts
+ *     description: Returns all posts created by the currently registered user (matched by IP address).
+ *     tags:
+ *       - Posts
+ *     responses:
+ *       200:
+ *         description: List of the user's posts
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Post'
+ *       403:
+ *         description: User not registered
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.get('/me', getMyPosts);
 
 /**
  * @openapi

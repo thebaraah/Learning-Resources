@@ -94,7 +94,7 @@ export default class WebSocketClient {
 
     const updatedPosts = posts.map((post) =>
       post.id === updatedPost.id
-        ? { ...updatedPost, timestamp: post.timestamp, isEdited: true }
+        ? { ...updatedPost, timestamp: updatedPost.timestamp, isEdited: true }
         : post
     );
 

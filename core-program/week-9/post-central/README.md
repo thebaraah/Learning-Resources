@@ -61,6 +61,25 @@ Register a new user. Your IP address is recorded automatically.
 
 ---
 
+#### `GET /users/me`
+
+Get the user associated with your IP address.
+
+**Responses:**
+
+| Status          | Description                      |
+|-----------------|----------------------------------|
+| `200 OK`        | The current user                 |
+| `404 Not Found` | No user registered with your IP  |
+
+**Response body (success):**
+
+```json
+{ "user": "alice", "ip": "192.168.1.20" }
+```
+
+---
+
 #### `DELETE /users/me`
 
 Delete your own user account (identified by IP).
@@ -77,6 +96,27 @@ Delete your own user account (identified by IP).
 ### Posts
 
 All post endpoints require a registered user (matched by IP). Unregistered users receive a `403` error.
+
+#### `GET /posts/me`
+
+Get all posts created by the current user (matched by IP).
+
+**Responses:**
+
+| Status          | Description              |
+|-----------------|--------------------------|
+| `200 OK`        | List of the user's posts |
+| `403 Forbidden` | User not registered      |
+
+**Response body (success):**
+
+```json
+[
+  { "id": 1, "user": "alice", "text": "Hello world!", "timestamp": "2024-01-01T00:00:00.000Z" }
+]
+```
+
+---
 
 #### `POST /posts`
 

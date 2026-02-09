@@ -50,6 +50,18 @@ export default class PostsView {
     this.#container.innerHTML = posts
       .map((post) => this.#renderPost(post))
       .join('');
+
+    // Clear isNew flags after animation completes
+    const newPosts = posts.filter((post) => post.isNew);
+    if (newPosts.length > 0) {
+      setTimeout(() => {
+        const currentState = this.#state.get();
+        const updatedPosts = currentState.posts.map((post) =>
+          post.isNew ? { ...post, isNew: false } : post
+        );
+        this.#state.update({ posts: updatedPosts });
+      }, 2000);
+    }
   }
 
   #renderPost(post) {
@@ -118,6 +130,15 @@ export default class PostsView {
     notification.textContent = message;
 
     this.#container.insertAdjacentElement('beforebegin', notification);
+
+    // Auto-remove notification after 5 seconds
+    setTimeout(() => {
+      notification.classList.add('fade-out');
+      // Remove from DOM after fade-out animation completes
+      setTimeout(() => {
+        notification.remove();
+      }, 500);
+    }, 5000);
   }
 
   destroy() {

@@ -1,6 +1,7 @@
 import {
   createUser,
   deleteUserByIP,
+  findUserByIP,
   findUserByName,
   getAllUsers,
 } from '../services/userService.js';
@@ -9,6 +10,15 @@ import { broadcast } from '../utils/websocket.js';
 
 export const getUsers = (req, res) => {
   res.json(getAllUsers());
+};
+
+export const getMe = (req, res) => {
+  const ip = getIP4Address(req.ip);
+  const user = findUserByIP(ip);
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+  res.json(user);
 };
 
 export const registerUser = async (req, res) => {

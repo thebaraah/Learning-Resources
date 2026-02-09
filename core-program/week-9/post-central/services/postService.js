@@ -7,6 +7,9 @@ export const getAllPosts = () => posts;
 
 export const findPostById = (id) => posts.find((p) => p.id === parseInt(id));
 
+export const getPostsByUser = (username) =>
+  posts.filter((p) => p.user === username);
+
 export const createPost = (username, text) => {
   const post = {
     id: generatePostId(),
@@ -24,6 +27,8 @@ export const updatePost = (id, text) => {
     return null;
   }
   post.text = text;
+  post.timestamp = new Date().toISOString();
+  post.isEdited = true;
   return post;
 };
 

@@ -40,10 +40,13 @@ server.listen(PORT, () => {
   );
   // We will reveal the API docs URL later, after having worked with the
   // documentation from the README first.
-  // console.log(
-  //   chalk.blue(
-  //     `API Documentation available at http://localhost:${PORT}/api-docs`
-  //   )
-  // );
+  console.log(
+    chalk.blue(
+      `API Documentation available at http://${getLocalIP()}:${PORT}/api-docs`
+    )
+  );
   console.log(chalk.yellow('Press Ctrl+C to stop the server'));
 });
+
+// Disable keep-alive to prevent hanging connections and ensure immediate response delivery
+server.keepAliveTimeout = 0;
