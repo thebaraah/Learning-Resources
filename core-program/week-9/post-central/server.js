@@ -32,6 +32,11 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/users', userRoutes);
 app.use('/posts', postRoutes);
 
+// 404 handler for unknown endpoints
+app.use((req, res) => {
+  res.status(404).json({ error: `Cannot ${req.method} ${req.originalUrl}` });
+});
+
 // Start server
 server.listen(PORT, () => {
   console.log(chalk.green(`Server is running on http://localhost:${PORT}`));

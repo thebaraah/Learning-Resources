@@ -63,6 +63,9 @@ export default class WebSocketClient {
       case 'user:register':
         this.#handleUserRegister(data);
         break;
+      case 'user:login':
+        this.#handleUserLogin(data);
+        break;
       case 'user:delete':
         this.#handleUserDelete(data);
         break;
@@ -126,6 +129,20 @@ export default class WebSocketClient {
     this.#state.update({
       users: [...users, user],
       lastAction: { type: 'user:register', user },
+    });
+  }
+
+  #handleUserLogin(user) {
+    const currentState = this.#state.get();
+    const users = currentState.users || [];
+
+    // Add user to the list if not already present
+    const userExists = users.some((u) => u.user === user.user);
+    const updatedUsers = userExists ? users : [...users, user];
+
+    this.#state.update({
+      users: updatedUsers,
+      lastAction: { type: 'user:login', user },
     });
   }
 

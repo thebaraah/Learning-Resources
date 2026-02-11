@@ -23,11 +23,15 @@ export default class PostsView {
     const lastAction = state.lastAction;
 
     // Show notification for user registration
-    if (lastAction && lastAction.type === 'user:register') {
+    if (
+      lastAction &&
+      ['user:register', 'user:login'].includes(lastAction.type)
+    ) {
       this.#showNotification(
         `${lastAction.user.user} joined Post Central`,
         'user-joined'
       );
+      this.#state.update({ lastAction: null });
     }
 
     // Show notification for user deletion
@@ -36,6 +40,7 @@ export default class PostsView {
         `${lastAction.user.user} left Post Central`,
         'user-left'
       );
+      this.#state.update({ lastAction: null });
     }
 
     if (posts.length === 0) {

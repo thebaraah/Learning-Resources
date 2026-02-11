@@ -11,9 +11,9 @@ export const swaggerOptions = {
     openapi: '3.0.0',
     info: {
       title: 'Post Central API',
-      version: '1.0.0',
+      version: '2.0.0',
       description:
-        'A real-time messaging API with WebSocket support for live updates',
+        'A real-time messaging API with JWT authentication and WebSocket support for live updates',
       contact: {
         name: 'API Support',
       },
@@ -25,6 +25,15 @@ export const swaggerOptions = {
       },
     ],
     components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+          description:
+            'Enter a JWT token obtained from /users/register or /users/login',
+        },
+      },
       schemas: {
         User: {
           type: 'object',
@@ -33,9 +42,18 @@ export const swaggerOptions = {
               type: 'string',
               description: 'Username',
             },
-            ip: {
+          },
+        },
+        AuthResponse: {
+          type: 'object',
+          properties: {
+            user: {
               type: 'string',
-              description: 'User IP address',
+              description: 'Username',
+            },
+            token: {
+              type: 'string',
+              description: 'JWT authentication token',
             },
           },
         },

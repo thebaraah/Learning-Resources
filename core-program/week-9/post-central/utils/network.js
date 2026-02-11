@@ -14,9 +14,3 @@ export const getLocalIP = () => {
   return 'localhost';
 };
 
-export const getIP4Address = (ip) => {
-  if (ip.startsWith('::ffff:')) {
-    return ip.substring(7);
-  }
-  return ip;
-};

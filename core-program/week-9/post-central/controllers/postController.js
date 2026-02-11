@@ -5,41 +5,24 @@ import {
   getPostsByUser,
   updatePost as updatePostService,
 } from '../services/postService.js';
-import { findUserByIP } from '../services/userService.js';
-import { getIP4Address } from '../utils/network.js';
 import { broadcast } from '../utils/websocket.js';
 
 export const getMyPosts = (req, res) => {
-  const ip = getIP4Address(req.ip);
-  const user = findUserByIP(ip);
-  if (!user) {
-    return res.status(403).json({ error: 'User not registered' });
-  }
-  const posts = getPostsByUser(user.user);
+  const posts = getPostsByUser(req.user.user);
   res.json(posts);
 };
 
 export const createPost = (req, res) => {
-  const ip = getIP4Address(req.ip);
-  const user = findUserByIP(ip);
-  if (!user) {
-    return res.status(403).json({ error: 'User not registered' });
-  }
   const { text } = req.body;
   if (!text) {
     return res.status(400).json({ error: 'Text is required' });
   }
-  const post = createPostService(user.user, text);
+  const post = createPostService(req.user.user, text);
   broadcast('post:create', { ...post, isNew: true });
   res.json(post);
 };
 
 export const updatePost = (req, res) => {
-  const ip = getIP4Address(req.ip);
-  const user = findUserByIP(ip);
-  if (!user) {
-    return res.status(403).json({ error: 'User not registered' });
-  }
   const { id } = req.params;
   const { text } = req.body;
   if (!text) {
@@ -49,7 +32,7 @@ export const updatePost = (req, res) => {
   if (!post) {
     return res.status(404).json({ error: 'Post not found' });
   }
-  if (post.user !== user.user) {
+  if (post.user !== req.user.user) {
     return res.status(403).json({ error: 'You can only edit your own posts' });
   }
   const updatedPost = updatePostService(id, text);
@@ -58,17 +41,12 @@ export const updatePost = (req, res) => {
 };
 
 export const deletePost = (req, res) => {
-  const ip = getIP4Address(req.ip);
-  const user = findUserByIP(ip);
-  if (!user) {
-    return res.status(403).json({ error: 'User not registered' });
-  }
   const { id } = req.params;
   const post = findPostById(id);
   if (!post) {
     return res.status(404).json({ error: 'Post not found' });
   }
-  if (post.user !== user.user) {
+  if (post.user !== req.user.user) {
     return res
       .status(403)
       .json({ error: 'You can only delete your own posts' });

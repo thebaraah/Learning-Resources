@@ -5,6 +5,7 @@ import {
   getMyPosts,
   updatePost,
 } from '../controllers/postController.js';
+import { authenticate } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -13,9 +14,11 @@ const router = express.Router();
  * /posts/me:
  *   get:
  *     summary: Get my posts
- *     description: Returns all posts created by the currently registered user (matched by IP address).
+ *     description: Returns all posts created by the authenticated user.
  *     tags:
  *       - Posts
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: List of the user's posts
@@ -25,23 +28,25 @@ const router = express.Router();
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Post'
- *       403:
- *         description: User not registered
+ *       401:
+ *         description: Authorization token required or invalid
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/me', getMyPosts);
+router.get('/me', authenticate, getMyPosts);
 
 /**
  * @openapi
  * /posts:
  *   post:
  *     summary: Create a new post
- *     description: Create a new post. User must be registered and the request must come from their registered IP address.
+ *     description: Create a new post. Requires authentication.
  *     tags:
  *       - Posts
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -68,14 +73,14 @@ router.get('/me', getMyPosts);
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Error'
- *       403:
- *         description: User not registered
+ *       401:
+ *         description: Authorization token required or invalid
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/', createPost);
+router.post('/', authenticate, createPost);
 
 /**
  * @openapi
@@ -85,6 +90,8 @@ router.post('/', createPost);
  *     description: Update an existing post. Only the post author can update their own posts.
  *     tags:
  *       - Posts
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -118,8 +125,14 @@ router.post('/', createPost);
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Error'
+ *       401:
+ *         description: Authorization token required or invalid
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  *       403:
- *         description: User not registered or not authorized to edit this post
+ *         description: Not authorized to edit this post
  *         content:
  *           application/json:
  *             schema:
@@ -131,7 +144,7 @@ router.post('/', createPost);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.put('/:id', updatePost);
+router.put('/:id', authenticate, updatePost);
 
 /**
  * @openapi
@@ -141,6 +154,8 @@ router.put('/:id', updatePost);
  *     description: Delete an existing post. Only the post author can delete their own posts.
  *     tags:
  *       - Posts
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -161,8 +176,14 @@ router.put('/:id', updatePost);
  *                     message:
  *                       type: string
  *                       example: Post deleted
+ *       401:
+ *         description: Authorization token required or invalid
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  *       403:
- *         description: User not registered or not authorized to delete this post
+ *         description: Not authorized to delete this post
  *         content:
  *           application/json:
  *             schema:
@@ -174,6 +195,6 @@ router.put('/:id', updatePost);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.delete('/:id', deletePost);
+router.delete('/:id', authenticate, deletePost);
 
 export default router;

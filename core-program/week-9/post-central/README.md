@@ -1,6 +1,6 @@
 # Post Central API
 
-A simple REST API for managing users and posts, with real-time WebSocket updates. Users are identified by their IP address.
+A simple REST API for managing users and posts, with real-time WebSocket updates. Users authenticate with a username and password, and receive a JWT token for subsequent requests.
 
 ## Getting Started
 
@@ -15,98 +15,162 @@ The server runs on port **3000**.
 
 ## Authentication Model
 
-There is no traditional authentication. The server identifies users by their **IP address** upon registration. When you register a user, your IP is recorded. You can only manage (edit/delete) users and posts associated with your IP.
+Users register with a **username** and **password**. Passwords are hashed using **bcrypt** before storage. On successful registration or login, the server returns a **JSON Web Token (JWT)**.
+
+All endpoints except `/users/register` and `/users/login` require the JWT token in the `Authorization` header:
+
+```http
+Authorization: Bearer <token>
+```
+
+A pre-seeded **admin** user is available with credentials `admin` / `admin`.
 
 ## API Endpoints
 
 ### Users
 
-#### `GET /users`
-
-Returns a list of all registered users.
-
-**Response:** `200 OK`
-
-```json
-[
-  { "user": "admin", "ip": "192.168.1.10" }
-]
-```
-
----
-
 #### `POST /users/register`
 
-Register a new user. Your IP address is recorded automatically.
+Register a new user. Returns a JWT token.
 
 **Request body:**
 
-| Field  | Type   | Required | Description          |
-|--------|--------|----------|----------------------|
-| `name` | string | Yes      | The username to register |
+| Field      | Type   | Required | Description              |
+|------------|--------|----------|--------------------------|
+| `name`     | string | Yes      | The username to register |
+| `password` | string | Yes      | The account password     |
 
 **Responses:**
 
-| Status | Description |
-|--------|-------------|
-| `201 Created` | User registered successfully |
-| `400 Bad Request` | `name` field is missing from the request body |
-| `409 Conflict` | A user with that name already exists |
+| Status            | Description                            |
+|-------------------|----------------------------------------|
+| `201 Created`     | User registered successfully           |
+| `400 Bad Request` | `name` or `password` field is missing  |
+| `409 Conflict`    | A user with that name already exists   |
 
 **Response body (success):**
 
 ```json
-{ "user": "alice", "ip": "192.168.1.20" }
+{ "user": "alice", "token": "eyJhbGciOiJIUzI1NiIs..." }
+```
+
+---
+
+#### `POST /users/login`
+
+Log in with an existing account. Returns a JWT token.
+
+**Request body:**
+
+| Field      | Type   | Required | Description  |
+|------------|--------|----------|--------------|
+| `name`     | string | Yes      | Username     |
+| `password` | string | Yes      | Password     |
+
+**Responses:**
+
+| Status             | Description                           |
+|--------------------|---------------------------------------|
+| `200 OK`           | Login successful                      |
+| `400 Bad Request`  | `name` or `password` field is missing |
+| `401 Unauthorized` | Invalid credentials                   |
+
+**Response body (success):**
+
+```json
+{ "user": "alice", "token": "eyJhbGciOiJIUzI1NiIs..." }
+```
+
+---
+
+#### `GET /users`
+
+Returns a list of all registered users (usernames only). **Requires authentication.**
+
+**Headers:**
+
+| Header          | Value              |
+|-----------------|--------------------|
+| `Authorization` | `Bearer <token>`   |
+
+**Responses:**
+
+| Status             | Description                          |
+|--------------------|--------------------------------------|
+| `200 OK`           | List of users                        |
+| `401 Unauthorized` | Authorization token required/invalid |
+
+**Response body (success):**
+
+```json
+[
+  { "user": "admin" },
+  { "user": "alice" }
+]
 ```
 
 ---
 
 #### `GET /users/me`
 
-Get the user associated with your IP address.
+Get the authenticated user's information. **Requires authentication.**
+
+**Headers:**
+
+| Header          | Value              |
+|-----------------|--------------------|
+| `Authorization` | `Bearer <token>`   |
 
 **Responses:**
 
-| Status          | Description                      |
-|-----------------|----------------------------------|
-| `200 OK`        | The current user                 |
-| `404 Not Found` | No user registered with your IP  |
+| Status             | Description                          |
+|--------------------|--------------------------------------|
+| `200 OK`           | The current user                     |
+| `401 Unauthorized` | Authorization token required/invalid |
+| `404 Not Found`    | User not found                       |
 
 **Response body (success):**
 
 ```json
-{ "user": "alice", "ip": "192.168.1.20" }
+{ "user": "alice" }
 ```
 
 ---
 
 #### `DELETE /users/me`
 
-Delete your own user account (identified by IP).
+Delete the authenticated user's account. **Requires authentication.**
+
+**Headers:**
+
+| Header          | Value              |
+|-----------------|--------------------|
+| `Authorization` | `Bearer <token>`   |
 
 **Responses:**
 
-| Status          | Description                      |
-|-----------------|----------------------------------|
-| `200 OK`        | User deleted successfully        |
-| `404 Not Found` | No user registered with your IP  |
+| Status             | Description                          |
+|--------------------|--------------------------------------|
+| `200 OK`           | User deleted successfully            |
+| `401 Unauthorized` | Authorization token required/invalid |
+| `404 Not Found`    | User not found                       |
 
 ---
 
 ### Posts
 
-All post endpoints require a registered user (matched by IP). Unregistered users receive a `403` error.
+All post endpoints **require authentication**. Include the `Authorization: Bearer <token>` header with every request.
 
 #### `GET /posts/me`
 
-Get all posts created by the current user (matched by IP).
+Get all posts created by the authenticated user.
 
 **Responses:**
 
-| Status          | Description              |
-|-----------------|--------------------------|
-| `200 OK`        | List of the user's posts |
-| `403 Forbidden` | User not registered      |
+| Status             | Description                          |
+|--------------------|--------------------------------------|
+| `200 OK`           | List of the user's posts             |
+| `401 Unauthorized` | Authorization token required/invalid |
 
 **Response body (success):**
 
@@ -130,11 +194,11 @@ Create a new post.
 
 **Responses:**
 
-| Status | Description |
-|--------|-------------|
-| `200 OK` | Post created successfully |
-| `400 Bad Request` | `text` field is missing from the request body |
-| `403 Forbidden` | User not registered |
+| Status             | Description                          |
+|--------------------|--------------------------------------|
+| `200 OK`           | Post created successfully            |
+| `400 Bad Request`  | `text` field is missing              |
+| `401 Unauthorized` | Authorization token required/invalid |
 
 **Response body (success):**
 
@@ -150,8 +214,8 @@ Update an existing post. You can only edit your own posts.
 
 **URL parameters:**
 
-| Parameter | Description |
-|-----------|-------------|
+| Parameter | Description           |
+|-----------|-----------------------|
 | `:id`     | The post ID to update |
 
 **Request body:**
@@ -162,12 +226,13 @@ Update an existing post. You can only edit your own posts.
 
 **Responses:**
 
-| Status | Description |
-|--------|-------------|
-| `200 OK` | Post updated successfully |
-| `400 Bad Request` | `text` field is missing from the request body |
-| `403 Forbidden` | User not registered, or post belongs to another user |
-| `404 Not Found` | Post not found |
+| Status             | Description                                     |
+|--------------------|-------------------------------------------------|
+| `200 OK`           | Post updated successfully                       |
+| `400 Bad Request`  | `text` field is missing                         |
+| `401 Unauthorized` | Authorization token required/invalid            |
+| `403 Forbidden`    | Post belongs to another user                    |
+| `404 Not Found`    | Post not found                                  |
 
 ---
 
@@ -177,17 +242,18 @@ Delete a post. You can only delete your own posts.
 
 **URL parameters:**
 
-| Parameter | Description |
-|-----------|-------------|
+| Parameter | Description           |
+|-----------|-----------------------|
 | `:id`     | The post ID to delete |
 
 **Responses:**
 
-| Status | Description |
-|--------|-------------|
-| `200 OK` | Post deleted successfully |
-| `403 Forbidden` | User not registered, or post belongs to another user |
-| `404 Not Found` | Post not found |
+| Status             | Description                                     |
+|--------------------|-------------------------------------------------|
+| `200 OK`           | Post deleted successfully                       |
+| `401 Unauthorized` | Authorization token required/invalid            |
+| `403 Forbidden`    | Post belongs to another user                    |
+| `404 Not Found`    | Post not found                                  |
 
 ---
 
