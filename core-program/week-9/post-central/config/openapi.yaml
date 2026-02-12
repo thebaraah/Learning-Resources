@@ -1,0 +1,372 @@
+openapi: 3.0.0
+info:
+  title: Post Central API
+  version: 2.0.0
+  description: A real-time messaging API with JWT authentication and WebSocket support for live updates
+  contact:
+    name: API Support
+servers:
+  - url: http://localhost:3000
+    description: Local server
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Enter a JWT token obtained from /users/register or /users/login
+  schemas:
+    User:
+      type: object
+      properties:
+        user:
+          type: string
+          description: Username
+    AuthResponse:
+      type: object
+      properties:
+        user:
+          type: string
+          description: Username
+        token:
+          type: string
+          description: JWT authentication token
+    Post:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Post ID
+        user:
+          type: string
+          description: Username who created the post
+        text:
+          type: string
+          description: Post content
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+paths:
+  /posts/me:
+    get:
+      summary: Get my posts
+      description: Returns all posts created by the authenticated user.
+      tags: [Posts]
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: List of the user's posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Post"
+        401:
+          description: Authorization token required or invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /posts:
+    post:
+      summary: Create a new post
+      description: Create a new post. Requires authentication.
+      tags: [Posts]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [text]
+              properties:
+                text:
+                  type: string
+                  description: Post content
+                  example: Hello, this is my first post!
+      responses:
+        200:
+          description: Post successfully created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Post"
+        400:
+          description: Text is required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Authorization token required or invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /posts/{id}:
+    put:
+      summary: Update a post
+      description: Update an existing post. Only the post author can update their own posts.
+      tags: [Posts]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Post ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [text]
+              properties:
+                text:
+                  type: string
+                  description: Updated post content
+                  example: Updated post text
+      responses:
+        200:
+          description: Post successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Post"
+        400:
+          description: Text is required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Authorization token required or invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Not authorized to edit this post
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Post not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete a post
+      description: Delete an existing post. Only the post author can delete their own posts.
+      tags: [Posts]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Post ID
+      responses:
+        200:
+          description: Post successfully deleted
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Post"
+                  - type: object
+                    properties:
+                      message:
+                        type: string
+                        example: Post deleted
+        401:
+          description: Authorization token required or invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Not authorized to delete this post
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Post not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /users:
+    get:
+      summary: Get all registered users
+      description: Returns a list of all users currently registered in the system. Requires authentication.
+      tags: [Users]
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        401:
+          description: Authorization token required or invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /users/register:
+    post:
+      summary: Register a new user
+      description: Register a new user with a unique username and password. Returns a JWT token for authentication.
+      tags: [Users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, password]
+              properties:
+                name:
+                  type: string
+                  description: Username to register
+                  example: johndoe
+                password:
+                  type: string
+                  description: Password for the account
+                  example: mypassword123
+      responses:
+        201:
+          description: User successfully created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        400:
+          description: Name and password are required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        409:
+          description: User with this name already exists
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /users/login:
+    post:
+      summary: Log in an existing user
+      description: Authenticate with username and password. Returns a JWT token for subsequent requests.
+      tags: [Users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, password]
+              properties:
+                name:
+                  type: string
+                  description: Username
+                  example: johndoe
+                password:
+                  type: string
+                  description: Password
+                  example: mypassword123
+      responses:
+        200:
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        400:
+          description: Name and password are required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /users/me:
+    get:
+      summary: Get current user
+      description: Returns the authenticated user's information.
+      tags: [Users]
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: The current user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        401:
+          description: Authorization token required or invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete current user
+      description: Delete the authenticated user's account.
+      tags: [Users]
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: User successfully deleted
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/User"
+                  - type: object
+                    properties:
+                      message:
+                        type: string
+                        example: User deleted
+        401:
+          description: Authorization token required or invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"

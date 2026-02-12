@@ -2,11 +2,10 @@ import chalk from 'chalk';
 import express from 'express';
 import { createServer } from 'http';
 import path from 'path';
-import swaggerUi from 'swagger-ui-express';
 import { fileURLToPath } from 'url';
 import { WebSocketServer } from 'ws';
 import { PORT } from './config/constants.js';
-import { swaggerSpec } from './config/swagger.js';
+import { setupApiDocs } from './config/apiDocs.js';
 import { setupMiddleware } from './middleware/index.js';
 import postRoutes from './routes/postRoutes.js';
 import userRoutes from './routes/userRoutes.js';
@@ -25,8 +24,8 @@ initializeWebSocket(wss);
 // Setup middleware
 setupMiddleware(app, __dirname);
 
-// Setup Swagger documentation
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// Setup API documentation
+setupApiDocs(app);
 
 // Setup routes
 app.use('/users', userRoutes);

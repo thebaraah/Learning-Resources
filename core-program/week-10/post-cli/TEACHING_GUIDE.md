@@ -16,8 +16,6 @@ cd Learning-Resources/week-9/post-central
 npm install
 ```
 
-> During installation, you may see warnings about deprecated packages. These are caused by _swagger_ dependencies. At the time of this writing, the latest version of swagger unfortunately still depends on some older, deprecated packages. You can safely ignore these warnings for this session.
-
 Start the server with:
 
 ```bash
