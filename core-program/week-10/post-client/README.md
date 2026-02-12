@@ -5,6 +5,8 @@ manage posts. The API server lives in `week-9/post-central`.
 
 ## Getting Started
 
+If you want to run the client, you need to have the API server running first. If you are in class working with an instructor, the instructor will run the server on the instructor's machine, and you can skip the steps below. If you are trying this exercise on your own, make sure to start the server yourself.
+
 1. From the `week-9/post-central` folder, install dependencies and start the
    server:
 
@@ -13,7 +15,7 @@ manage posts. The API server lives in `week-9/post-central`.
    npm start
    ```
 
-2. Open http://localhost:3000/ in your browser.
+2. Open <http://localhost:3000/client> in your browser.
 
 ## Your Task
 

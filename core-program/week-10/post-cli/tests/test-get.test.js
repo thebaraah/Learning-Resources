@@ -7,7 +7,7 @@
  *
  * NOTE: Change the import path to test student code:
  * - Testing starter: import from '../services.js'
- * - Testing solution: import from '../fetchers-solution.js'
+ * - Testing solution: import from '../services-solution.js'
  */
 import { existsSync } from 'node:fs';
 import path from 'node:path';
@@ -17,7 +17,7 @@ const __dirname = new URL('.', import.meta.url).pathname; // Get current directo
 const studentFetchersPath = path.join(__dirname, '../src/services.js');
 const solutionFetchersPath = path.join(
   __dirname,
-  '../src/fetchers-solution.js'
+  '../src/services-solution.js'
 );
 
 // Import fetcher functions

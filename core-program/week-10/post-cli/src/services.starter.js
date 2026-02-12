@@ -11,41 +11,18 @@ const BASE_URL = 'http://localhost:3000';
  */
 let authToken = null;
 
-/** Save the token (called after login/register) */
+/**
+ * Save the token. Called by the UI after login/register and by unit tests.
+ */
 const setToken = (token) => {
   authToken = token;
 };
 
-/** Get the current token */
+/**
+ * Get the current token. Use this to build the Authorization header
+ * for authenticated requests: `Bearer ${getToken()}`
+ */
 const getToken = () => authToken;
-
-/**
- * Build headers object with Content-Type and Authorization.
- * Learn: The Authorization header sends your JWT token to the server.
- * Format: "Bearer <token>"
- */
-const authHeaders = () => {
-  const headers = { 'Content-Type': 'application/json' };
-  if (authToken) {
-    headers['Authorization'] = `Bearer ${authToken}`;
-  }
-  return headers;
-};
-
-// ============================================================================
-// HELPER FUNCTION - Reusable error handler
-// ============================================================================
-
-/**
- * Handles fetch response and extracts JSON data
- * @param {Response} response - The fetch response object
- * @param {string} errorMsg - Error message to show if request fails
- * @returns {Promise<any>} The parsed JSON data
- */
-const handleResponse = async (response, errorMsg) => {
-  // TODO: Check if response is ok, throw error if not
-  // TODO: Return parsed JSON data
-};
 
 // ============================================================================
 // STAGE 1: GET REQUEST - Read data from the server
@@ -53,13 +30,11 @@ const handleResponse = async (response, errorMsg) => {
 
 /**
  * Get current user information
- * Learn: Basic GET request with Authorization header
+ * Method: GET | Endpoint: /users/me | Auth: Yes
+ * Response: { user: string }
  */
 const getMe = async () => {
-  // TODO: Make a GET request to /users/me
-  // Hint: const response = await fetch(`${BASE_URL}/users/me`, { headers: authHeaders() });
-  // Hint: Use authHeaders() to include your JWT token
-  // Hint: Return the parsed JSON: await response.json()
+  // TODO
 };
 
 // ============================================================================
@@ -68,30 +43,22 @@ const getMe = async () => {
 
 /**
  * Register a new user
- * Learn: POST method, headers, request body, JSON.stringify
- * @param {string} name - The user's name
- * @param {string} password - The user's password
+ * Method: POST | Endpoint: /users/register | Auth: No
+ * Body: { name, password }
+ * Response: { user: string, token: string }
  */
 const createUser = async (name, password) => {
-  // TODO: Make a POST request to /users/register
-  // Hint: Set method to 'POST'
-  // Hint: Add headers: { 'Content-Type': 'application/json' }
-  // Hint: Add body: JSON.stringify({ name, password })
-  // Hint: No Authorization header needed (this is a public endpoint!)
-  // Hint: Check response and return JSON data (contains { user, token })
+  // TODO
 };
 
 /**
  * Log in an existing user
- * Learn: POST with credentials, receive a JWT token
- * @param {string} name - The user's name
- * @param {string} password - The user's password
+ * Method: POST | Endpoint: /users/login | Auth: No
+ * Body: { name, password }
+ * Response: { user: string, token: string }
  */
 const loginUser = async (name, password) => {
-  // TODO: Make a POST request to /users/login
-  // Hint: Similar to createUser - POST with { name, password }
-  // Hint: No Authorization header needed (this is a public endpoint!)
-  // Hint: Returns { user, token }
+  // TODO
 };
 
 // ============================================================================
@@ -100,57 +67,49 @@ const loginUser = async (name, password) => {
 
 /**
  * Create a new post
- * Learn: POST request with Authorization header
- * @param {string} text - The post content
+ * Method: POST | Endpoint: /posts | Auth: Yes
+ * Body: { text }
+ * Response: { id: number, text: string, user: string }
  */
 const createPost = async (text) => {
-  // TODO: Make a POST request to /posts
-  // Hint: Use authHeaders() to include your JWT token
-  // Hint: body: JSON.stringify({ text })
+  // TODO
 };
 
 /**
- * Get all posts
- * Learn: GET request with Authorization header
+ * Get all posts for the current user
+ * Method: GET | Endpoint: /posts/me | Auth: Yes
+ * Response: Array of { id, text, user }
  */
 const getPosts = async () => {
-  // TODO: Make a GET request to /posts/me
-  // Hint: Use authHeaders() to include your JWT token
+  // TODO
 };
 
 /**
  * Update an existing post
- * Learn: PUT method for updates, with Authorization header
- * @param {number} id - The post ID to update
- * @param {string} text - The new post content
+ * Method: PUT | Endpoint: /posts/:id | Auth: Yes
+ * Body: { text }
+ * Response: { id: number, text: string }
  */
 const updatePost = async (id, text) => {
-  // TODO: Make a PUT request to /posts/:id
-  // Hint: Use template literal for URL: `${BASE_URL}/posts/${id}`
-  // Hint: Use authHeaders() for headers
-  // Hint: body: JSON.stringify({ text })
+  // TODO
 };
 
 /**
  * Delete current user
- * Learn: DELETE method with Authorization header
+ * Method: DELETE | Endpoint: /users/me | Auth: Yes
+ * No response body
  */
 const deleteUser = async () => {
-  // TODO: Make a DELETE request to /users/me
-  // Hint: Use authHeaders() for headers
-  // Hint: Only need to check response.ok, no JSON to return
+  // TODO
 };
 
 /**
  * Delete a post
- * Learn: DELETE method with Authorization header
- * @param {number} id - The post ID to delete
+ * Method: DELETE | Endpoint: /posts/:id | Auth: Yes
+ * No response body
  */
 const deletePost = async (id) => {
-  // TODO: Make a DELETE request to /posts/:id
-  // Hint: Use template literal: `${BASE_URL}/posts/${id}`
-  // Hint: Use authHeaders() for headers
-  // Hint: Only need to check response.ok, no JSON to return
+  // TODO
 };
 
 // ============================================================================
@@ -165,7 +124,6 @@ export {
   getMe,
   getPosts,
   getToken,
-  handleResponse,
   loginUser,
   setToken,
   updatePost,

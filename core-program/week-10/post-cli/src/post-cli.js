@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
+import { select, confirm } from '@inquirer/prompts';
 import promptSync from 'prompt-sync';
 const prompt = promptSync();
 
@@ -41,37 +42,26 @@ const promptPassword = (message) => {
  * @returns {Promise<string>} The registered username
  */
 const registerNewUser = async () => {
-  while (true) {
-    let name = prompt('Enter your name or /exit to quit: ').trim();
-    if (name.toLowerCase() === '/exit') {
-      console.log(chalk.yellow('Exiting the post-cli note app. Goodbye!'));
-      process.exit(0);
-    }
-    if (!name) {
-      console.log(chalk.red('Name cannot be empty.'));
-      continue;
-    }
-    if (name.startsWith('/')) {
-      console.log(
-        chalk.red('Name cannot start with a command prefix (e.g. /view)')
-      );
-      continue;
-    }
+  const name = prompt('Enter your name: ').trim();
+  if (!name) {
+    console.log(chalk.red('Name cannot be empty.'));
+    return null;
+  }
 
-    const password = promptPassword('Enter a password: ');
-    if (!password) {
-      console.log(chalk.red('Password cannot be empty.'));
-      continue;
-    }
+  const password = promptPassword('Enter a password: ');
+  if (!password) {
+    console.log(chalk.red('Password cannot be empty.'));
+    return null;
+  }
 
-    try {
-      const data = await createUser(name, password);
-      setToken(data.token);
-      console.log(chalk.green(`  User ${name} registered successfully!`));
-      return name;
-    } catch (error) {
-      console.log(chalk.red(error.message));
-    }
+  try {
+    const data = await createUser(name, password);
+    setToken(data.token);
+    console.log(chalk.green(`  User ${name} registered successfully!`));
+    return name;
+  } catch (error) {
+    console.log(chalk.red(error.message));
+    return null;
   }
 };
 
@@ -80,31 +70,26 @@ const registerNewUser = async () => {
  * @returns {Promise<string>} The logged-in username
  */
 const loginExistingUser = async () => {
-  while (true) {
-    let name = prompt('Enter your name or /exit to quit: ').trim();
-    if (name.toLowerCase() === '/exit') {
-      console.log(chalk.yellow('Exiting the post-cli note app. Goodbye!'));
-      process.exit(0);
-    }
-    if (!name) {
-      console.log(chalk.red('Name cannot be empty.'));
-      continue;
-    }
+  const name = prompt('Enter your name: ').trim();
+  if (!name) {
+    console.log(chalk.red('Name cannot be empty.'));
+    return null;
+  }
 
-    const password = promptPassword('Enter your password: ');
-    if (!password) {
-      console.log(chalk.red('Password cannot be empty.'));
-      continue;
-    }
+  const password = promptPassword('Enter your password: ');
+  if (!password) {
+    console.log(chalk.red('Password cannot be empty.'));
+    return null;
+  }
 
-    try {
-      const data = await loginUser(name, password);
-      setToken(data.token);
-      console.log(chalk.green(`  Welcome back, ${name}!`));
-      return name;
-    } catch (error) {
-      console.log(chalk.red(error.message));
-    }
+  try {
+    const data = await loginUser(name, password);
+    setToken(data.token);
+    console.log(chalk.green(`  Welcome back, ${name}!`));
+    return name;
+  } catch (error) {
+    console.log(chalk.red(error.message));
+    return null;
   }
 };
 
@@ -114,36 +99,33 @@ const loginExistingUser = async () => {
  */
 const chooseAuthAction = async () => {
   console.log(chalk.cyan('\nWelcome to Post Central!'));
-  console.log(chalk.blue('  1. Register (new user)'));
-  console.log(chalk.blue('  2. Login (existing user)'));
-  console.log(chalk.blue('  3. Exit'));
 
   while (true) {
-    const choice = prompt('Choose an option (1/2/3): ').trim();
+    const choice = await select({
+      message: 'What would you like to do?',
+      choices: [
+        { name: 'Login (existing user)', value: 'login' },
+        { name: 'Register (new user)', value: 'register' },
+        { name: 'Exit', value: 'exit' },
+      ],
+    });
+
     switch (choice) {
-      case '1':
-        return await registerNewUser();
-      case '2':
-        return await loginExistingUser();
-      case '3':
+      case 'register': {
+        const name = await registerNewUser();
+        if (name) return name;
+        break;
+      }
+      case 'login': {
+        const name = await loginExistingUser();
+        if (name) return name;
+        break;
+      }
+      case 'exit':
         console.log(chalk.yellow('Goodbye!'));
         process.exit(0);
-      default:
-        console.log(chalk.red('Please enter 1, 2, or 3.'));
     }
   }
-};
-
-/**
- * Display the command menu
- */
-const displayMenu = () => {
-  console.log(
-    chalk.blue(
-      '\nCommands: /view (see posts), /update <id> (edit post), /delete <id> (remove post), /exit (quit), /leave (delete account)'
-    )
-  );
-  console.log(chalk.blue('Or type a message to create a post:'));
 };
 
 /**
@@ -158,6 +140,14 @@ const handleExitCommand = () => {
  * Handle the /leave command (delete account)
  */
 const handleLeaveCommand = async () => {
+  const confirmed = await confirm({
+    message: 'Are you sure you want to delete your account?',
+    default: false,
+  });
+  if (!confirmed) {
+    console.log(chalk.blue('Account deletion cancelled.'));
+    return;
+  }
   await deleteUser();
   console.log(chalk.yellow('Your account has been deleted. Goodbye!'));
   process.exit(0);
@@ -179,54 +169,6 @@ const handleViewCommand = async () => {
 };
 
 /**
- * Handle the /update command (edit a post)
- * @param {string[]} parts - Command parts (e.g., ['/update', '1'])
- */
-const handleUpdateCommand = async (parts) => {
-  const id = parseInt(parts[1]);
-  if (isNaN(id)) {
-    console.log(chalk.red('Invalid post ID. Usage: /update <id>'));
-    return;
-  }
-  const newText = prompt('Enter new text: ').trim();
-  if (!newText) {
-    console.log(chalk.red('Text cannot be empty.'));
-    return;
-  }
-  try {
-    await updatePost(id, newText);
-    console.log(chalk.green(`  Post ${id} updated successfully`));
-  } catch (error) {
-    console.log(chalk.red(error.message));
-  }
-};
-
-/**
- * Handle the /delete command (remove a post)
- * @param {string[]} parts - Command parts (e.g., ['/delete', '1'])
- */
-const handleDeletePostCommand = async (parts) => {
-  const id = parseInt(parts[1]);
-  if (isNaN(id)) {
-    console.log(chalk.red('Invalid post ID. Usage: /delete <id>'));
-    return;
-  }
-  try {
-    await deletePost(id);
-    console.log(chalk.green(`  Post ${id} deleted successfully`));
-  } catch (error) {
-    console.log(chalk.red(error.message));
-  }
-};
-
-/**
- * Handle empty input
- */
-const handleEmptyInput = () => {
-  console.log(chalk.red('Message cannot be empty.'));
-};
-
-/**
  * Handle creating a new post
  * @param {string} input - The post text
  */
@@ -240,41 +182,73 @@ const handleCreatePost = async (input) => {
  */
 const runMainLoop = async () => {
   while (true) {
-    displayMenu();
-    const input = prompt('> ').trim();
+    const action = await select({
+      message: 'What would you like to do?',
+      choices: [
+        { name: 'Create a new post', value: 'create' },
+        { name: 'View my posts', value: 'view' },
+        { name: 'Update a post', value: 'update' },
+        { name: 'Delete a post', value: 'delete' },
+        { name: 'Delete my account', value: 'leave' },
+        { name: 'Exit', value: 'exit' },
+      ],
+    });
 
-    // Parse command and arguments
-    const parts = input.split(/\s+/);
-    const command = parts[0].toLowerCase();
+    try {
+      switch (action) {
+        case 'create': {
+          const text = prompt('Enter your post: ').trim();
+          if (!text) {
+            console.log(chalk.red('Message cannot be empty.'));
+            break;
+          }
+          await handleCreatePost(text);
+          break;
+        }
 
-    switch (command) {
-      case '/exit':
-        handleExitCommand();
-        break;
+        case 'view':
+          await handleViewCommand();
+          break;
 
-      case '/leave':
-        await handleLeaveCommand();
-        break;
+        case 'update': {
+          await handleViewCommand();
+          const updateId = parseInt(prompt('Enter post ID to update: ').trim());
+          if (isNaN(updateId)) {
+            console.log(chalk.red('Invalid post ID.'));
+            break;
+          }
+          const newText = prompt('Enter new text: ').trim();
+          if (!newText) {
+            console.log(chalk.red('Text cannot be empty.'));
+            break;
+          }
+          await updatePost(updateId, newText);
+          console.log(chalk.green(`  Post ${updateId} updated successfully`));
+          break;
+        }
 
-      case '/view':
-        await handleViewCommand();
-        break;
+        case 'delete': {
+          await handleViewCommand();
+          const deleteId = parseInt(prompt('Enter post ID to delete: ').trim());
+          if (isNaN(deleteId)) {
+            console.log(chalk.red('Invalid post ID.'));
+            break;
+          }
+          await deletePost(deleteId);
+          console.log(chalk.green(`  Post ${deleteId} deleted successfully`));
+          break;
+        }
 
-      case '/update':
-        await handleUpdateCommand(parts);
-        break;
+        case 'leave':
+          await handleLeaveCommand();
+          break;
 
-      case '/delete':
-        await handleDeletePostCommand(parts);
-        break;
-
-      case '':
-        handleEmptyInput();
-        break;
-
-      default:
-        await handleCreatePost(input);
-        break;
+        case 'exit':
+          handleExitCommand();
+          break;
+      }
+    } catch (error) {
+      console.log(chalk.red(error.message));
     }
   }
 };

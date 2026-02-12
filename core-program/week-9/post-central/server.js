@@ -4,8 +4,8 @@ import { createServer } from 'http';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { WebSocketServer } from 'ws';
-import { PORT } from './config/constants.js';
 import { setupApiDocs } from './config/apiDocs.js';
+import { PORT } from './config/constants.js';
 import { setupMiddleware } from './middleware/index.js';
 import postRoutes from './routes/postRoutes.js';
 import userRoutes from './routes/userRoutes.js';
@@ -39,17 +39,17 @@ app.use((req, res) => {
 // Start server
 server.listen(PORT, () => {
   console.log(chalk.green(`Server is running on http://localhost:${PORT}`));
+  console.log(chalk.cyan(`\nAPI accessible at http://${getLocalIP()}:${PORT}`));
   console.log(
-    chalk.green(`Accessible on local network at http://${getLocalIP()}:${PORT}`)
+    chalk.magenta(`\nClient app at http://${getLocalIP()}:${PORT}/client`)
   );
-  // We will reveal the API docs URL later, after having worked with the
-  // documentation from the README first.
   console.log(
-    chalk.blue(
-      `API Documentation available at http://${getLocalIP()}:${PORT}/api-docs`
-    )
+    chalk.magenta(`Portal app at http://${getLocalIP()}:${PORT}/portal`)
   );
-  console.log(chalk.yellow('Press Ctrl+C to stop the server'));
+  console.log(
+    chalk.blue(`\nAPI Documentation at http://${getLocalIP()}:${PORT}/api-docs`)
+  );
+  console.log(chalk.yellow('\nPress Ctrl+C to stop the server'));
 });
 
 // Disable keep-alive to prevent hanging connections and ensure immediate response delivery
