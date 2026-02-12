@@ -1,17 +1,19 @@
-# Post Central Web Client
+# Post Central Client
 
-A web client for the Post Central API where users can register, log in, and manage posts.
+A web client for the Post Central API where users can register, log in, and
+manage posts. The API server lives in `week-9/post-central`.
 
 ## Getting Started
 
-1. From the `post-central` folder, install dependencies and start the server:
+1. From the `week-9/post-central` folder, install dependencies and start the
+   server:
 
    ```bash
    npm install
    npm start
    ```
 
-2. Open http://localhost:3000/web/ in your browser.
+2. Open http://localhost:3000/ in your browser.
 
 ## Your Task
 
@@ -62,9 +64,11 @@ Here is a summary:
 ### Running Tests
 
 There are unit tests that verify your implementation by checking that each
-function calls the right URL with the right method, headers, and body.
+function calls the right URL with the right method, headers, and body. Run them
+from the `post-client` folder:
 
 ```bash
+npm install
 npm test
 ```
 

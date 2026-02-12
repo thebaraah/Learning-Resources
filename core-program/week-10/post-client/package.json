@@ -1,0 +1,12 @@
+{
+  "name": "post-central-client",
+  "version": "1.0.0",
+  "description": "Web client exercise for the Post Central API",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "^3.0.0"
+  }
+}

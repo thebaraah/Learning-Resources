@@ -7,7 +7,7 @@ import {
   createPost,
   editPost,
   deletePost,
-} from '../web/src/services.js';
+} from '../src/services.js';
 
 function mockFetchResponse(data, { ok = true, status = 200 } = {}) {
   globalThis.fetch = vi.fn(() =>
