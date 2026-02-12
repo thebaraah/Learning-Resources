@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
+    "test": "vitest run",
     "kill": "kill -9 $(lsof -t -i:3000)"
   },
   "keywords": [],
@@ -26,6 +27,7 @@
     "@eslint/js": "^10.0.1",
     "eslint": "^10.0.0",
     "globals": "^17.3.0",
-    "prettier": "^3.8.1"
+    "prettier": "^3.8.1",
+    "vitest": "^3.0.0"
   }
 }
