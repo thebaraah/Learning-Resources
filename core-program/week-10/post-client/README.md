@@ -18,7 +18,8 @@ manage posts. The API server lives in `week-9/post-central`.
 ## Your Task
 
 All the UI code is already in place. Your job is to implement the API service
-functions that connect the UI to the server.
+functions that connect the UI to the server. Curious how the UI calls your
+functions? See [README_UI.md](./README_UI.md).
 
 ### Setup
 
