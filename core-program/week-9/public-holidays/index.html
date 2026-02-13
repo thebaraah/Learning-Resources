@@ -3,24 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Netherlands Public Holidays 2025</title>
+    <title>Public Holidays</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+    </div>
+
     <div class="container">
       <header>
-        <h1>🇳🇱 Netherlands Public Holidays</h1>
+        <h1><span id="country-name"></span> Public Holidays</h1>
       </header>
 
       <div class="controls">
+        <label for="country-select" class="country-label">Country:</label>
+        <select id="country-select" class="country-select">
+          <!-- Countries will be populated by JavaScript -->
+        </select>
         <label for="year-select" class="year-label">Year:</label>
         <select id="year-select" class="year-select">
           <!-- Years will be populated by JavaScript -->
         </select>
-        <button type="button" id="load-btn">Load Holidays</button>
       </div>
 
-      <div class="loading" id="loading">Loading holidays...</div>
       <div class="error-message" id="error-message"></div>
 
       <div id="holidays-container"></div>

@@ -25,24 +25,52 @@ functions? See [README_UI.md](./README_UI.md).
 
 ### Setup
 
-1. Rename `src/services.starter.js` to `src/services.js` (replacing the
-   existing file).
-2. Open `src/services.js` — you'll see seven functions that all return a
-   `NOT_IMPLEMENTED` error.
+1. Rename `src/services/services.starter.js` to `src/services/services.js`
+   (replacing the existing file).
+2. Open `src/services/services.js` — you'll see seven functions, one fully
+   implemented (`register`) as a template, and six that throw "Not implemented".
 3. Implement each function so it calls the correct API endpoint using `fetch`.
 
 ### What Each Function Should Do
 
-Every function must return an object with this shape:
+Every function should:
+
+- **On success:** return the parsed JSON response data directly.
+- **On error** (when `response.ok` is `false`): throw an `Error` whose `message`
+  comes from the server response and which has a `status` property set to the
+  HTTP status code.
+
+#### Example: The `register` Function
+
+We have provided the `register` function as a fully implemented example. Here's
+what it looks like:
 
 ```js
-{
-  ok: true/false,     // was the request successful?
-  status: 200,        // the HTTP status code
-  data: { ... },      // the parsed JSON response body
-  message: ''         // error message (if any)
+export async function register(name, password) {
+  const response = await fetch('/users/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, password }),
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    const error = new Error(data.error || response.statusText);
+    error.status = response.status;
+    throw error;
+  }
+  return data;
 }
 ```
+
+> :exclamation: A note about `response.json()` and `response.ok`: Normally you would need
+to check `response.ok` _before_ calling `response.json()`, because not every
+server returns JSON for error responses. This API is different — it **always**
+returns JSON, even when the response is not OK. That means you can safely call
+`response.json()` first and then check `response.ok` afterwards (as you can see
+in the `register` function above). This is convenient because the parsed JSON
+body contains the error message you need for the thrown `Error`.
+
+### Implementation
 
 Use the JSDoc comments above each function for the exact endpoint, HTTP method,
 headers, and request body.

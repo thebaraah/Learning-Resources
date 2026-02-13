@@ -7,7 +7,7 @@ import {
   createPost,
   editPost,
   deletePost,
-} from '../src/services.js';
+} from '../src/services/services.js';
 
 function mockFetchResponse(data, { ok = true, status = 200 } = {}) {
   globalThis.fetch = vi.fn(() =>
@@ -63,21 +63,23 @@ describe('login', () => {
     expect(body.name).toBe('alice');
     expect(body.password).toBe('secret');
 
-    expect(result.ok).toBe(true);
-    expect(result.data.user).toBe('alice');
-    expect(result.data.token).toBe('jwt123');
+    expect(result.user).toBe('alice');
+    expect(result.token).toBe('jwt123');
   });
 
-  it('should return error info on failed login', async () => {
+  it('should throw on failed login', async () => {
     mockFetchResponse(
       { error: 'Invalid credentials' },
       { ok: false, status: 401 }
     );
 
-    const result = await login('alice', 'wrong');
-
-    expect(result.ok).toBe(false);
-    expect(result.status).toBe(401);
+    try {
+      await login('alice', 'wrong');
+      expect.unreachable('should have thrown');
+    } catch (error) {
+      expect(error.message).toBe('Invalid credentials');
+      expect(error.status).toBe(401);
+    }
   });
 });
 
@@ -98,21 +100,23 @@ describe('register', () => {
     expect(body.name).toBe('bob');
     expect(body.password).toBe('pass123');
 
-    expect(result.ok).toBe(true);
-    expect(result.data.user).toBe('bob');
-    expect(result.data.token).toBe('jwt456');
+    expect(result.user).toBe('bob');
+    expect(result.token).toBe('jwt456');
   });
 
-  it('should return error info when user already exists', async () => {
+  it('should throw when user already exists', async () => {
     mockFetchResponse(
       { error: 'User already exists' },
       { ok: false, status: 409 }
     );
 
-    const result = await register('bob', 'pass123');
-
-    expect(result.ok).toBe(false);
-    expect(result.status).toBe(409);
+    try {
+      await register('bob', 'pass123');
+      expect.unreachable('should have thrown');
+    } catch (error) {
+      expect(error.message).toBe('User already exists');
+      expect(error.status).toBe(409);
+    }
   });
 });
 
@@ -129,20 +133,22 @@ describe('getProfile', () => {
     expect(call.method).toBe('GET');
     expect(getHeader('Authorization')).toBe('Bearer mytoken');
 
-    expect(result.ok).toBe(true);
-    expect(result.data.user).toBe('alice');
+    expect(result.user).toBe('alice');
   });
 
-  it('should return 401 for invalid token', async () => {
+  it('should throw for invalid token', async () => {
     mockFetchResponse(
       { error: 'Invalid token' },
       { ok: false, status: 401 }
     );
 
-    const result = await getProfile('badtoken');
-
-    expect(result.ok).toBe(false);
-    expect(result.status).toBe(401);
+    try {
+      await getProfile('badtoken');
+      expect.unreachable('should have thrown');
+    } catch (error) {
+      expect(error.message).toBe('Invalid token');
+      expect(error.status).toBe(401);
+    }
   });
 });
 
@@ -162,8 +168,7 @@ describe('getMyPosts', () => {
     expect(call.method).toBe('GET');
     expect(getHeader('Authorization')).toBe('Bearer mytoken');
 
-    expect(result.ok).toBe(true);
-    expect(result.data).toEqual(posts);
+    expect(result).toEqual(posts);
   });
 });
 
@@ -190,8 +195,7 @@ describe('createPost', () => {
     const body = getParsedBody();
     expect(body.text).toBe('New post');
 
-    expect(result.ok).toBe(true);
-    expect(result.data.text).toBe('New post');
+    expect(result.text).toBe('New post');
   });
 });
 
@@ -219,20 +223,22 @@ describe('editPost', () => {
     const body = getParsedBody();
     expect(body.text).toBe('Updated');
 
-    expect(result.ok).toBe(true);
-    expect(result.data.isEdited).toBe(true);
+    expect(result.isEdited).toBe(true);
   });
 
-  it('should return 403 when editing another user\'s post', async () => {
+  it('should throw when editing another user\'s post', async () => {
     mockFetchResponse(
       { error: 'Forbidden' },
       { ok: false, status: 403 }
     );
 
-    const result = await editPost('mytoken', 99, 'Hacked');
-
-    expect(result.ok).toBe(false);
-    expect(result.status).toBe(403);
+    try {
+      await editPost('mytoken', 99, 'Hacked');
+      expect.unreachable('should have thrown');
+    } catch (error) {
+      expect(error.message).toBe('Forbidden');
+      expect(error.status).toBe(403);
+    }
   });
 });
 
@@ -256,8 +262,7 @@ describe('deletePost', () => {
     expect(call.method).toBe('DELETE');
     expect(getHeader('Authorization')).toBe('Bearer mytoken');
 
-    expect(result.ok).toBe(true);
-    expect(result.data.message).toBe('Post deleted');
+    expect(result.message).toBe('Post deleted');
   });
 
   it('should not send a request body', async () => {

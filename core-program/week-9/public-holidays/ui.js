@@ -1,18 +1,77 @@
 class UI {
-  initialize(loaderFn) {
+  initialize(loaderFn, countriesLoaderFn) {
     this.loaderFn = loaderFn;
     this.dom = this.getElementsWithIds(document);
 
-    // Populate year select dropdown
     this.populateYearSelect();
 
-    // Set up load button event listener
-    this.dom.loadBtn.addEventListener('click', () => {
-      this.showLoading();
-      const year = this.dom.yearSelect.value;
-      this.loaderFn(year);
-      this.hideLoading;
+    // Set up change listeners on both dropdowns
+    this.dom.yearSelect.addEventListener('change', () => this.loadHolidays());
+    this.dom.countrySelect.addEventListener('change', () => {
+      this.updateCountryName();
+      this.loadHolidays();
     });
+
+    // Load countries on startup
+    this.showLoading();
+    countriesLoaderFn((err, countries) => {
+      this.hideLoading();
+      if (err) {
+        console.error(err);
+        this.showError('Failed to load countries. Please try again later.');
+        return;
+      }
+      this.populateCountrySelect(countries);
+      this.updateCountryName();
+      this.loadHolidays();
+    });
+  }
+
+  loadHolidays() {
+    const year = this.dom.yearSelect.value;
+    const countryCode = this.dom.countrySelect.value;
+    this.showLoading();
+    this.loaderFn(year, countryCode, (err, data) => {
+      this.hideLoading();
+      if (err) {
+        console.error(err);
+        this.showError('Failed to load holidays. Please try again later.');
+      } else {
+        this.renderHolidays(data);
+      }
+    });
+  }
+
+  getDefaultCountryCode(countries) {
+    const locale = navigator.language || '';
+    const parts = locale.split('-');
+    if (parts.length > 1) {
+      const code = parts[1].toUpperCase();
+      if (countries.some((c) => c.countryCode === code)) {
+        return code;
+      }
+    }
+    return 'NL';
+  }
+
+  populateCountrySelect(countries) {
+    const defaultCode = this.getDefaultCountryCode(countries);
+    countries.forEach((country) => {
+      const option = document.createElement('option');
+      option.value = country.countryCode;
+      option.textContent = country.name;
+      if (country.countryCode === defaultCode) {
+        option.selected = true;
+      }
+      this.dom.countrySelect.appendChild(option);
+    });
+  }
+
+  updateCountryName() {
+    const select = this.dom.countrySelect;
+    const selectedOption = select.options[select.selectedIndex];
+    this.dom.countryName.textContent =
+      selectedOption ? selectedOption.textContent : '';
   }
 
   getElementsWithIds(root) {
@@ -122,5 +181,3 @@ class UI {
 }
 
 export const ui = new UI();
-export const renderHolidays = ui.renderHolidays.bind(ui);
-export const showError = ui.showError.bind(ui);

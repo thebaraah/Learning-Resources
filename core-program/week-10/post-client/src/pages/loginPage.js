@@ -1,4 +1,4 @@
-import { login } from '../services.js';
+import { login } from '../services/services.js';
 import { putToken } from '../lib/tokenUtils.js';
 import LoginView from '../views/loginView.js';
 import BasePage from './basePage.js';
@@ -14,15 +14,10 @@ export default class LoginPage extends BasePage {
 
   #onSubmit = async (name, password) => {
     try {
-      const result = await login(name, password);
+      const data = await login(name, password);
 
-      if (!result.ok) {
-        throw new Error(result.message || 'Login failed');
-      }
-
-      const token = result.data?.token;
-      putToken(token);
-      this.state.update({ token, user: result.data?.user, error: null });
+      putToken(data.token);
+      this.state.update({ token: data.token, user: data.user, error: null });
 
       this.router.navigateTo('home');
     } catch (error) {

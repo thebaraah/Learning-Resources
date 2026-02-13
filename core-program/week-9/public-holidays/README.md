@@ -1,92 +1,94 @@
 # Public Holidays
 
-This application uses the **Nager.Date** public web API to display a list of public
-holidays in the Netherlands for a selected year:
+This application displays public holidays for any supported country and year, using the **Nager.Date** public web API. It serves as a demo to illustrate how web applications interact with APIs using HTTP requests.
 
-- API documentation: [Nager.Date API](https://date.nager.at/scalar/#api-version-3)
+When you open the application, it loads a list of countries from the API and populates a dropdown. It then automatically loads the holidays for the selected country and year. Changing either dropdown triggers a new request.
 
-The application consists of the following files:
+## Application files
 
-| File       | Description                                                              |
-| ---------- | ------------------------------------------------------------------------ |
-| index.html | The main HTML file that provides the HTML structure for the application. |
-| styles.css | Contains all the styling for the application.                            |
-| ui.js      | Handles all UI-related functionality.                                    |
-| index.js   | The main application logic that handles API interactions.                |
+| File        | Description                                          |
+| ----------- | ---------------------------------------------------- |
+| index.html  | The HTML structure for the application.              |
+| styles.css  | All styling for the application.                     |
+| ui.js       | Handles all UI-related functionality.                |
+| index.js    | The main entry point that wires everything together. |
+| services.js | Where the HTTP requests are made.                    |
 
-Your job is to complete the function `loadHolidays()` in `services.js` as described below, following the code snippet.
+## Running the application
 
-```javascript
-// import { renderHolidays, showError } from './ui.js';
+> If you haven't already done so, install the VS Code [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) extension before continuing.
 
-function getRequest(url, onSuccess, onError) {
-  // ... existing code ...
-}
+1. Right-click `index.html` in the VS Code Explorer and select **Open with Live Server**.
+2. The application should open in your browser with a country dropdown, a year dropdown, and a list of holidays.
 
-export function loadHolidays(year) {
-  getRequest(
-    `<url>`, //TODO: Replace <url> with the actual API endpoint
-    (data) => {
-      // TODO: Handle successful data retrieval
-    },
-    (error) => {
-      // TODO: Handle errors
-    }
-  );
-}
+## Understanding the API URLs
+
+The key file to look at is `services.js`. It contains two functions that each make an HTTP request to a different API endpoint. The API documentation can be found here:
+
+- [Nager.Date API explorer](https://date.nager.at/scalar/#api-version-3) (interactive documentation)
+- [Nager.Date API documentation](https://date.nager.at/swagger/v3/swagger.json) (OpenAPI spec)
+
+The base URL for the API is: `https://date.nager.at`
+
+### `loadCountries`
+
+This function loads the list of available countries. The full URL is:
+
+```text
+https://date.nager.at/api/v3/AvailableCountries
 ```
 
-Complete the implementation as follows:
+This is a fixed URL — it always returns the same type of data (a list of all supported countries).
 
-1. Complete the URL string for the Nager.Date API as was discussed in the Using APIs section of the learning material for this week. The URL should request the public holidays for the Netherlands (`NL`) for the year provided as the `year` parameter to the `loadHolidays()` function.
+### `loadHolidays`
 
-2. Complete the first arrow function, which acts as the `onSuccess` handler for `getRequest()`. It should take a single parameter that will receive the data obtained from the API if the GET request was successful. This will be a JavaScript object. Inside the function body, call the imported function `renderHolidays()` and pass the received object as a parameter.
+This function loads the public holidays for a given year and country. The URL uses **path parameters** — values that are embedded directly in the URL path:
 
-3. Complete the second arrow function, which acts as the `onError` handler for `getRequest()`. It will receive a JavaScript `Error` object as its sole parameter if the GET request returns an error. Log this error as-is to the console. (The target audience for this technical error information is developers.)
+```text
+https://date.nager.at/api/v3/PublicHolidays/{year}/{countryCode}
+```
 
-   Then, call the imported `showError()` with a user-friendly error message.
+For example, to get the holidays for the Netherlands in 2026, the URL would be:
 
-> :exclamation: If you haven't already done so, install the VS Code [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) extension before continuing.
+```text
+https://date.nager.at/api/v3/PublicHolidays/2026/NL
+```
 
-When you are done, right-click the `index.html` file in the VS Code Explorer and select "Open with Live Server" to open it in the browser. You should get something similar to this:
+In the code, the `year` and `countryCode` function parameters are inserted into the URL using a template literal:
 
-![public-holidays-start](../.assets/public-holidays-start.png)
+```js
+`https://date.nager.at/api/v3/PublicHolidays/${year}/${countryCode}`
+```
 
-Open the browser's Developer Tools by pressing <kbd>F12</kbd> on Windows or Linux or <kbd>Fn</kbd> + <kbd>F12</kbd> on a Mac. Then, select the Network tab, as shown below:
+### URL structure
 
-![network-tab-1](../.assets/network-tab-1.png)
+Both URLs follow the same pattern:
 
-We are interested in network requests that we make in our code with `Fetch`, so let's activate the `Fetch/XHR` filter as shown in the screenshot.
+```text
+https://date.nager.at  /api/v3/  PublicHolidays/2026/NL
+\_____________________/ \______/ \____________________/
+       base URL          API       endpoint path
+                        version    (with parameters)
+```
 
-Now press the **Load Holidays** button. If all is well, you should now see the holidays for the selected year displayed in the UI. In the network tab, you should see the request as in the screenshot below. (Note: you may see other requests in the network that are not related to this app but are caused by browser extensions that you may have installed. They are not important for our purpose.)
+## Inspecting network requests
 
-![network-tab-2](../.assets/network-tab-2.png)
+Open the browser's Developer Tools by pressing <kbd>F12</kbd> on Windows/Linux or <kbd>Fn</kbd>+<kbd>F12</kbd> on a Mac. Select the **Network** tab and activate the **Fetch/XHR** filter.
 
-The request that we just made now appears in the network tab. From this, we can see the following:
+Now change a dropdown. You should see a network request appear. Click on it to inspect the details:
 
-| Field     | Value       | Description                                                |
-| --------- | ----------- | ---------------------------------------------------------- |
-| Name      | NL          | This is the last part of the endpoint URL path.            |
-| Status    | 200         | The response status code: OK                               |
-| Type      | fetch       | The request was a `fetch` request.                         |
-| Initiator | index.js:10 | The request was initiated by the `index.js` file, line 10. |
-| Size      | 1.0 kB      | The size of the response.                                  |
-| Time      | 55 ms       | The turn-around time for the response, in milliseconds.    |
+- **Headers** — the request URL, method, and status code
+- **Preview** — the parsed JSON response
+- **Response** — the raw response text
 
-The colored bars in the timeline represent the timing and stages of each network request. They can be used to identify performance bottlenecks, but this is an advanced topic not relevant for our discussion here.
+Notice how the URL in the request corresponds to what is constructed in the code.
 
-Next, click on the line of the network request. This will show more details for the request:
+## Testing error handling
 
-![network-tab-3](../.assets/network-tab-3.png)
+To see how the application handles errors:
 
-You can inspect the request and response **Headers**, **Preview** the returned content as parsed data, view the **Response** in its original format, and get more details about the **Initiator** of the request and about the **Timing**.
+1. In the Network tab, check the **Disable cache** checkbox.
+2. From the throttling dropdown (shows **No throttling**), select **Offline**.
+3. Change a dropdown. You should see a failed request and an error message in the UI.
 
-Let's finally try and find out how our application handles errors. One such error happens when the network is no longer available. We can simulate this as follows:
-
-First, click the checkbox labelled **Disable cache**. We don't want the fetch to be served from the browser's cache, as this will not be reported as an error.
-
-With the cache disabled, from the drop-down that currently shows **No throttling**, select **Offline**. As the name implies, this simulates the browser becoming offline.
-
-Press the **Load Holidays** button again. You should now see a failed network request in developer tools. The UI should display the error message that you set up in the code.
-
-That concludes this exercise. Don't forget to undo the changes we made to make the network offline.
+Don't forget to set the throttling back to **No throttling** when you're done.

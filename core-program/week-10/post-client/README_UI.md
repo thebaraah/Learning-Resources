@@ -15,7 +15,7 @@ The app has three layers:
 | --- | --- | --- |
 | View | `loginView.js`, `homeView.js`, ... | What the user sees and clicks. |
 | Page | `loginPage.js`, `homePage.js`, ... | Logic that decides what to do. |
-| Services | `services.js` | **Your code** — Talks to the server. |
+| Services | `services/services.js` | **Your code** — Talks to the server. |
 
 **You are writing the bottom layer.** The Views and Pages are already done. When
 you implement `login()`, `getMyPosts()`, and the other functions, the app will
@@ -180,15 +180,10 @@ The callback leads to `LoginPage.#onSubmit`
 ```js
 #onSubmit = async (name, password) => {
   try {
-    const result = await login(name, password); // ← YOUR FUNCTION
+    const data = await login(name, password); // ← YOUR FUNCTION
 
-    if (!result.ok) {
-      throw new Error(result.message || 'Login failed');
-    }
-
-    const token = result.data?.token;
-    putToken(token);  // save token to localStorage
-    this.state.update({ token, user: result.data?.user, error: null });
+    putToken(data.token);  // save token to localStorage
+    this.state.update({ token: data.token, user: data.user, error: null });
 
     this.router.navigateTo('home');
   } catch (error) {
@@ -201,15 +196,14 @@ Here is what happens line by line:
 
 1. **`await login(name, password)`** — calls **your** `login` function from
    `services.js`. This sends a `POST` request to the server and waits for the
-   response.
-2. **`if (!result.ok)`** — checks the `ok` property you returned. If the login
-   failed (wrong password, user not found, etc.), it throws an error.
-3. **`putToken(token)`** — saves the token in `localStorage` so the user stays
-   logged in if they refresh the page.
-4. **`this.state.update(...)`** — puts the token and username into the shared
+   response. If the login fails, your function **throws an error**, which jumps
+   straight to the `catch` block.
+2. **`putToken(data.token)`** — saves the token in `localStorage` so the user
+   stays logged in if they refresh the page.
+3. **`this.state.update(...)`** — puts the token and username into the shared
    state.
-5. **`this.router.navigateTo('home')`** — switches to the home page.
-6. **`catch (error)`** — if anything went wrong (network error, bad credentials,
+4. **`this.router.navigateTo('home')`** — switches to the home page.
+5. **`catch (error)`** — if anything went wrong (network error, bad credentials,
    etc.), the error message is put into state, which causes the view to show an
    error banner.
 
@@ -224,19 +218,18 @@ async #loadData() {
   const { token } = this.state.get();
 
   try {
-    const profileResult = await getProfile(token);  // ← YOUR FUNCTION
-    // ...check result.ok...
-
-    const postsResult = await getMyPosts(token);     // ← YOUR FUNCTION
-    // ...check result.ok...
+    const profile = await getProfile(token);  // ← YOUR FUNCTION
+    const posts = await getMyPosts(token);    // ← YOUR FUNCTION
 
     this.state.update({
-      user: profileResult.data.user,
-      posts: postsResult.data,
+      user: profile.user,
+      posts,
       error: null,
     });
   } catch (error) {
-    this.state.update({ error: error.message });
+    if (!this.#handleAuthError(error)) {
+      this.state.update({ error: error.message });
+    }
   }
 }
 ```
@@ -246,7 +239,9 @@ Two of **your** functions are called here:
 - **`getProfile(token)`** — fetches the username for the logged-in user.
 - **`getMyPosts(token)`** — fetches all posts created by that user.
 
-The results are put into state.
+If either function throws (e.g. expired token), the `catch` block checks whether
+it is an authentication error (see below). Otherwise the error message is shown
+to the user.
 
 ### Step 5 — The View Renders the Posts
 
@@ -307,11 +302,12 @@ follows the same pattern.
 #onCreatePost = async (text) => {
   const { token } = this.state.get();
   try {
-    const result = await createPost(token, text); // ← YOUR FUNCTION
-    if (!result.ok) { /* handle error */ }
-    await this.#refreshPosts();                   // calls getMyPosts again
+    await createPost(token, text);  // ← YOUR FUNCTION (throws on error)
+    await this.#refreshPosts();     // calls getMyPosts again
   } catch (error) {
-    this.state.update({ error: error.message });
+    if (!this.#handleAuthError(error)) {
+      this.state.update({ error: error.message });
+    }
   }
 };
 ```
@@ -340,17 +336,16 @@ Here is the pattern:
 
 ```js
 try {
-  const result = await createPost(token, text);  // your function returns { ok, status, data, message }
-
-  if (!result.ok) {
-    throw new Error(result.message);  // turn a failed result into an error
-  }
-
+  await createPost(token, text);  // your function throws on error
   // success — update state with new data
 } catch (error) {
   this.state.update({ error: error.message });  // put error message in state
 }
 ```
+
+Because **your** functions throw when the server returns an error, the page code
+doesn't need to check a result object — errors automatically land in the `catch`
+block.
 
 When `error` is set in state, the view's `update()` method runs and shows a red
 error banner at the top of the page:
@@ -366,17 +361,16 @@ if (state.error) {
 }
 ```
 
-So the error message from **your** `{ message }` property ends up visible to the
-user.
+So the error message from **your** thrown error ends up visible to the user.
 
 ## What About Authentication Errors?
 
-If **your** function returns `{ status: 401 }` (unauthorized — meaning the token
-has expired or is invalid), the home page handles it specially:
+If **your** function throws an error with `status: 401` (unauthorized — meaning
+the token has expired or is invalid), the home page handles it specially:
 
 ```js
-#handleAuthError(result) {
-  if (result.status === 401) {
+#handleAuthError(error) {
+  if (error.status === 401) {
     removeToken();                    // delete the saved token
     this.state.clear();               // clear all state
     this.router.navigateTo('login');  // send user back to login
@@ -386,7 +380,7 @@ has expired or is invalid), the home page handles it specially:
 }
 ```
 
-This is why the `status` property in your return object matters — it lets the
+This is why the `status` property on your thrown error matters — it lets the
 app distinguish "wrong input" errors from "you need to log in again" errors.
 
 ## File Map
@@ -395,7 +389,7 @@ app distinguish "wrong input" errors from "you need to log in again" errors.
 | --- | --- |
 | `index.html` | The single HTML page the browser loads |
 | `src/app.js` | Starts the app: creates state, router, and navigates to the first page |
-| `src/services.js` | **Your code** — the functions that talk to the server |
+| `src/services/services.js` | **Your code** — the functions that talk to the server |
 | `src/routes.js` | Maps page names (like `'login'`) to their Page classes |
 | `src/pages/loginPage.js` | Login logic — calls `login()` from your services |
 | `src/pages/registerPage.js` | Registration logic — calls `register()` |

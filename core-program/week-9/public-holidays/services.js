@@ -1,38 +1,32 @@
-// import { renderHolidays, showError } from './ui.js';
-
-function getRequest(url, onSuccess, onError) {
-  const xhr = new XMLHttpRequest();
-
-  xhr.open('GET', url, true);
-
-  xhr.onload = function () {
-    if (xhr.status >= 200 && xhr.status < 300) {
-      try {
-        const data = JSON.parse(xhr.responseText);
-        onSuccess(data);
-      } catch (error) {
-        onError(new Error('Failed to parse JSON response'));
+function getRequest(url, callback) {
+  fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    } else {
-      onError(new Error(`HTTP error! status: ${xhr.status}`));
-    }
-  };
-
-  xhr.onerror = function () {
-    onError(new Error('Network error occurred'));
-  };
-
-  xhr.send();
+      return response.json();
+    })
+    .then((data) => callback(null, data))
+    .catch((error) => callback(error));
 }
 
-export function loadHolidays(year) {
+export function loadCountries(callback) {
+  getRequest('https://date.nager.at/api/v3/AvailableCountries', (err, data) => {
+    if (err) {
+      console.error(err);
+    }
+    callback(err, data);
+  });
+}
+
+export function loadHolidays(year, countryCode, callback) {
   getRequest(
-    `<url>`, //TODO: Replace <url> with the actual API endpoint
-    (data) => {
-      // TODO: Handle successful data retrieval
-    },
-    (error) => {
-      // TODO: Handle errors
+    `https://date.nager.at/api/v3/PublicHolidays/${year}/${countryCode}`,
+    (err, data) => {
+      if (err) {
+        console.error(err);
+      }
+      callback(err, data);
     }
   );
 }

@@ -1,4 +1,4 @@
-import { register } from '../services.js';
+import { register } from '../services/services.js';
 import RegisterView from '../views/registerView.js';
 import BasePage from './basePage.js';
 
@@ -13,12 +13,7 @@ export default class RegisterPage extends BasePage {
 
   #onSubmit = async (name, password) => {
     try {
-      const result = await register(name, password);
-
-      if (!result.ok) {
-        throw new Error(result.message || 'Registration failed');
-      }
-
+      await register(name, password);
       this.router.navigateTo('register-success');
     } catch (error) {
       this.state.update({ error: error.message });

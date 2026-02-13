@@ -2,9 +2,22 @@
 
 This is an interactive web application that demonstrates API integration using the **Deck of Cards** API at <https://deckofcardsapi.com>. The application allows users to create, shuffle, and draw cards from a virtual deck.
 
+## Learning Objectives
+
+In this assignment you will learn to:
+
+- Make GET requests using the browser's built-in `fetch()` function.
+- Handle JSON responses from a REST API.
+- Check for HTTP errors and throw errors when needed.
+- Refactor repeated code by applying the DRY principle.
+
+## How It Works
+
 The application as delivered in the repository is incomplete, therefore you cannot use it yourself until you have completed the assignment. However, this is how you can use it once you are done.
 
-After you load the `index.html`, click on the **New Deck** button to create a new deck of cards.
+Since the application uses ES modules (`import`/`export`), you cannot open `index.html` directly in your browser. Instead, use the **Live Server** extension in VS Code: right-click on `index.html` and select **Open with Live Server**.
+
+Once the page has loaded, click on the **New Deck** button to create a new deck of cards.
 
 ![new-deck](../.assets/new-deck.gif)
 
@@ -27,7 +40,7 @@ The application consists of the following files:
 | services.js | Contains functions that interact with the Deck of Cards API.             |
 | index.js    | Contains the application startup logic.                                  |
 
-Your job will be to make modifications to the `service.js` file. The other files should remain untouched.
+Your job will be to make modifications to the `services.js` file. The other files should remain untouched. Note that `services.js` already provides a `API_BASE_URL` constant that you should use to construct your API URLs.
 
 Before you start tinkering with the code, it is essential that you build an understanding of the application's functionality and structure. Here, VS Code Copilot can be of great help.
 
@@ -61,11 +74,15 @@ The `services.js` contains a number of functions that call the browser's built-i
 - `fetchDrawCards(deckId, count)`
 - `fetchShuffleDeck(deckId)`
 
-The function names are self-explanatory. Your task is to complete the implementation of these functions. You must examine the API documentation at <https://deckofcardsapi.com> to determine how to achieve this.
+The function names are self-explanatory. Your task is to complete the implementation of these functions using `async/await` syntax. You must examine the API documentation at <https://deckofcardsapi.com> to determine how to achieve this.
+
+Each function should return the parsed JSON response from the API. To understand what data the calling code expects, take a look at how these functions are used in `ui.js`.
+
+Make sure that your functions check for HTTP errors (hint: look at the `response.ok` property) and throw an error when the request fails. This ensures that the UI can display meaningful error messages to the user.
 
 Once you have successfully completed the functions and tested the application in the browser, your next task is to do some refactoring.
 
-You will likely have some repeated code in the three "fetch" functions. If each of the functions that call the native `fetch()` function they will contain repeated code (the code is not DRY). Refactor the code as follows:
+You will likely have repeated code across the three fetch functions (e.g., calling `fetch()`, checking for errors, and parsing JSON). This means the code is not DRY. Refactor the code as follows:
 
 1. Create a new function called `fetchData()`.
 2. It is to be called with a single argument containing a URL.
