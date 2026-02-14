@@ -112,7 +112,7 @@ const updatePost = async (id, text) => {
 /**
  * Delete current user
  * Method: DELETE | Endpoint: /users/me | Auth: Yes
- * No response body
+ * Response: { user: string, message: string }
  */
 const deleteUser = async () => {
   // TODO
@@ -121,7 +121,7 @@ const deleteUser = async () => {
 /**
  * Delete a post
  * Method: DELETE | Endpoint: /posts/:id | Auth: Yes
- * No response body
+ * Response: { id: number, text: string, message: string }
  */
 const deletePost = async (id) => {
   // TODO

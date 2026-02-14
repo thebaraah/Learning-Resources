@@ -180,7 +180,7 @@ describe('Complete CRUD Operations', () => {
     // Mock DELETE user response
     fetchMock.mockResolvedValueOnce({
       ok: true,
-      status: 204,
+      status: 200,
     });
 
     // DELETE: Remove the user
@@ -228,7 +228,7 @@ describe('Complete CRUD Operations', () => {
 
     fetchMock.mockResolvedValueOnce({
       ok: true,
-      status: 204,
+      status: 200,
     });
 
     await deleteUser();

@@ -57,17 +57,16 @@ The `authHeaders()` helper function in `services.js` builds the correct headers 
 | POST   | `/users/login`    | No            | `{ name: string, password: string }`  | `{ user: string, token: string }`            |
 | GET    | `/posts/hello`    | No            | -                                     | `{ id: number, user: string, text: string, timestamp: string }` |
 | GET    | `/users/me`       | Yes           | -                                     | `{ user: string, createdAt: string, lastLogin: string }` |
-| DELETE | `/users/me`       | Yes           | -                                     | No content                                   |
+| DELETE | `/users/me`       | Yes           | -                                     | `{ user: string, message: string }`          |
 | GET    | `/posts/me`       | Yes           | -                                     | `Array of posts`                             |
 | POST   | `/posts`          | Yes           | `{ text: string }`                    | `{ id: number, text: string, user: string }` |
 | PUT    | `/posts/:id`      | Yes           | `{ text: string }`                    | `{ id: number, text: string }`               |
-| DELETE | `/posts/:id`      | Yes           | -                                     | No content                                   |
+| DELETE | `/posts/:id`      | Yes           | -                                     | `{ id: number, text: string, message: string }` |
 
 ### Common HTTP Status Codes
 
 - **200 OK** - Request succeeded
 - **201 Created** - Resource created successfully
-- **204 No Content** - Request succeeded, no response body
 - **400 Bad Request** - Invalid request data
 - **401 Unauthorized** - Missing or invalid token
 - **403 Forbidden** - You can only modify your own posts
