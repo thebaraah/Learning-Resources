@@ -14,7 +14,7 @@ const generateToken = (username, role) =>
   jwt.sign({ user: username, role }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
 
 export const getUsers = (req, res) => {
-  res.json(getAllUsers());
+  res.json(getAllUsers().filter((u) => u.role !== 'admin'));
 };
 
 export const getMe = (req, res) => {

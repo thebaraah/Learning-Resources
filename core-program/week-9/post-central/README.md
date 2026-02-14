@@ -17,13 +17,11 @@ The server runs on port **3000**.
 
 Users register with a **username** and **password**. Passwords are hashed using **bcrypt** before storage. On successful registration or login, the server returns a **JSON Web Token (JWT)**.
 
-All endpoints except `/users/register` and `/users/login` require the JWT token in the `Authorization` header:
+All endpoints except `/users/register`, `/users/login`, and `GET /posts/hello` require the JWT token in the `Authorization` header:
 
 ```http
 Authorization: Bearer <token>
 ```
-
-A pre-seeded **admin** user is available with credentials `admin` / `admin`.
 
 ## API Endpoints
 
@@ -53,6 +51,7 @@ Register a new user. Returns a JWT token.
 ```json
 {
   "user": "alice",
+  "role": "user",
   "token": "eyJhbGciOiJIUzI1NiIs..."
 }
 ```
@@ -111,12 +110,8 @@ Returns a list of all registered users. **Requires authentication.**
 ```json
 [
   {
-    "user": "admin",
-    "createdAt": "2024-01-01T00:00:00.000Z",
-    "lastUsedAt": "2024-01-01T00:00:00.000Z"
-  },
-  {
     "user": "alice",
+    "role": "user",
     "createdAt": "2025-06-15T10:30:00.000Z",
     "lastUsedAt": "2025-06-15T12:00:00.000Z"
   }
@@ -148,6 +143,7 @@ Get the authenticated user's information. **Requires authentication.**
 ```json
 {
   "user": "alice",
+  "role": "user",
   "createdAt": "2025-06-15T10:30:00.000Z",
   "lastUsedAt": "2025-06-15T12:00:00.000Z"
 }
