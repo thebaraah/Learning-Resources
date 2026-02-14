@@ -17,6 +17,7 @@ export default class HomePage extends BasePage {
       onCreatePost: this.#onCreatePost,
       onEditPost: this.#onEditPost,
       onDeletePost: this.#onDeletePost,
+      onAdmin: this.#onAdmin,
     });
     this.#loadData();
   }
@@ -44,6 +45,7 @@ export default class HomePage extends BasePage {
 
       this.state.update({
         user: profile.user,
+        role: profile.role,
         posts,
         error: null,
       });
@@ -53,6 +55,10 @@ export default class HomePage extends BasePage {
       }
     }
   }
+
+  #onAdmin = () => {
+    this.router.navigateTo('admin');
+  };
 
   #onLogout = () => {
     removeToken();

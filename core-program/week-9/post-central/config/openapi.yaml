@@ -29,7 +29,7 @@ components:
         createdAt:
           type: string
           description: ISO 8601 timestamp of when the user registered
-        lastUsedAt:
+        lastLogin:
           type: string
           description: ISO 8601 timestamp of the user's last login
     AuthResponse:
@@ -104,6 +104,33 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
   /posts:
+    get:
+      summary: Get all posts (admin only)
+      description: Returns all posts in the system. Requires admin role.
+      tags: [Admin]
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: List of all posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Post"
+        401:
+          description: Authorization token required or invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Admin access required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
     post:
       summary: Create a new post
       description: Create a new post. Requires authentication.

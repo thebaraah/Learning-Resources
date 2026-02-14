@@ -18,6 +18,7 @@ export default class HomeView extends BaseView {
             <span class="header-title">Post Central Client</span>
             <div class="header-right">
               <span id="username" class="header-user"></span>
+              <button id="adminBtn" class="btn btn-secondary btn-small hidden">Admin</button>
               <button id="logoutBtn" class="btn btn-secondary btn-small">Logout</button>
             </div>
           </div>
@@ -58,11 +59,17 @@ export default class HomeView extends BaseView {
 
     this.#dom = getElementsWithIds(this.root);
 
+    this.#dom.adminBtn.addEventListener('click', this.#onAdmin);
     this.#dom.logoutBtn.addEventListener('click', this.#onLogout);
     this.#dom.createPostForm.addEventListener('submit', this.#onCreatePost);
     this.#dom.postsList.addEventListener('click', this.#onPostAction);
     this.#dom.confirmDialog.addEventListener('close', this.#onDialogClose);
   }
+
+  #onAdmin = (e) => {
+    e.preventDefault();
+    this.#props.onAdmin();
+  };
 
   #onLogout = (e) => {
     e.preventDefault();
@@ -154,7 +161,7 @@ export default class HomeView extends BaseView {
     if (diffMin < 60) return `${diffMin}m ago`;
     if (diffHr < 24) return `${diffHr}h ago`;
 
-    return date.toLocaleDateString(undefined, {
+    return date.toLocaleDateString('nl-NL', {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
@@ -221,6 +228,10 @@ export default class HomeView extends BaseView {
   update(state) {
     if (state.user) {
       this.#dom.username.textContent = state.user;
+    }
+
+    if (state.role === 'admin') {
+      this.#dom.adminBtn.classList.remove('hidden');
     }
 
     if (state.posts) {

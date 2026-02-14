@@ -113,7 +113,7 @@ Returns a list of all registered users. **Requires authentication.**
     "user": "alice",
     "role": "user",
     "createdAt": "2025-06-15T10:30:00.000Z",
-    "lastUsedAt": "2025-06-15T12:00:00.000Z"
+    "lastLogin": "2025-06-15T12:00:00.000Z"
   }
 ]
 ```
@@ -145,7 +145,7 @@ Get the authenticated user's information. **Requires authentication.**
   "user": "alice",
   "role": "user",
   "createdAt": "2025-06-15T10:30:00.000Z",
-  "lastUsedAt": "2025-06-15T12:00:00.000Z"
+  "lastLogin": "2025-06-15T12:00:00.000Z"
 }
 ```
 

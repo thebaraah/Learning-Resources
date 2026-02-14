@@ -34,18 +34,18 @@ if (!users) {
       password: adminPassword,
       role: 'admin',
       createdAt: '2024-01-01T00:00:00.000Z',
-      lastUsedAt: '2024-01-01T00:00:00.000Z',
+      lastLogin: '2024-01-01T00:00:00.000Z',
     },
   ];
   saveUsers();
 }
 
 export const getAllUsers = () =>
-  users.map(({ user, role, createdAt, lastUsedAt }) => ({
+  users.map(({ user, role, createdAt, lastLogin }) => ({
     user,
     role,
     createdAt,
-    lastUsedAt,
+    lastLogin,
   }));
 
 export const findUserByName = (name) => users.find((u) => u.user === name);
@@ -57,17 +57,17 @@ export const createUser = (name, hashedPassword) => {
     password: hashedPassword,
     role: 'user',
     createdAt: now,
-    lastUsedAt: now,
+    lastLogin: now,
   };
   users.push(newUser);
   saveUsers();
-  return { user: name, role: 'user', createdAt: now, lastUsedAt: now };
+  return { user: name, role: 'user', createdAt: now, lastLogin: now };
 };
 
-export const updateLastUsedAt = (name) => {
+export const updateLastLogin = (name) => {
   const user = users.find((u) => u.user === name);
   if (user) {
-    user.lastUsedAt = new Date().toISOString();
+    user.lastLogin = new Date().toISOString();
     saveUsers();
   }
 };

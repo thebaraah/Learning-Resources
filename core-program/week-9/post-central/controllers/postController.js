@@ -2,10 +2,18 @@ import {
   createPost as createPostService,
   deletePost as deletePostService,
   findPostById,
+  getAllPosts as getAllPostsService,
   getPostsByUser,
   updatePost as updatePostService,
 } from '../services/postService.js';
 import { broadcast } from '../utils/websocket.js';
+
+export const getPosts = (req, res) => {
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ error: 'Admin access required' });
+  }
+  res.json(getAllPostsService());
+};
 
 export const getHello = (_req, res) => {
   res.json({

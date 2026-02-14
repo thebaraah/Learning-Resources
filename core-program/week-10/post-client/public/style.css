@@ -339,6 +339,7 @@
 
   /* Confirm dialog */
   .confirm-dialog {
+    margin: auto;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     padding: 24px;
@@ -367,6 +368,128 @@
   .main-content {
     padding-block: 20px;
   }
+
+  /* Success banner */
+  .success-banner {
+    background: oklch(0.95 0.05 145);
+    border: 1px solid oklch(0.6 0.15 145 / 0.4);
+    color: oklch(0.35 0.15 145);
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    margin-block: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+
+    & .success-close-btn {
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      color: oklch(0.35 0.15 145);
+      padding: 0 4px;
+    }
+  }
+
+  /* Admin page */
+  .admin-section {
+    margin-block-end: 32px;
+  }
+
+  .admin-section-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-block-end: 12px;
+  }
+
+  .admin-users-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .admin-user-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .admin-user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .admin-user-name {
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .admin-user-meta {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+  }
+
+  .admin-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-block-end: 12px;
+
+    & .admin-section-title {
+      margin-block-end: 0;
+    }
+  }
+
+  .admin-posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .admin-post-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .admin-post-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-inline-size: 0;
+  }
+
+  .admin-post-header {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .admin-post-author {
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .admin-post-meta {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+  }
+
+  .admin-post-text {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    overflow-wrap: break-word;
+  }
 }
 
 @layer utilities {
@@ -383,5 +506,17 @@
   .post-item {
     border-radius: 0;
     border-inline: none;
+  }
+
+  .admin-user-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .admin-post-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
   }
 }

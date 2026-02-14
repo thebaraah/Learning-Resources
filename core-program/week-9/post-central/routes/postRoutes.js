@@ -4,6 +4,7 @@ import {
   deletePost,
   getHello,
   getMyPosts,
+  getPosts,
   updatePost,
 } from '../controllers/postController.js';
 import { authenticate } from '../middleware/auth.js';
@@ -11,6 +12,7 @@ import { authenticate } from '../middleware/auth.js';
 const router = express.Router();
 
 router.get('/hello', getHello);
+router.get('/', authenticate, getPosts);
 router.get('/me', authenticate, getMyPosts);
 router.post('/', authenticate, createPost);
 router.put('/:id', authenticate, updatePost);

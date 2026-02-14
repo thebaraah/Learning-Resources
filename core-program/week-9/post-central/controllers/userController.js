@@ -6,7 +6,7 @@ import {
   deleteUserByName,
   findUserByName,
   getAllUsers,
-  updateLastUsedAt,
+  updateLastLogin,
 } from '../services/userService.js';
 import { broadcast } from '../utils/websocket.js';
 
@@ -26,7 +26,7 @@ export const getMe = (req, res) => {
     user: user.user,
     role: user.role,
     createdAt: user.createdAt,
-    lastUsedAt: user.lastUsedAt,
+    lastLogin: user.lastLogin,
   });
 };
 
@@ -60,7 +60,7 @@ export const loginUser = async (req, res) => {
   if (!isMatch) {
     return res.status(401).json({ error: 'Invalid credentials' });
   }
-  updateLastUsedAt(name);
+  updateLastLogin(name);
   const token = generateToken(name, user.role);
   broadcast('user:login', { user: user.user });
   res.json({ user: user.user, token });
