@@ -1,7 +1,8 @@
 import { existsSync, mkdirSync, copyFileSync } from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'node:url';
 
-const __dirname = new URL('.', import.meta.url).pathname; // Get current directory path
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const source = path.join(__dirname, 'settings.json');
 const destination = path.join(__dirname, '../../../../.vscode/settings.json');
 

@@ -11,3 +11,4 @@
 ## Hints
 - Use `tab` to autocomplete file names
 - Don't forget to use `pwd` to find out where you are
+- Windows users: use Git Bash or PowerShell (both support the same commands)

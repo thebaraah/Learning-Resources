@@ -1,11 +1,12 @@
 import chalk from 'chalk';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { select, confirm } from '@inquirer/prompts';
 import promptSync from 'prompt-sync';
 const prompt = promptSync();
 
-const __dirname = new URL('.', import.meta.url).pathname; // Get current directory path
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const studentServicePath = path.join(__dirname, '../src/services.js');
 const solutionServicePath = path.join(__dirname, '../src/services-solution.js');
 

@@ -4,7 +4,7 @@
   "description": "Web client exercise for the Post Central API",
   "type": "module",
   "scripts": {
-    "reset": "node -e \"require('fs').copyFileSync('src/services/services.starter.js','src/services/services.js')\"",
+    "reset": "node --input-type=commonjs -e \"require('fs').copyFileSync('src/services/services.starter.js','src/services/services.js')\"",
     "test": "vitest run"
   },
   "devDependencies": {

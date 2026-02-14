@@ -12,9 +12,10 @@
 
 import { existsSync } from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-const __dirname = new URL('.', import.meta.url).pathname; // Get current directory path
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const studentFetchersPath = path.join(__dirname, '../src/services.js');
 const solutionFetchersPath = path.join(
   __dirname,
