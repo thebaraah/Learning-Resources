@@ -191,7 +191,7 @@ Returns a sample post with a greeting message. **No authentication required.** T
 {
   "id": 0,
   "user": "post-central",
-  "text": "Hello from Post Central",
+  "text": "Welcome to Post Central!",
   "timestamp": "2024-01-01T00:00:00.000Z"
 }
 ```

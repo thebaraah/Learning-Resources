@@ -17,6 +17,7 @@ const {
   createUser,
   deletePost,
   deleteUser,
+  getHello,
   getPosts,
   loginUser,
   setToken,
@@ -99,7 +100,15 @@ const loginExistingUser = async () => {
  * @returns {Promise<string>} The authenticated username
  */
 const chooseAuthAction = async () => {
-  console.log(chalk.cyan('\nWelcome to Post Central!'));
+  try {
+    const hello = await getHello();
+    console.log(chalk.cyan(`\n${hello.text}`));
+  } catch {
+    console.log(
+      chalk.red('\nCould not connect to the server. Is it running?')
+    );
+    process.exit(1);
+  }
 
   while (true) {
     const choice = await select({

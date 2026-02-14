@@ -4,9 +4,10 @@
   "description": "Fetch & APIs learning exercise for HackYourFuture students",
   "main": "main.js",
   "scripts": {
-    "start": "node src/post-cli.js",
+    "start": "node --watch src/post-cli.js",
     "test": "vitest",
     "test:run": "vitest run",
+    "test:me": "vitest run test-get -t getMe",
     "test:get": "vitest run test-get",
     "test:post": "vitest run test-post",
     "test:crud": "vitest run test-crud",
