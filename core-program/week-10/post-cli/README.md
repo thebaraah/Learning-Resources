@@ -47,7 +47,7 @@ The API uses **JWT (JSON Web Token)** authentication:
 2. Include the token in the `Authorization` header for all protected endpoints
 3. Header format: `Authorization: Bearer <your-token>`
 
-The `authHeaders()` helper function in `services.js` builds the correct headers for you.
+Build the correct headers inline for each request: `Authorization: Bearer <your-token>`
 
 ### Endpoints
 
@@ -89,10 +89,12 @@ The `authHeaders()` helper function in `services.js` builds the correct headers 
 - Learn about `fetch()`, `response.ok`, and `response.json()`
 - Understand HTTP status codes
 - Learn about the `Authorization` header
+- Note: `createUser()` is already implemented — use the CLI to register and get a token before testing
 
 ### Stage 2: POST with Body (15 min)
 
-- Implement `createUser()` and `loginUser()` functions
+- Study the provided `createUser()` implementation as a reference
+- Implement `loginUser()` following the same pattern
 - Learn about request methods, headers, and body
 - Understand `Content-Type: application/json`
 - Learn the difference between public and protected endpoints

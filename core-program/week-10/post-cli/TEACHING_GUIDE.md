@@ -92,11 +92,11 @@ const getHello = async () => {
 **Learning Goal:** Basic fetch, response handling, JSON parsing, Authorization header
 
 1. Open `services.js`
-2. Show the provided `authHeaders()` helper and explain what it does
+2. Show how to build the Authorization header inline: `` `Authorization: `Bearer ${getToken()}` ``
 3. Live code the `getMe()` function together:
    - Show `fetch()` syntax (works in Node.js 18+ without additional packages)
    - Explain `await` and why it's needed
-   - Show how to pass `{ headers: authHeaders() }` as the second argument
+   - Show how to pass an options object with `headers` containing both `Content-Type` and `Authorization`
    - Check `response.ok`
    - Call `response.json()`
 4. Students implement in pairs (5 min)
@@ -115,7 +115,7 @@ const getHello = async () => {
 
 **Learning Goal:** Request methods, headers, body, public vs protected endpoints
 
-1. Live code `createUser()` together:
+1. Walk through the provided `createUser()` implementation:
    - Show the options object
    - Explain `method: 'POST'`
    - Emphasize `Content-Type` header importance
@@ -177,7 +177,7 @@ Keep it simple for trainees:
 - **What is a token?** A string that proves who you are, like a wristband at a concert
 - **How do you get one?** Register or login with your name and password
 - **How do you use it?** Send it in the `Authorization` header with every request
-- **The `authHeaders()` helper** does the work of building the correct headers for you
+- **The Authorization header** is built inline: `` `Authorization: `Bearer ${getToken()}` ``
 - **Public endpoints** (register, login, `/posts/hello`) don't need a token - you haven't logged in yet!
 
 ### Demonstrations
@@ -269,7 +269,7 @@ Error: fetch failed
 Failed to get user info: HTTP 401 Unauthorized
 ```
 
-**Fix:** Make sure `authHeaders()` is used instead of just `{ 'Content-Type': 'application/json' }`. Check that `setToken()` was called after login/register.
+**Fix:** Make sure the `Authorization` header is included: `` `Authorization: `Bearer ${getToken()}` ``. Check that `setToken()` was called after login/register.
 
 ### Module Import Errors
 

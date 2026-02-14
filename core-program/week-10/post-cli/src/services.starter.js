@@ -53,7 +53,7 @@ const getMe = async () => {
 };
 
 // ============================================================================
-// STAGE 2: POST REQUEST - Send data to the server
+// STAGE 2: POST REQUEST - createUser() is provided as a reference. Implement loginUser().
 // ============================================================================
 
 /**
@@ -63,7 +63,19 @@ const getMe = async () => {
  * Response: { user: string, token: string }
  */
 const createUser = async (name, password) => {
-  // TODO
+  const response = await fetch(`${BASE_URL}/users/register`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ name, password }),
+  });
+  if (!response.ok) {
+    throw new Error(
+      `Failed to create user: HTTP ${response.status} ${response.statusText}`
+    );
+  }
+  return await response.json();
 };
 
 /**
