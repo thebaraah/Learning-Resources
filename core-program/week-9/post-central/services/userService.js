@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import fs from 'fs';
 import path from 'path';
+4;
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -31,6 +32,7 @@ if (!users) {
     {
       user: 'admin',
       password: adminPassword,
+      role: 'admin',
       createdAt: '2024-01-01T00:00:00.000Z',
       lastUsedAt: '2024-01-01T00:00:00.000Z',
     },
@@ -39,8 +41,9 @@ if (!users) {
 }
 
 export const getAllUsers = () =>
-  users.map(({ user, createdAt, lastUsedAt }) => ({
+  users.map(({ user, role, createdAt, lastUsedAt }) => ({
     user,
+    role,
     createdAt,
     lastUsedAt,
   }));
@@ -52,12 +55,13 @@ export const createUser = (name, hashedPassword) => {
   const newUser = {
     user: name,
     password: hashedPassword,
+    role: 'user',
     createdAt: now,
     lastUsedAt: now,
   };
   users.push(newUser);
   saveUsers();
-  return { user: name, createdAt: now, lastUsedAt: now };
+  return { user: name, role: 'user', createdAt: now, lastUsedAt: now };
 };
 
 export const updateLastUsedAt = (name) => {

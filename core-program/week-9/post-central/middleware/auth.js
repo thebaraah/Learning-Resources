@@ -10,7 +10,7 @@ export const authenticate = (req, res, next) => {
   const token = authHeader.split(' ')[1];
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = { user: decoded.user };
+    req.user = { user: decoded.user, role: decoded.role };
     next();
   } catch {
     return res.status(401).json({ error: 'Invalid or expired token' });

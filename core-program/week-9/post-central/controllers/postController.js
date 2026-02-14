@@ -55,7 +55,7 @@ export const deletePost = (req, res) => {
   if (!post) {
     return res.status(404).json({ error: 'Post not found' });
   }
-  if (post.user !== req.user.user) {
+  if (post.user !== req.user.user && req.user.role !== 'admin') {
     return res
       .status(403)
       .json({ error: 'You can only delete your own posts' });
