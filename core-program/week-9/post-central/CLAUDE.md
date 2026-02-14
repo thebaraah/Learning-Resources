@@ -1,4 +1,4 @@
-# claude.md
+# CLAUDE.md
 
 This is an educational app used during HackYourFuture classroom sessions to teach trainees how to use REST APIs. The trainees are the API consumers.
 

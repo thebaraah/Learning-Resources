@@ -1,4 +1,4 @@
-# claude.md
+# CLAUDE.md
 
 This is a HackYourFuture educational repo. Our students are referred to as "trainees". Avoid the use of the word "student".
 
