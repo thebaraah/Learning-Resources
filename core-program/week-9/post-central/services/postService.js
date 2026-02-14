@@ -34,6 +34,15 @@ export const findPostById = (id) => posts.find((p) => p.id === parseInt(id));
 export const getPostsByUser = (username) =>
   posts.filter((p) => p.user === username);
 
+export const deletePostsByUser = (username) => {
+  for (let i = posts.length - 1; i >= 0; i--) {
+    if (posts[i].user === username) {
+      posts.splice(i, 1);
+    }
+  }
+  savePosts();
+};
+
 export const createPost = (username, text) => {
   const post = {
     id: generatePostId(),

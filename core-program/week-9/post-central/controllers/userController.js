@@ -8,6 +8,7 @@ import {
   getAllUsers,
   updateLastLogin,
 } from '../services/userService.js';
+import { deletePostsByUser } from '../services/postService.js';
 import { broadcast } from '../utils/websocket.js';
 
 const generateToken = (username, role) =>
@@ -78,6 +79,7 @@ export const deleteUser = (req, res) => {
     return res.status(404).json({ error: 'User not found' });
   }
 
+  deletePostsByUser(req.user.user);
   broadcast('user:delete', { ...user, message: 'User deleted' });
   res.json({ ...user, message: 'User deleted' });
 };
@@ -97,6 +99,7 @@ export const deleteUserByAdmin = (req, res) => {
   }
 
   const user = deleteUserByName(name);
+  deletePostsByUser(name);
   broadcast('user:delete', { ...user, message: 'User deleted by admin' });
   res.json({ ...user, message: 'User deleted by admin' });
 };
