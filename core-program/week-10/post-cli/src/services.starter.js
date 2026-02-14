@@ -25,6 +25,21 @@ const setToken = (token) => {
 const getToken = () => authToken;
 
 // ============================================================================
+// STAGE 0: Hello Endpoint - Verify your setup works (no auth needed!)
+// ============================================================================
+
+/**
+ * Get a hello message from Post Central
+ * Method: GET | Endpoint: /posts/hello | Auth: No
+ * Response: { id: number, user: string, text: string, timestamp: string }
+ *
+ * Tip: This needs no headers at all - just fetch the URL!
+ */
+const getHello = async () => {
+  // TODO
+};
+
+// ============================================================================
 // STAGE 1: GET REQUEST - Read data from the server
 // ============================================================================
 
@@ -121,6 +136,7 @@ export {
   createUser,
   deletePost,
   deleteUser,
+  getHello,
   getMe,
   getPosts,
   getToken,

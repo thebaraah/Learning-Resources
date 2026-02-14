@@ -79,6 +79,7 @@ Here is a summary:
 
 | Function       | Method   | URL              | Auth   | Request Body       |
 | -------------- | -------- | ---------------- | ------ | ------------------ |
+| `getHello`     | `GET`    | `/posts/hello`   | No     | —                  |
 | `login`        | `POST`   | `/users/login`   | No     | `{ name, password }` |
 | `register`     | `POST`   | `/users/register`| No     | `{ name, password }` |
 | `getProfile`   | `GET`    | `/users/me`      | Bearer | —                  |

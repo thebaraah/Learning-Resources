@@ -6,6 +6,7 @@ import {
   deleteUserByName,
   findUserByName,
   getAllUsers,
+  updateLastUsedAt,
 } from '../services/userService.js';
 import { broadcast } from '../utils/websocket.js';
 
@@ -21,7 +22,11 @@ export const getMe = (req, res) => {
   if (!user) {
     return res.status(404).json({ error: 'User not found' });
   }
-  res.json({ user: user.user });
+  res.json({
+    user: user.user,
+    createdAt: user.createdAt,
+    lastUsedAt: user.lastUsedAt,
+  });
 };
 
 export const registerUser = async (req, res) => {
@@ -54,6 +59,7 @@ export const loginUser = async (req, res) => {
   if (!isMatch) {
     return res.status(401).json({ error: 'Invalid credentials' });
   }
+  updateLastUsedAt(name);
   const token = generateToken(name);
   broadcast('user:login', { user: user.user });
   res.json({ user: user.user, token });

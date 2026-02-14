@@ -27,20 +27,45 @@ const saveUsers = () => {
 let users = loadUsers();
 if (!users) {
   const adminPassword = await bcrypt.hash('admin', 10);
-  users = [{ user: 'admin', password: adminPassword }];
+  users = [
+    {
+      user: 'admin',
+      password: adminPassword,
+      createdAt: '2024-01-01T00:00:00.000Z',
+      lastUsedAt: '2024-01-01T00:00:00.000Z',
+    },
+  ];
   saveUsers();
 }
 
 export const getAllUsers = () =>
-  users.map(({ user }) => ({ user }));
+  users.map(({ user, createdAt, lastUsedAt }) => ({
+    user,
+    createdAt,
+    lastUsedAt,
+  }));
 
 export const findUserByName = (name) => users.find((u) => u.user === name);
 
 export const createUser = (name, hashedPassword) => {
-  const newUser = { user: name, password: hashedPassword };
+  const now = new Date().toISOString();
+  const newUser = {
+    user: name,
+    password: hashedPassword,
+    createdAt: now,
+    lastUsedAt: now,
+  };
   users.push(newUser);
   saveUsers();
-  return { user: name };
+  return { user: name, createdAt: now, lastUsedAt: now };
+};
+
+export const updateLastUsedAt = (name) => {
+  const user = users.find((u) => u.user === name);
+  if (user) {
+    user.lastUsedAt = new Date().toISOString();
+    saveUsers();
+  }
 };
 
 export const deleteUserByName = (name) => {

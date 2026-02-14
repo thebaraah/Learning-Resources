@@ -1,4 +1,17 @@
 /**
+ * Get a hello message from Post Central (no auth required).
+ * @returns {Promise<{id: number, user: string, text: string, timestamp: string}>} The hello post
+ * @throws {Error} With a `status` property (HTTP status code) on failure
+ *
+ * API endpoint: GET /posts/hello
+ */
+export async function getHello() {
+  const error = new Error('Not implemented');
+  error.status = 501;
+  throw error;
+}
+
+/**
  * Register a new user.
  * @param {string} name - The desired username
  * @param {string} password - The desired password

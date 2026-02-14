@@ -51,7 +51,10 @@ Register a new user. Returns a JWT token.
 **Response body (success):**
 
 ```json
-{ "user": "alice", "token": "eyJhbGciOiJIUzI1NiIs..." }
+{
+  "user": "alice",
+  "token": "eyJhbGciOiJIUzI1NiIs..."
+}
 ```
 
 ---
@@ -78,14 +81,17 @@ Log in with an existing account. Returns a JWT token.
 **Response body (success):**
 
 ```json
-{ "user": "alice", "token": "eyJhbGciOiJIUzI1NiIs..." }
+{
+  "user": "alice",
+  "token": "eyJhbGciOiJIUzI1NiIs..."
+}
 ```
 
 ---
 
 #### `GET /users`
 
-Returns a list of all registered users (usernames only). **Requires authentication.**
+Returns a list of all registered users. **Requires authentication.**
 
 **Headers:**
 
@@ -104,8 +110,16 @@ Returns a list of all registered users (usernames only). **Requires authenticati
 
 ```json
 [
-  { "user": "admin" },
-  { "user": "alice" }
+  {
+    "user": "admin",
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "lastUsedAt": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "user": "alice",
+    "createdAt": "2025-06-15T10:30:00.000Z",
+    "lastUsedAt": "2025-06-15T12:00:00.000Z"
+  }
 ]
 ```
 
@@ -132,7 +146,11 @@ Get the authenticated user's information. **Requires authentication.**
 **Response body (success):**
 
 ```json
-{ "user": "alice" }
+{
+  "user": "alice",
+  "createdAt": "2025-06-15T10:30:00.000Z",
+  "lastUsedAt": "2025-06-15T12:00:00.000Z"
+}
 ```
 
 ---
@@ -159,7 +177,30 @@ Delete the authenticated user's account. **Requires authentication.**
 
 ### Posts
 
-All post endpoints **require authentication**. Include the `Authorization: Bearer <token>` header with every request.
+Most post endpoints **require authentication**. The exception is `GET /posts/hello`, which is public and a good starting point. Include the `Authorization: Bearer <token>` header with all other requests.
+
+#### `GET /posts/hello`
+
+Returns a sample post with a greeting message. **No authentication required.** This is a good first endpoint to try.
+
+**Responses:**
+
+| Status   | Description         |
+|----------|---------------------|
+| `200 OK` | A sample hello post |
+
+**Response body:**
+
+```json
+{
+  "id": 0,
+  "user": "post-central",
+  "text": "Hello from Post Central",
+  "timestamp": "2024-01-01T00:00:00.000Z"
+}
+```
+
+---
 
 #### `GET /posts/me`
 
@@ -176,7 +217,12 @@ Get all posts created by the authenticated user.
 
 ```json
 [
-  { "id": 1, "user": "alice", "text": "Hello world!", "timestamp": "2024-01-01T00:00:00.000Z" }
+  {
+    "id": 1,
+    "user": "alice",
+    "text": "Hello world!",
+    "timestamp": "2024-01-01T00:00:00.000Z"
+  }
 ]
 ```
 
@@ -203,7 +249,11 @@ Create a new post.
 **Response body (success):**
 
 ```json
-{ "id": 1, "user": "alice", "text": "Hello world!" }
+{
+  "id": 1,
+  "user": "alice",
+  "text": "Hello world!"
+}
 ```
 
 ---
@@ -264,7 +314,10 @@ The server also runs a WebSocket server on the same port. Clients receive real-t
 **Message format:**
 
 ```json
-{ "type": "<event>", "data": { ... } }
+{
+  "type": "<event>",
+  "data": { ... }
+}
 ```
 
 **Event types:**

@@ -55,7 +55,8 @@ The `authHeaders()` helper function in `services.js` builds the correct headers 
 | ------ | ----------------- | ------------- | ------------------------------------- | -------------------------------------------- |
 | POST   | `/users/register` | No            | `{ name: string, password: string }`  | `{ user: string, token: string }`            |
 | POST   | `/users/login`    | No            | `{ name: string, password: string }`  | `{ user: string, token: string }`            |
-| GET    | `/users/me`       | Yes           | -                                     | `{ user: string }`                           |
+| GET    | `/posts/hello`    | No            | -                                     | `{ id: number, user: string, text: string, timestamp: string }` |
+| GET    | `/users/me`       | Yes           | -                                     | `{ user: string, createdAt: string, lastUsedAt: string }` |
 | DELETE | `/users/me`       | Yes           | -                                     | No content                                   |
 | GET    | `/posts/me`       | Yes           | -                                     | `Array of posts`                             |
 | POST   | `/posts`          | Yes           | `{ text: string }`                    | `{ id: number, text: string, user: string }` |
@@ -75,6 +76,13 @@ The `authHeaders()` helper function in `services.js` builds the correct headers 
 - **500 Internal Server Error** - Server error
 
 ## Exercise Structure
+
+### Stage 0: Hello Endpoint - Verify Setup (5 min)
+
+- Implement `getHello()` function
+- Verify your `BASE_URL` is correct and the server is reachable
+- Learn the basic structure of a `fetch()` call with no headers needed
+- See what a post object looks like before touching authentication
 
 ### Stage 1: Simple GET Request (15 min)
 
@@ -137,7 +145,8 @@ npm run test:run
 3. Read error messages carefully - they tell you what's wrong
 4. Use `console.log()` to inspect responses during development
 5. Check the API documentation when unsure about request format
-6. Remember: `register` and `login` don't need an Authorization header, but everything else does!
-7. Don't hesitate to ask your lecturer for help
+6. `getHello()` needs no Authorization header — start there to verify your BASE_URL!
+7. Remember: `register` and `login` don't need an Authorization header, but everything else does!
+8. Don't hesitate to ask your lecturer for help
 
 Good luck!

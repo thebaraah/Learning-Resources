@@ -1,4 +1,22 @@
 /**
+ * Get a hello message from Post Central (no auth required).
+ * @returns {Promise<{id: number, user: string, text: string, timestamp: string}>} The hello post
+ * @throws {Error} With a `status` property (HTTP status code) on failure
+ *
+ * API endpoint: GET /posts/hello
+ */
+export async function getHello() {
+  const response = await fetch('/posts/hello');
+  const data = await response.json();
+  if (!response.ok) {
+    const error = new Error(data.error || response.statusText);
+    error.status = response.status;
+    throw error;
+  }
+  return data;
+}
+
+/**
  * Log in a user.
  * @param {string} name - The username
  * @param {string} password - The password

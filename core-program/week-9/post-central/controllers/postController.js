@@ -7,6 +7,15 @@ import {
 } from '../services/postService.js';
 import { broadcast } from '../utils/websocket.js';
 
+export const getHello = (_req, res) => {
+  res.json({
+    id: 0,
+    user: 'post-central',
+    text: 'Hello from Post Central',
+    timestamp: '2024-01-01T00:00:00.000Z',
+  });
+};
+
 export const getMyPosts = (req, res) => {
   const posts = getPostsByUser(req.user.user);
   res.json(posts);

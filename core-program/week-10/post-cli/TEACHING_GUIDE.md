@@ -44,6 +44,7 @@ Since the `localhost` address will not work from their machines, your trainees w
 - [ ] Ensure Post Central API server is running on the teacher's computer.
 - [ ] Copy the `services-solution.js` file from the TBC to the `src` folder. This will be used for demonstration purposes. Trainees will complete the `services.js` file on their own.
 - [ ] Ensure trainees have the Learning Resources repository available on their machines. This should have already have cloned it last week.
+- [ ] Verify trainees can reach the server by having them open `http://<IP>:3000/posts/hello` in a browser
 - [ ] Verify npm packages are installed (`npm install`)
 
 ### Introduction (5 min)
@@ -53,6 +54,38 @@ Since the `localhost` address will not work from their machines, your trainees w
 - Explain we'll build the same functionality with JavaScript fetch in a Node.js CLI application
 - Briefly explain JWT authentication: "A token is like a wristband at a concert - you get it at the door (login), and show it to access different areas (endpoints)"
 - Demonstrate running the solution with `npm start` with the `fetchers-solution.js` file copied to the `src` folder.
+
+### Stage 0: Hello Endpoint - Verify Setup (5 min)
+
+**Learning Goal:** Confirm BASE_URL is correct, understand the basic fetch() call, see a post object
+
+1. Open `services.js`
+2. Implement `getHello()` together as a class:
+   - Use `fetch()` with no options object at all — just a URL
+   - Call `response.json()`
+   - Return the result
+3. Run `npm start` — the CLI should print the hello post
+4. This confirms the server is reachable before touching authentication
+
+**Code (write together):**
+
+```js
+const getHello = async () => {
+  const response = await fetch(`${BASE_URL}/posts/hello`);
+  if (!response.ok) {
+    throw new Error(
+      `Failed to get hello: HTTP ${response.status} ${response.statusText}`
+    );
+  }
+  return await response.json();
+};
+```
+
+**Why this matters:**
+
+- Trainees get a working fetch call before auth complexity
+- Confirms `BASE_URL` is set correctly (common failure point)
+- Shows what a real post object looks like
 
 ### Stage 1: GET Request (15 min)
 
@@ -145,7 +178,7 @@ Keep it simple for trainees:
 - **How do you get one?** Register or login with your name and password
 - **How do you use it?** Send it in the `Authorization` header with every request
 - **The `authHeaders()` helper** does the work of building the correct headers for you
-- **Public endpoints** (register, login) don't need a token - you haven't logged in yet!
+- **Public endpoints** (register, login, `/posts/hello`) don't need a token - you haven't logged in yet!
 
 ### Demonstrations
 
