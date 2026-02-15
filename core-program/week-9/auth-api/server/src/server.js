@@ -1,12 +1,13 @@
 import express from 'express';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 import AuthService from './auth-service.js';
 import { requestLogger, responseLogger } from './middleware.js';
 import UserController from './user-controller.js';
 import UserService from './user-service.js';
 
-const __dirname = import.meta.dirname;
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 function start(app) {
   const userService = new UserService();

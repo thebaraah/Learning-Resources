@@ -5,7 +5,7 @@ post-central/
 │
 ├── README.md                    # Main documentation, API reference, learning objectives
 ├── TEACHING_GUIDE.md            # For lecturers: session structure, tips, troubleshooting
-├── QUICK_REFERENCE.md           # Student cheat sheet for fetch syntax
+├── QUICK_REFERENCE.md           # Trainee cheat sheet for fetch syntax
 ├── IMPLEMENTATION_SUMMARY.md    # Overview of the implementation
 ├── PROJECT_STRUCTURE.md         # This file
 │
@@ -16,7 +16,7 @@ post-central/
 │
 ├── src/                         # Source code
 │   ├── post-cli.js              # Interactive CLI application entry point
-│   ├── services.js              # Student working file with API functions to implement
+│   ├── services.js              # Trainee working file with API functions to implement
 │   └── fetchers-solution.js     # Complete reference implementation
 │
 ├── curl/                        # cURL examples for comparison
@@ -37,7 +37,7 @@ post-central/
 
 ## File Purposes
 
-### For Students
+### For Trainees
 
 - **README.md** - Start here! Complete guide to the exercise
 - **QUICK_REFERENCE.md** - Keep this open while coding
@@ -53,8 +53,8 @@ post-central/
 
 ### Key Files Explained
 
-- **src/post-cli.js** - Interactive CLI entry point with register/login flow, imports student functions
-- **src/services.js** - Students implement API functions here (token management provided, API functions are TODOs)
+- **src/post-cli.js** - Interactive CLI entry point with register/login flow, imports trainee functions
+- **src/services.js** - Trainees implement API functions here (token management provided, API functions are TODOs)
 - **src/fetchers-solution.js** - Complete API function implementations with JWT auth
 
 ## Available Commands

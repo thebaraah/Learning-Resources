@@ -99,7 +99,7 @@ const getHello = async () => {
    - Show how to pass an options object with `headers` containing both `Content-Type` and `Authorization`
    - Check `response.ok`
    - Call `response.json()`
-4. Students implement in pairs (5 min)
+4. Trainees implement in pairs (5 min)
 5. Test together using `npm run test:get`
    - Show Vitest output in the terminal
    - Explain the test assertions (including Authorization header checks)
@@ -122,7 +122,7 @@ const getHello = async () => {
    - Show `JSON.stringify()` for body (now includes `{ name, password }`)
    - Highlight that register and login are **public endpoints** (no Authorization header needed)
 2. Live code `loginUser()` (similar pattern, different endpoint)
-3. Students implement in pairs (7 min)
+3. Trainees implement in pairs (7 min)
 4. Test together using `npm run test:post`
    - Show how tests verify the response includes a `token`
    - Explain the token flow: register/login → get token → use token
@@ -141,7 +141,7 @@ const getHello = async () => {
 1. Quick demo of solution app (3 min)
    - Run `npm start` to show the interactive CLI
    - Show the register → login → create/view/update/delete flow
-2. Students implement remaining functions:
+2. Trainees implement remaining functions:
    - `getPosts()` (GET with auth header)
    - `createPost()` (POST with auth header)
    - `updatePost()` (new: PUT method with auth header)
@@ -150,7 +150,7 @@ const getHello = async () => {
 3. Test with `npm run test:crud`
 4. Show Vitest watch mode: `npm test`
 
-**Extension Tasks for Fast Students:**
+**Extension Tasks for Fast Trainees:**
 
 - Display posts with formatting
 - Add error handling for network failures
@@ -236,14 +236,14 @@ When trainees get stuck:
 
 ### Differentiation
 
-**For Struggling Students:**
+**For Struggling Trainees:**
 
 - Pair with stronger trainees
 - Focus on GET and POST only
 - Provide more scaffolding (fill-in-the-blanks)
 - Use test files to verify each step
 
-**For Advanced Students:**
+**For Advanced Trainees:**
 
 - Implement all CRUD operations
 - Add query parameters for filtering
@@ -256,7 +256,7 @@ When trainees get stuck:
 ### API Server Not Running
 
 ```bash
-# Students will see fetch errors
+# Trainees will see fetch errors
 Error: fetch failed
   cause: Error: connect ECONNREFUSED 127.0.0.1:3000
 ```
@@ -291,7 +291,7 @@ SyntaxError: Unexpected token < in JSON
 
 ### Quick Checks
 
-- Can student explain what `fetch()` does?
+- Can trainee explain what `fetch()` does?
 - Can they identify the HTTP method from code?
 - Can they spot missing headers?
 - Can they explain the difference between public and protected endpoints?
@@ -311,7 +311,7 @@ SyntaxError: Unexpected token < in JSON
 - Check for code duplication
 - Verify Authorization headers are included where needed
 
-## Resources for Students
+## Resources for Trainees
 
 - MDN fetch API: <https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API>
 - HTTP status codes: <https://httpstatuses.com/>
