@@ -1,28 +1,57 @@
-export default class PostsView {
+export default class DashboardView {
   #container;
-  #state;
+  #postsContainer;
+  #connectionStatusElement;
   #timestampUpdateInterval;
+  #lastState;
 
-  constructor(container, state) {
+  constructor(container) {
     this.#container = container;
-    this.#state = state;
-    this.#state.subscribe(this);
+    this.#postsContainer = container.querySelector('#posts-container');
+    this.#connectionStatusElement = container.querySelector(
+      '#connection-status'
+    );
 
-    // Update timestamps every minute
     this.#timestampUpdateInterval = setInterval(() => {
-      this.render(this.#state.get());
+      if (this.#lastState) {
+        this.#render(this.#lastState);
+      }
     }, 60000);
   }
 
   update(state) {
-    this.render(state);
+    this.#lastState = state;
+    this.#render(state);
   }
 
-  render(state) {
+  #render(state) {
+    this.#renderConnectionStatus(state.connectionStatus);
+    this.#renderPosts(state);
+  }
+
+  #renderConnectionStatus(status) {
+    const indicator = this.#connectionStatusElement.querySelector(
+      '.status-indicator'
+    );
+    const text = this.#connectionStatusElement.querySelector('.status-text');
+
+    indicator.className = 'status-indicator';
+
+    if (status === 'connected') {
+      indicator.classList.add('connected');
+      text.textContent = 'Connected';
+    } else if (status === 'disconnected') {
+      indicator.classList.add('disconnected');
+      text.textContent = 'Disconnected';
+    } else {
+      text.textContent = 'Connecting...';
+    }
+  }
+
+  #renderPosts(state) {
     const posts = state.posts || [];
     const lastAction = state.lastAction;
 
-    // Show notification for user registration
     if (
       lastAction &&
       ['user:register', 'user:login'].includes(lastAction.type)
@@ -31,20 +60,17 @@ export default class PostsView {
         `${lastAction.user.user} joined Post Central`,
         'user-joined'
       );
-      this.#state.update({ lastAction: null });
     }
 
-    // Show notification for user deletion
     if (lastAction && lastAction.type === 'user:delete') {
       this.#showNotification(
         `${lastAction.user.user} left Post Central`,
         'user-left'
       );
-      this.#state.update({ lastAction: null });
     }
 
     if (posts.length === 0) {
-      this.#container.innerHTML = `
+      this.#postsContainer.innerHTML = `
         <div class="posts-empty">
           No posts yet. Waiting for new posts...
         </div>
@@ -52,21 +78,9 @@ export default class PostsView {
       return;
     }
 
-    this.#container.innerHTML = posts
+    this.#postsContainer.innerHTML = posts
       .map((post) => this.#renderPost(post))
       .join('');
-
-    // Clear isNew flags after animation completes
-    const newPosts = posts.filter((post) => post.isNew);
-    if (newPosts.length > 0) {
-      setTimeout(() => {
-        const currentState = this.#state.get();
-        const updatedPosts = currentState.posts.map((post) =>
-          post.isNew ? { ...post, isNew: false } : post
-        );
-        this.#state.update({ posts: updatedPosts });
-      }, 2000);
-    }
   }
 
   #renderPost(post) {
@@ -134,12 +148,10 @@ export default class PostsView {
     notification.className = `notification ${notificationType}`;
     notification.textContent = message;
 
-    this.#container.insertAdjacentElement('beforebegin', notification);
+    this.#postsContainer.insertAdjacentElement('beforebegin', notification);
 
-    // Auto-remove notification after 5 seconds
     setTimeout(() => {
       notification.classList.add('fade-out');
-      // Remove from DOM after fade-out animation completes
       setTimeout(() => {
         notification.remove();
       }, 500);
@@ -147,7 +159,6 @@ export default class PostsView {
   }
 
   destroy() {
-    this.#state.unsubscribe(this);
     if (this.#timestampUpdateInterval) {
       clearInterval(this.#timestampUpdateInterval);
     }

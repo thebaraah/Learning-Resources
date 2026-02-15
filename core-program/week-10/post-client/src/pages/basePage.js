@@ -26,6 +26,7 @@ export default class BasePage {
 
   pageDidMount() {
     this.#state.subscribe(this.#view);
+    this.#view.update(this.#state.get());
   }
 
   pageWillUnmount() {

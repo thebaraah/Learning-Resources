@@ -3,7 +3,7 @@ export default class ObservableState {
   #subscribers = new Set();
 
   #notify() {
-    console.log('State updated:', this.#state);
+    console.log(this.#state);
 
     this.#subscribers.forEach((subscriber) => {
       subscriber.update({ ...this.#state });
