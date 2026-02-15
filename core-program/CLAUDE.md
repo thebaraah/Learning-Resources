@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+**Scope:** These instructions apply to `week-9/` and `week-10/` only. Other folders may have their own CLAUDE.md files with different conventions.
+
 ## About this repo
 
 HackYourFuture (HYF) is an educational organization that trains refugees and displaced people for tech careers. This repository contains learning resources for the **core program** of the HYF curriculum. Trainees typically have no prior programming experience.
@@ -35,7 +37,7 @@ week-10/    Promises, async/await & fetch()
 - **`week-10/post-cli/`** — CLI client assignment where trainees implement `fetch()` calls against post-central
 - **`week-10/post-client/`** — Web client assignment where trainees implement service functions against post-central
 
-Both week-10 clients depend on post-central running at `http://localhost:3000`.
+  Both week-10 clients depend on post-central running at `http://localhost:3000`.
 
 ## Commands
 
