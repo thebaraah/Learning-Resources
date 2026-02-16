@@ -5,6 +5,8 @@ export default class DashboardPage {
   #state;
   #view;
   #wsClient;
+  #audioCtx;
+  #pingBuffer;
 
   constructor({ state, container }) {
     this.#state = state;
@@ -25,6 +27,18 @@ export default class DashboardPage {
       onMessage: (message) => this.#handleMessage(message),
       onStatusChange: (status) => state.update({ connectionStatus: status }),
     });
+
+    // Create AudioContext early; browsers suspend it until a user gesture
+    this.#audioCtx = new AudioContext();
+    this.#showAudioBanner();
+
+    // Pre-load notification sound
+    fetch('/portal/public/notification.wav')
+      .then((res) => res.arrayBuffer())
+      .then((buf) => this.#audioCtx.decodeAudioData(buf))
+      .then((decoded) => {
+        this.#pingBuffer = decoded;
+      });
   }
 
   mount() {
@@ -36,6 +50,7 @@ export default class DashboardPage {
   destroy() {
     this.#state.unsubscribe(this.#view);
     this.#wsClient.disconnect();
+    this.#audioCtx.close();
     this.#view.destroy();
   }
 
@@ -80,6 +95,36 @@ export default class DashboardPage {
       lastAction: { type: 'post:create', post: postWithTimestamp },
     });
     queueMicrotask(() => this.#state.update({ lastAction: null }));
+
+    if (post.user === 'admin' && post.isNew !== false) {
+      this.#playPing();
+    }
+  }
+
+  #playPing() {
+    const ctx = this.#audioCtx;
+    if (ctx.state === 'suspended' || !this.#pingBuffer) return;
+
+    const source = ctx.createBufferSource();
+    source.buffer = this.#pingBuffer;
+    source.connect(ctx.destination);
+    source.start();
+  }
+
+  #showAudioBanner() {
+    const banner = document.createElement('div');
+    banner.className = 'audio-banner';
+    banner.innerHTML =
+      '<span>Click to enable notification sounds for admin posts</span>' +
+      '<button class="audio-banner-dismiss" aria-label="Dismiss">&times;</button>';
+
+    banner.addEventListener('click', () => {
+      this.#audioCtx.resume();
+      banner.remove();
+    });
+
+    const header = document.querySelector('.header');
+    header.insertAdjacentElement('afterend', banner);
   }
 
   #handlePostUpdate(updatedPost) {

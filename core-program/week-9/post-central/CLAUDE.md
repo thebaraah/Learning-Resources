@@ -68,7 +68,7 @@ Routes → controllers → services pattern. Services read/write JSON files dire
 ## Key guardrails
 
 - **README.md is trainee-facing** — never expose admin credentials or internal details there
-- **Config values are intentionally hardcoded** in `config/constants.js` (JWT secret, port, expiry) — this is fine for an educational app; don't add `.env` or dotenv
+- **Config values are intentionally hardcoded** in `config/constants.js` (JWT secret, port, expiry) — this is fine for an educational app. **Exception:** the admin seed password is read from `process.env.ADMIN_PASSWORD` (loaded via dotenv) with fallback to `'admin'`
 - **Admin is hidden from `GET /users`** — the controller filters out admin users; preserve this behavior
 - **No database** — persistence is JSON files in `data/`; don't introduce a database
 - **Keep it simple and beginner-friendly** — avoid over-engineering, complex abstractions, or advanced patterns that would confuse trainees reading the code

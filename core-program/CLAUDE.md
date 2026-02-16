@@ -83,7 +83,7 @@ npm test           # run vitest tests
 ## Key architectural decisions
 
 - **No database** — persistence is file-based JSON in `data/` directories. Don't introduce a database.
-- **Config values are intentionally hardcoded** (JWT secret, port, expiry in `config/constants.js`) — don't add `.env` or dotenv. This is fine for an educational app.
+- **Config values are intentionally hardcoded** (JWT secret, port, expiry in `config/constants.js`) — this is fine for an educational app. **Exception:** the admin seed password is read from `process.env.ADMIN_PASSWORD` (loaded via dotenv) with fallback to `'admin'`.
 - **Routes → controllers → services** pattern in post-central.
 - **Admin account** (username: `admin`, password: `admin`) is auto-seeded on first run. Admin is hidden from `GET /users` — preserve this behavior.
 

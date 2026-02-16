@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt';
 import fs from 'fs';
 import path from 'path';
-4;
 import { fileURLToPath } from 'url';
+import { ADMIN_PASSWORD } from '../config/constants.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_FILE = path.join(__dirname, '..', 'data', 'users.json');
@@ -27,7 +27,7 @@ const saveUsers = () => {
 // Load from file, or seed with default admin
 let users = loadUsers();
 if (!users) {
-  const adminPassword = await bcrypt.hash('admin', 10);
+  const adminPassword = await bcrypt.hash(ADMIN_PASSWORD, 10);
   users = [
     {
       user: 'admin',

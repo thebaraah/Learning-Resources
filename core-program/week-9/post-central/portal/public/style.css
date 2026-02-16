@@ -230,6 +230,30 @@ body {
   }
 }
 
+/* Audio Banner */
+.audio-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff8e1;
+  border-bottom: 1px solid #ffe082;
+  font-size: 14px;
+  color: #5d4037;
+  cursor: pointer;
+  animation: slideIn 0.3s ease-out;
+}
+
+.audio-banner-dismiss {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #5d4037;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+}
+
 /* Responsive */
 @media (max-width: 600px) {
   .container {
