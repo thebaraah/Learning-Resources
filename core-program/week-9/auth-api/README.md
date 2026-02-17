@@ -1,6 +1,18 @@
-# Auth API
+# Exercise: Authentication
 
-## Getting started
+In this exercise, you will walk through a simple authentication flow using a pre-made backend and Postman.
+
+You will:
+
+- Register a user
+- Log in and get an authentication token
+- Use the token to access a protected endpoint
+- Log out
+- Try some requests that should fail
+
+---
+
+## 1. Start the backend
 
 Go to the `auth-api/server` folder and run:
 
@@ -14,61 +26,83 @@ Start the server:
 npm start
 ```
 
-The server listens on `http://localhost:3000`.
+The server listens on `http://localhost:3000`. Continue once the server is running.
 
-## Authentication
+---
 
-- JWT signed with a secret key, expires after 1 hour.
-- Send tokens with `Authorization: Bearer <token>`.
+## 2. Register a user
 
-> Important: For simplicity, this demo API comes with a hardcoded "secret" in `server.js` for signing and verifying JSON webtokens. See the section at the bottom of this README how to handle secrets in production code.
+1. In Postman, create a **POST** request to the **Register user** endpoint.
+2. Set the request body to **raw JSON**, for example:
+    
+    ```json
+    {
+      "username": "alice",
+      "password": "secret123"
+    }
+    ```
+    
+3. Send the request and check that the status and JSON response match `README_API.md`.
 
-## Endpoints
+---
 
-### Register user
+## 3. Log in and get a token
 
-- **POST** `/user/register`
-- **Body**: `{ "username": <username>, "password": <password> }`
-- **Responses**:
-  - `201 Created`: `{ "id": "<uuid>", "username": <username> }`
-  - `400 Bad Request`: missing fields or username already exists
+1. Create a **POST** request to the **Login** endpoint.
+2. Use the same username and password in the JSON body.
+3. Send the request. The response should contain a `token` field.
+4. Copy the token value (without quotes).
+    
+    The token is valid for a limited time (1 hour in this example).
+    
 
-### Login
+---
 
-- **POST** `/user/login`
-- **Body**: `{ "username": <username>, "password": <password> }`
-- **Responses**:
-  - `200 OK`: `{ "token": "<jwt>" }`
-  - `400 Bad Request`: missing fields
-  - `401 Unauthorized`: invalid username or password
+## 4. Call a protected endpoint without a token
 
-### Logout
+1. Create a **GET** request to the **Get profile** endpoint.
+2. Do **not** add any Authorization header.
+3. Send the request.
+4. You should get a `401 Unauthorized` response and a message like “Authorization header missing”.
 
-- **POST** `/user/logout`
-- **Responses**:
-  - `200 OK`: `{ "message": "Logged out successfully" }`
+---
 
-### Get profile
+## 5. Call the same endpoint with a token
 
-- **GET** `/user/me`
-- **Headers**: `Authorization: Bearer <jwt>`
-- **Responses**:
-  - `200 OK`: `{ "message": "You are currently logged in as <username>" }`
-  - `401 Unauthorized`: missing/invalid/expired token
-  - `404 Not Found`: user id in token not found
+1. On the same **Get profile** request, open the **Authorization** tab.
+2. Choose **Bearer Token** and paste the token from Step 3 (without quotes).
+3. Send the request again.
+4. You should now get a `200 OK` response and a message like “You are currently logged in as <username>”.
 
-## Notes
+---
 
-- Passwords are hashed with bcrypt (10 salt rounds) before storage.
-- Requests and JSON responses are logged to the console.
-- Users are kept in-memory for this demo; restart clears registrations.
+## 6. Log out
+
+1. Create a **POST** request to the **Logout** endpoint.
+2. Use the **Bearer Token** authorization with the same token.
+3. Send the request and check the logout response.
+
+---
+
+## 7. Try error scenarios
+
+Optionally, try requests that should fail with 4xx errors:
+
+- Registering a username that already exists
+- Registering without a username or password
+- Logging in with a non-existing user
+- Logging in with a wrong password
+
+Pay attention to the status codes and error messages to understand how the API reports problems.
+
+---
 
 ## Keep secrets out of source control
 
-For production APIs, you should never expose your secrets in code that is pushed to a remote repository. Instead, load secrets from environment variables. The [`dotenv`](https://github.com/motdotla/dotenv) NPM package is often used for this. Here is how would use that:
+For production APIs, you should never expose your secrets in code that is pushed to a remote repository. Instead, load secrets from environment variables. The [`dotenv`](https://github.com/motdotla/dotenv) NPM package is often used for this. Here is how you would use that:
 
 1. Install dotenv (optional helper for local dev): `npm install dotenv`.
-2. Create a `.env` file (not checked in) alongside `server.js`:
+2. Create a `.env` file (not checked in) in the `server` folder:
 
    ```bash
    JWT_SECRET="<your-long-random-secret>"
@@ -82,18 +116,20 @@ For production APIs, you should never expose your secrets in code that is pushed
 
 4. In your server code, load the secret with `import 'dotenv/config';` before using `process.env.JWT_SECRET`.
 
+---
+
 ## Client (optional)
 
 While you can test the endpoints of your API with Postman and/or `curl`, we have also provided a fully functional demo front-end application that demonstrates how a web token based authentication system might be used from the front-end side. The demo front-end resides in the `client` folder and is statically served by the backend. When the backend is running you can access the client at <http://localhost:3000>.
 
 The client allows you to register, login and logout. After logging in, it uses the received JWT token to fetch the profile of the logged-in user and shows it on its home page. If this fetch fails, e.g. due to an expired token, the user is redirected to the login page.
 
-Upon logging in, the client stores the JWT token in `localStorage`. When the client starts it tries to load this token from `localStorage`. If a token was found it try to load the client's home page directly. This may fail if the token is expired as mentioned earlier in which case the login page is loaded. If no token was found in `localStorage` at client startup the login page is loaded directly.
+Upon logging in, the client stores the JWT token in `localStorage`. When the client starts it tries to load this token from `localStorage`. If a token was found it tries to load the client's home page directly. This may fail if the token is expired as mentioned earlier in which case the login page is loaded. If no token was found in `localStorage` at client startup the login page is loaded directly.
 
 When logging out, the token is removed from `localStorage` and the user is redirected to the login page.
 
 The process is illustrated in the diagram below.
 
-![client-date-diagram](../.assets/client-state-diagram.png)
+![client-state-diagram](../.assets/client-state-diagram.png)
 
 The client code logs debug information in the browser's console. This may help you to follow the application flow as you navigate through its pages.
