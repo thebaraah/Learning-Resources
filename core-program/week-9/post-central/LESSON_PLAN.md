@@ -5,6 +5,36 @@
 - **Tools:** curl, Postman, Scalar OpenAPI interface
 - **Server:** Post Central (run by instructor)
 
+## Introduction
+
+This exercise uses an API server, called Post Central, that runs on the teacher's computer. Trainees can send HTTP requests from their own laptop to the API server, using the local IP address (e.g. 192.168.xxx.xxx) of the teacher's machine. This local IP address will be shown when the server is started.
+
+The API server statically serves a portal application that visualizes the requests received from the endpoints in WhatsApp-like format. The portal communicates with the API in real-time using WebSockets.
+
+![post-central](../.assets/post-central.png)
+
+The Post Central API provides endpoints for the following:
+
+- Register a user (username, password)
+- User login
+- Post a text message
+- Update a text message
+- Delete a text message
+- Get all messages
+- Get the user’s profile
+- Get a list of users
+- Delete the user account
+
+The Register and Login endpoints return a token.
+
+All endpoints except Register and Login are protected through Bearer authentication.
+
+A posted text message is owned by the user that sent it. It can only be updated or deleted by the owner. A user account can only be deleted by its owner.
+
+During the exercise, the teacher can run the portal and keep it open on the big screen.
+
+Trainees will work in pairs. The laptop of one of the trainees will run an instance of the portal. The laptop of the other trainee will be used to send HTTP requests. Building these requests with curl and Postman is done through pair programming, although in this exercise there is no actual programming done. Part of the exercise is practicing the reading and interpretation of API documentation.
+
 ## Setup
 
 ### Instructor
