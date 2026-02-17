@@ -2,33 +2,18 @@
 
 This document explains the parts of the application you **don't** modify — the CLI, the test system, and how everything connects. Understanding these pieces will help you see where your `services.js` code fits in.
 
-## Architecture Overview
+## How the pieces fit together
 
-```mermaid
-flowchart TD
-    Server["Post Central Server\nlocalhost:3000"]
+Your `services.js` is the only file that talks to the server. It sits between two consumers:
 
-    subgraph "post-cli project"
-        CLI["post-cli.js\n(CLI interface)"]
-        Services["services.js\n(your code)"]
-        Tests["tests/\n(vitest)"]
-        Token["authToken\n(stored in services.js)"]
-    end
+- **The CLI** (`post-cli.js`) imports your functions and calls them in response to menu selections. It handles all user interaction — you handle all server communication.
+- **The tests** (`tests/`) import the same functions but replace `fetch()` with a mock, so they can verify your code without a running server.
 
-    CLI -- "calls service functions\n(e.g. loginUser, getPosts)" --> Services
-    Tests -- "calls service functions\n& mocks fetch()" --> Services
-    Services -- "HTTP requests\n(fetch)" --> Server
-    Server -- "JSON responses" --> Services
-    CLI -- "setToken()" --> Token
-    Tests -- "setToken()" --> Token
-    Services -- "getToken()\nfor Authorization header" --> Token
-```
-
-Your `services.js` sits in the middle — it is the only file that talks to the server. Both the CLI and the tests call the same functions you write. This is why you can test your code without running the CLI, and why the CLI works once your functions are correct.
+Both the CLI and the tests also use `setToken()` to store a JWT token before calling your functions, and your functions use `getToken()` to read it. This is why you can test your code without running the CLI, and why the CLI works once your functions are correct.
 
 ## The CLI (`post-cli.js`)
 
-The CLI is the interactive terminal application that trainees use to test their work. It is provided ready-made — you do not need to modify it.
+The CLI is the interactive terminal application you use to test your work. It is provided ready-made — you do not need to modify it.
 
 ### Two-phase flow
 
@@ -135,7 +120,7 @@ const { loginUser, getPosts, ... } = solutionExists
 
 This means:
 
-- If `services-solution.js` exists, the CLI and tests use it. This file is a reference implementation for instructors so they can quickly demo a working version — it is not intended for trainees.
+- If `services-solution.js` exists, the CLI and tests use it. This file is a reference implementation for instructors so they can quickly demo a working version — it is not intended for you.
 - If it doesn't exist, they fall back to your `services.js`.
 
 When you receive this project as a homework assignment, only `services.js` (the starter file) will be present, so the CLI and tests will automatically use your code.
