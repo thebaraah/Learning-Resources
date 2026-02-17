@@ -47,6 +47,9 @@ The CLI runs in **watch mode** — whenever you save your code, it restarts auto
 
 The main application logic is provided ready-made so you can focus on implementing the API functions.
 
+> [!TIP]
+> Curious how the CLI, tests, and token management work under the hood? See [README_BACKGROUND.md](README_BACKGROUND.md) for an architecture overview of the parts you don't need to modify.
+
 ## API Documentation
 
 ### Base URL
