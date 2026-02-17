@@ -141,3 +141,6 @@ vite.config.ts.timestamp-*
 .vite/
 
 .DS_Store
+
+# Solution files (kept in a separate private repo)
+*.solution.js

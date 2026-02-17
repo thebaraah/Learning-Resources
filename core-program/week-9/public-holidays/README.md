@@ -16,60 +16,27 @@ When you open the application, it loads a list of countries from the API and pop
 
 ## Running the application
 
+> [!TIP]
 > If you haven't already done so, install the VS Code [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) extension before continuing.
+>
+> 1. Right-click `index.html` in the VS Code Explorer and select **Open with Live Server**.
+> 2. The application should open in your browser with a country dropdown, a year dropdown, and a list of holidays.
 
-1. Right-click `index.html` in the VS Code Explorer and select **Open with Live Server**.
-2. The application should open in your browser with a country dropdown, a year dropdown, and a list of holidays.
+## Exercise
 
-## Understanding the API URLs
+Open `services.js` — it contains two functions that each need to make an HTTP request to a different endpoint of the **Nager.Date** API. The URLs are currently set to `'TODO'` and need to be replaced with the correct ones.
 
-The key file to look at is `services.js`. It contains two functions that each make an HTTP request to a different API endpoint. The API documentation can be found here:
+Use the API documentation to find the right endpoints:
 
 - [Nager.Date API explorer](https://date.nager.at/scalar/#api-version-3) (interactive documentation)
 - [Nager.Date API documentation](https://date.nager.at/swagger/v3/swagger.json) (OpenAPI spec)
 
 The base URL for the API is: `https://date.nager.at`
 
-### `loadCountries`
+**What to do:**
 
-This function loads the list of available countries. The full URL is:
-
-```text
-https://date.nager.at/api/v3/AvailableCountries
-```
-
-This is a fixed URL — it always returns the same type of data (a list of all supported countries).
-
-### `loadHolidays`
-
-This function loads the public holidays for a given year and country. The URL uses **path parameters** — values that are embedded directly in the URL path:
-
-```text
-https://date.nager.at/api/v3/PublicHolidays/{year}/{countryCode}
-```
-
-For example, to get the holidays for the Netherlands in 2026, the URL would be:
-
-```text
-https://date.nager.at/api/v3/PublicHolidays/2026/NL
-```
-
-In the code, the `year` and `countryCode` function parameters are inserted into the URL using a template literal:
-
-```js
-`https://date.nager.at/api/v3/PublicHolidays/${year}/${countryCode}`
-```
-
-### URL structure
-
-Both URLs follow the same pattern:
-
-```text
-https://date.nager.at  /api/v3/  PublicHolidays/2026/NL
-\_____________________/ \______/ \____________________/
-       base URL          API       endpoint path
-                        version    (with parameters)
-```
+1. `loadCountries()` — Find the endpoint that returns a list of available countries. This is a fixed URL (no parameters needed).
+2. `loadHolidays(year, countryCode)` — Find the endpoint that returns public holidays for a specific year and country. You'll need to use a template literal to insert the function parameters into the URL.
 
 ## Inspecting network requests
 

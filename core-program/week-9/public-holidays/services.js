@@ -11,7 +11,9 @@ function getRequest(url, callback) {
 }
 
 export function loadCountries(callback) {
-  getRequest('https://date.nager.at/api/v3/AvailableCountries', (err, data) => {
+  // TODO: Replace the URL below with the correct API endpoint for loading
+  // available countries.
+  getRequest('TODO', (err, data) => {
     if (err) {
       console.error(err);
     }
@@ -20,13 +22,13 @@ export function loadCountries(callback) {
 }
 
 export function loadHolidays(year, countryCode, callback) {
-  getRequest(
-    `https://date.nager.at/api/v3/PublicHolidays/${year}/${countryCode}`,
-    (err, data) => {
-      if (err) {
-        console.error(err);
-      }
-      callback(err, data);
+  // TODO: Replace the URL below with the correct API endpoint for loading
+  // public holidays. Use a template literal to insert the `year` and
+  // `countryCode` parameters into the URL.
+  getRequest('TODO', (err, data) => {
+    if (err) {
+      console.error(err);
     }
-  );
+    callback(err, data);
+  });
 }
