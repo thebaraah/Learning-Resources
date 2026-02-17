@@ -123,6 +123,11 @@ export default class DashboardPage {
       banner.remove();
     });
 
+    setTimeout(() => {
+      banner.classList.add('fade-out');
+      banner.addEventListener('animationend', () => banner.remove());
+    }, 3000);
+
     const header = document.querySelector('.header');
     header.insertAdjacentElement('afterend', banner);
   }

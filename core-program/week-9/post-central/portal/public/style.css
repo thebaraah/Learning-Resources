@@ -244,6 +244,10 @@ body {
   animation: slideIn 0.3s ease-out;
 }
 
+.audio-banner.fade-out {
+  animation: fadeOut 0.5s ease-out forwards;
+}
+
 .audio-banner-dismiss {
   background: none;
   border: none;
