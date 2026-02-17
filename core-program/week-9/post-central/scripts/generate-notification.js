@@ -10,7 +10,7 @@
  */
 
 import { writeFileSync } from 'fs';
-import { resolve, dirname } from 'path';
+import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -22,8 +22,8 @@ const NUM_CHANNELS = 1;
 
 // Tone definitions
 const tones = [
-  { freq: 523.25, start: 0, duration: 0.15 }, // C5
-  { freq: 659.25, start: 0.15, duration: 0.15 }, // E5
+  { freq: 523.25, start: 0, duration: 0.1 }, // C5
+  { freq: 659.25, start: 0.1, duration: 0.1 }, // E5
 ];
 
 const OVERTONE_RATIO = 2; // 2nd harmonic
@@ -60,7 +60,8 @@ for (const tone of tones) {
     const overtone =
       Math.sin(2 * Math.PI * tone.freq * OVERTONE_RATIO * t) * OVERTONE_GAIN;
 
-    samples[startSample + i] += (fundamental + overtone) * envelope * MASTER_GAIN;
+    samples[startSample + i] +=
+      (fundamental + overtone) * envelope * MASTER_GAIN;
   }
 }
 
