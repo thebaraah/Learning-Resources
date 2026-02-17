@@ -72,6 +72,10 @@ npm install
 npm test           # run vitest tests
 ```
 
+## Markdown conventions
+
+- Use [GitHub alert syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts) for tips, notes, warnings, etc. (e.g. `> [!TIP]`, `> [!NOTE]`)
+
 ## Code conventions
 
 - **ES modules everywhere** (`import`/`export`, `"type": "module"`) — no CommonJS

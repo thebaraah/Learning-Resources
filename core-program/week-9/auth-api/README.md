@@ -28,6 +28,9 @@ npm start
 
 The server listens on `http://localhost:3000`. Continue once the server is running.
 
+> [!TIP]
+> Keep the terminal visible while you work. The server logs every request and response with color coding, so you can see exactly what is happening as you send requests from Postman.
+
 ---
 
 ## 2. Register a user
