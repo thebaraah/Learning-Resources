@@ -4,7 +4,7 @@
 
 In last week's session, trainees made HTTP requests to the Post Central API using `curl` in the terminal and Postman. This week, we will use the same API server, but trainees will now complete JavaScript starter code and use the `fetch()` function to interact with it. The focus is on making HTTP requests with `fetch()`, handling responses, and managing authentication with JWT tokens. Another learning goal is to practice working with promises and async/await in JavaScript.
 
-The session is structured around a simple Node.js command-line interface (CLI) application that lets users register, log in, and perform CRUD operations on posts. The application is mostly complete, except for the file that trainees are expected to complete. This file is the `srv/service.js` module, which exports functions that handle the network requests for CRUD operations as well as for user registration and login. The CLI application imports these functions and uses them to implement the user interface.
+The session is structured around a simple Node.js command-line interface (CLI) application that lets users register, log in, and perform CRUD operations on posts. The application is mostly complete, except for the file that trainees are expected to complete. This file is the `src/services.js` module, which exports functions that handle the network requests for CRUD operations as well as for user registration and login. The CLI application imports these functions and uses them to implement the user interface.
 
 ## Setting Up the API Server
 
@@ -42,7 +42,7 @@ Since the `localhost` address will not work from their machines, your trainees w
 ### Before the Session
 
 - [ ] Ensure Post Central API server is running on the teacher's computer.
-- [ ] Copy the `services.solution.js` file from the TBC to the `src` folder. This will be used for demonstration purposes. Trainees will complete the `services.js` file on their own.
+- [ ] Copy the `services.solution.js` file from the `Learning-Resources/core-program/week-10/post-cli/src/` folder to the assignment repo's `src` folder. This will be used for demonstration purposes. Trainees will complete the `services.js` file on their own.
 - [ ] Ensure trainees have the Learning Resources repository available on their machines. This should have already have cloned it last week.
 - [ ] Verify trainees can reach the server by having them open `http://<IP>:3000/posts/hello` in a browser
 - [ ] Verify npm packages are installed (`npm install`)
@@ -50,10 +50,9 @@ Since the `localhost` address will not work from their machines, your trainees w
 ### Introduction (5 min)
 
 - Explain what APIs are and why they're important
-- Show the curl examples to demonstrate raw HTTP
 - Explain we'll build the same functionality with JavaScript fetch in a Node.js CLI application
 - Briefly explain JWT authentication: "A token is like a wristband at a concert - you get it at the door (login), and show it to access different areas (endpoints)"
-- Demonstrate running the solution with `npm start` with the `fetchers-solution.js` file copied to the `src` folder.
+- Demonstrate running the solution with `npm start` with the `services.solution.js` file copied to the `src` folder.
 
 ### Stage 0: Hello Endpoint - Verify Setup (5 min)
 

@@ -112,10 +112,13 @@ A checkmark means your function works correctly. An `✗` with an error message 
 Both `post-cli.js` and the test files use the same pattern to decide which services file to load:
 
 ```js
-const solutionExists = existsSync(solutionServicePath);
-const { loginUser, getPosts, ... } = solutionExists
-  ? await import(solutionServicePath)    // services.solution.js
-  : await import(studentServicePath);    // services.js (your file)
+let services;
+try {
+  services = await import('./services.solution.js');
+} catch {
+  services = await import('./services.js');
+}
+const { loginUser, getPosts, ... } = services;
 ```
 
 This means:

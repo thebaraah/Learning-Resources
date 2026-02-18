@@ -9,8 +9,8 @@
     "postinstall": "node scripts/generate-notification.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "HackYourFuture",
+  "license": "CC BY-NC-SA 4.0",
   "type": "module",
   "dependencies": {
     "@scalar/express-api-reference": "^0.8.40",

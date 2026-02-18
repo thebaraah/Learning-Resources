@@ -1,13 +1,9 @@
 /**
  * Vitest tests for GET request functions
- * Tests the student's implementation of getMe() and getPosts()
+ * Tests the trainee's implementation of getMe() and getPosts()
  *
- * Uses mocked fetch to verify students are making correct API calls
+ * Uses mocked fetch to verify trainees are making correct API calls
  * without requiring a running API server.
- *
- * NOTE: Change the import path to test student code:
- * - Testing starter: import from '../services.js'
- * - Testing solution: import from '../services.solution.js'
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
