@@ -1,3 +1,5 @@
+import { BASE_URL } from './constants.js';
+
 /**
  * Get all posts (admin only).
  * @param {string} token - The JWT token
@@ -8,7 +10,7 @@
  * Headers: Authorization: Bearer <token>
  */
 export async function getAllPosts(token) {
-  const response = await fetch('/posts', {
+  const response = await fetch(`${BASE_URL}/posts`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -34,7 +36,7 @@ export async function getAllPosts(token) {
  * Headers: Authorization: Bearer <token>
  */
 export async function getUsers(token) {
-  const response = await fetch('/users', {
+  const response = await fetch(`${BASE_URL}/users`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -61,7 +63,7 @@ export async function getUsers(token) {
  * Headers: Authorization: Bearer <token>
  */
 export async function deleteUserByAdmin(token, name) {
-  const response = await fetch(`/users/${encodeURIComponent(name)}`, {
+  const response = await fetch(`${BASE_URL}/users/${encodeURIComponent(name)}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

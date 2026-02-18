@@ -1,3 +1,5 @@
+import { BASE_URL } from './constants.js';
+
 /**
  * Get a hello message from Post Central (no auth required).
  * @returns {Promise<{id: number, user: string, text: string, timestamp: string}>} The hello post
@@ -6,7 +8,7 @@
  * API endpoint: GET /posts/hello
  */
 export async function getHello() {
-  const response = await fetch('/posts/hello');
+  const response = await fetch(`${BASE_URL}/posts/hello`);
   const data = await response.json();
   if (!response.ok) {
     const error = new Error(data.error || response.statusText);
@@ -27,7 +29,7 @@ export async function getHello() {
  * Request body: { name, password }
  */
 export async function login(name, password) {
-  const response = await fetch('/users/login', {
+  const response = await fetch(`${BASE_URL}/users/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, password }),
@@ -52,7 +54,7 @@ export async function login(name, password) {
  * Request body: { name, password }
  */
 export async function register(name, password) {
-  const response = await fetch('/users/register', {
+  const response = await fetch(`${BASE_URL}/users/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, password }),
@@ -76,7 +78,7 @@ export async function register(name, password) {
  * Headers: Authorization: Bearer <token>
  */
 export async function getProfile(token) {
-  const response = await fetch('/users/me', {
+  const response = await fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -102,7 +104,7 @@ export async function getProfile(token) {
  * Headers: Authorization: Bearer <token>
  */
 export async function getMyPosts(token) {
-  const response = await fetch('/posts/me', {
+  const response = await fetch(`${BASE_URL}/posts/me`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -130,7 +132,7 @@ export async function getMyPosts(token) {
  * Request body: { text }
  */
 export async function createPost(token, text) {
-  const response = await fetch('/posts', {
+  const response = await fetch(`${BASE_URL}/posts`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -160,7 +162,7 @@ export async function createPost(token, text) {
  * Request body: { text }
  */
 export async function editPost(token, id, text) {
-  const response = await fetch(`/posts/${id}`, {
+  const response = await fetch(`${BASE_URL}/posts/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -188,7 +190,7 @@ export async function editPost(token, id, text) {
  * Headers: Authorization: Bearer <token>
  */
 export async function deletePost(token, id) {
-  const response = await fetch(`/posts/${id}`, {
+  const response = await fetch(`${BASE_URL}/posts/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

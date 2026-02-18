@@ -4,6 +4,7 @@ import {
   getUsers,
   deleteUserByAdmin,
 } from '../src/services/admin.js';
+import { BASE_URL } from '../src/services/constants.js';
 
 function mockFetchResponse(data, { ok = true, status = 200 } = {}) {
   globalThis.fetch = vi.fn(() =>
@@ -48,7 +49,7 @@ describe('getAllPosts', () => {
     expect(globalThis.fetch).toHaveBeenCalledOnce();
 
     const call = getFetchCallArgs();
-    expect(call.url).toBe('/posts');
+    expect(call.url).toBe(`${BASE_URL}/posts`);
     expect(call.method).toBe('GET');
     expect(getHeader('Authorization')).toBe('Bearer admintoken');
 
@@ -84,7 +85,7 @@ describe('getUsers', () => {
     expect(globalThis.fetch).toHaveBeenCalledOnce();
 
     const call = getFetchCallArgs();
-    expect(call.url).toBe('/users');
+    expect(call.url).toBe(`${BASE_URL}/users`);
     expect(call.method).toBe('GET');
     expect(getHeader('Authorization')).toBe('Bearer mytoken');
 
@@ -116,7 +117,7 @@ describe('deleteUserByAdmin', () => {
     expect(globalThis.fetch).toHaveBeenCalledOnce();
 
     const call = getFetchCallArgs();
-    expect(call.url).toBe('/users/alice');
+    expect(call.url).toBe(`${BASE_URL}/users/alice`);
     expect(call.method).toBe('DELETE');
     expect(getHeader('Authorization')).toBe('Bearer mytoken');
 
@@ -129,7 +130,7 @@ describe('deleteUserByAdmin', () => {
     await deleteUserByAdmin('mytoken', 'user name');
 
     const call = getFetchCallArgs();
-    expect(call.url).toBe('/users/user%20name');
+    expect(call.url).toBe(`${BASE_URL}/users/user%20name`);
   });
 
   it('should not send a request body', async () => {

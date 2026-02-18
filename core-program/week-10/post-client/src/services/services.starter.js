@@ -1,9 +1,11 @@
+import { BASE_URL } from './constants.js';
+
 /**
  * Get a hello message from Post Central (no auth required).
  * @returns {Promise<{id: number, user: string, text: string, timestamp: string}>} The hello post
  * @throws {Error} With a `status` property (HTTP status code) on failure
  *
- * API endpoint: GET /posts/hello
+ * API endpoint: GET ${BASE_URL}/posts/hello
  */
 export async function getHello() {
   const error = new Error('Not implemented');
@@ -18,11 +20,11 @@ export async function getHello() {
  * @returns {Promise<{user: string, token: string}>} The registered user and token
  * @throws {Error} With a `status` property (HTTP status code) on failure
  *
- * API endpoint: POST /users/register
+ * API endpoint: POST ${BASE_URL}/users/register
  * Request body: { name, password }
  */
 export async function register(name, password) {
-  const response = await fetch('/users/register', {
+  const response = await fetch(`${BASE_URL}/users/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, password }),
@@ -43,7 +45,7 @@ export async function register(name, password) {
  * @returns {Promise<{user: string, token: string}>} The logged-in user and token
  * @throws {Error} With a `status` property (HTTP status code) on failure
  *
- * API endpoint: POST /users/login
+ * API endpoint: POST ${BASE_URL}/users/login
  * Request body: { name, password }
  */
 export async function login(name, password) {
@@ -58,7 +60,7 @@ export async function login(name, password) {
  * @returns {Promise<{user: string}>} The user profile
  * @throws {Error} With a `status` property (HTTP status code) on failure
  *
- * API endpoint: GET /users/me
+ * API endpoint: GET ${BASE_URL}/users/me
  * Headers: Authorization: Bearer <token>
  */
 export async function getProfile(token) {
@@ -73,7 +75,7 @@ export async function getProfile(token) {
  * @returns {Promise<Array<{id: number, user: string, text: string, timestamp: string, isEdited?: boolean}>>} The user's posts
  * @throws {Error} With a `status` property (HTTP status code) on failure
  *
- * API endpoint: GET /posts/me
+ * API endpoint: GET ${BASE_URL}/posts/me
  * Headers: Authorization: Bearer <token>
  */
 export async function getMyPosts(token) {
@@ -89,7 +91,7 @@ export async function getMyPosts(token) {
  * @returns {Promise<{id: number, user: string, text: string, timestamp: string}>} The created post
  * @throws {Error} With a `status` property (HTTP status code) on failure
  *
- * API endpoint: POST /posts
+ * API endpoint: POST ${BASE_URL}/posts
  * Headers: Authorization: Bearer <token>
  * Request body: { text }
  */
@@ -107,7 +109,7 @@ export async function createPost(token, text) {
  * @returns {Promise<{id: number, user: string, text: string, timestamp: string, isEdited: true}>} The updated post
  * @throws {Error} With a `status` property (HTTP status code) on failure
  *
- * API endpoint: PUT /posts/:id
+ * API endpoint: PUT ${BASE_URL}/posts/:id
  * Headers: Authorization: Bearer <token>
  * Request body: { text }
  */
@@ -124,7 +126,7 @@ export async function editPost(token, id, text) {
  * @returns {Promise<{id: number, user: string, text: string, timestamp: string, message: string}>} The deleted post info
  * @throws {Error} With a `status` property (HTTP status code) on failure
  *
- * API endpoint: DELETE /posts/:id
+ * API endpoint: DELETE ${BASE_URL}/posts/:id
  * Headers: Authorization: Bearer <token>
  */
 export async function deletePost(token, id) {

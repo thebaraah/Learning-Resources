@@ -5,17 +5,28 @@ manage posts. The API server lives in `week-9/post-central`.
 
 ## Getting Started
 
-If you want to run the client, you need to have the API server running first. If you are in class working with an instructor, the instructor will run the server on the instructor's machine, and you can skip the steps below. If you are trying this exercise on your own, make sure to start the server yourself.
+If you want to run the client, you need to have the API server running first. If you are in class working with an instructor, the instructor will run the server on the instructor's machine, and you can skip the server setup steps below. If you are trying this exercise on your own, make sure to start the server yourself.
 
-1. From the `week-9/post-central` folder, install dependencies and start the
-   server:
+### Starting the server (only if working alone)
 
-   ```bash
-   npm install
-   npm start
-   ```
+From the `week-9/post-central` folder, install dependencies and start the
+server:
 
-2. Open <http://localhost:3000/client> in your browser.
+```bash
+npm install
+npm start
+```
+
+### Running the client
+
+This client is a static web page that you serve locally using the **Live Server** extension in VS Code.
+
+1. Install the [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) extension in VS Code (if you don't have it already).
+2. Open the `post-client` folder in VS Code.
+3. Open `src/services/constants.js` and set `BASE_URL` to the address of the Post Central server:
+   - **In class:** Use the instructor's IP address, e.g. `'http://192.168.1.42:3000'`
+   - **At home:** Keep the default `'http://localhost:3000'`
+4. Right-click `index.html` and select **"Open with Live Server"**. The client will open in your browser (typically at `http://localhost:5500`).
 
 ## Your Task
 
@@ -47,7 +58,7 @@ what it looks like:
 
 ```js
 export async function register(name, password) {
-  const response = await fetch('/users/register', {
+  const response = await fetch(`${BASE_URL}/users/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, password }),
@@ -61,6 +72,9 @@ export async function register(name, password) {
   return data;
 }
 ```
+
+`BASE_URL` is imported from `constants.js` and points to the Post Central
+server. Every `fetch()` call must use it as a prefix.
 
 > :exclamation: A note about `response.json()` and `response.ok`: Normally you would need
 to check `response.ok` _before_ calling `response.json()`, because not every
@@ -77,7 +91,7 @@ headers, and request body.
 
 Here is a summary:
 
-| Function       | Method   | URL              | Auth   | Request Body       |
+| Function       | Method   | Path             | Auth   | Request Body       |
 | -------------- | -------- | ---------------- | ------ | ------------------ |
 | `getHello`     | `GET`    | `/posts/hello`   | No     | —                  |
 | `login`        | `POST`   | `/users/login`   | No     | `{ name, password }` |
@@ -87,6 +101,9 @@ Here is a summary:
 | `createPost`   | `POST`   | `/posts`         | Bearer | `{ text }`         |
 | `editPost`     | `PUT`    | `/posts/:id`     | Bearer | `{ text }`         |
 | `deletePost`   | `DELETE` | `/posts/:id`     | Bearer | —                  |
+
+All paths must be prefixed with `BASE_URL` in your `fetch()` calls (e.g.
+`` `${BASE_URL}/posts/hello` ``).
 
 **"Bearer"** means the request needs an `Authorization` header with the value
 `Bearer <token>`.

@@ -8,6 +8,7 @@ import {
   editPost,
   deletePost,
 } from '../src/services/services.js';
+import { BASE_URL } from '../src/services/constants.js';
 
 function mockFetchResponse(data, { ok = true, status = 200 } = {}) {
   globalThis.fetch = vi.fn(() =>
@@ -55,7 +56,7 @@ describe('login', () => {
     expect(globalThis.fetch).toHaveBeenCalledOnce();
 
     const call = getFetchCallArgs();
-    expect(call.url).toBe('/users/login');
+    expect(call.url).toBe(`${BASE_URL}/users/login`);
     expect(call.method).toBe('POST');
     expect(getHeader('Content-Type')).toBe('application/json');
 
@@ -92,7 +93,7 @@ describe('register', () => {
     expect(globalThis.fetch).toHaveBeenCalledOnce();
 
     const call = getFetchCallArgs();
-    expect(call.url).toBe('/users/register');
+    expect(call.url).toBe(`${BASE_URL}/users/register`);
     expect(call.method).toBe('POST');
     expect(getHeader('Content-Type')).toBe('application/json');
 
@@ -129,7 +130,7 @@ describe('getProfile', () => {
     expect(globalThis.fetch).toHaveBeenCalledOnce();
 
     const call = getFetchCallArgs();
-    expect(call.url).toBe('/users/me');
+    expect(call.url).toBe(`${BASE_URL}/users/me`);
     expect(call.method).toBe('GET');
     expect(getHeader('Authorization')).toBe('Bearer mytoken');
 
@@ -164,7 +165,7 @@ describe('getMyPosts', () => {
     expect(globalThis.fetch).toHaveBeenCalledOnce();
 
     const call = getFetchCallArgs();
-    expect(call.url).toBe('/posts/me');
+    expect(call.url).toBe(`${BASE_URL}/posts/me`);
     expect(call.method).toBe('GET');
     expect(getHeader('Authorization')).toBe('Bearer mytoken');
 
@@ -187,7 +188,7 @@ describe('createPost', () => {
     expect(globalThis.fetch).toHaveBeenCalledOnce();
 
     const call = getFetchCallArgs();
-    expect(call.url).toBe('/posts');
+    expect(call.url).toBe(`${BASE_URL}/posts`);
     expect(call.method).toBe('POST');
     expect(getHeader('Authorization')).toBe('Bearer mytoken');
     expect(getHeader('Content-Type')).toBe('application/json');
@@ -215,7 +216,7 @@ describe('editPost', () => {
     expect(globalThis.fetch).toHaveBeenCalledOnce();
 
     const call = getFetchCallArgs();
-    expect(call.url).toBe('/posts/5');
+    expect(call.url).toBe(`${BASE_URL}/posts/5`);
     expect(call.method).toBe('PUT');
     expect(getHeader('Authorization')).toBe('Bearer mytoken');
     expect(getHeader('Content-Type')).toBe('application/json');
@@ -258,7 +259,7 @@ describe('deletePost', () => {
     expect(globalThis.fetch).toHaveBeenCalledOnce();
 
     const call = getFetchCallArgs();
-    expect(call.url).toBe('/posts/3');
+    expect(call.url).toBe(`${BASE_URL}/posts/3`);
     expect(call.method).toBe('DELETE');
     expect(getHeader('Authorization')).toBe('Bearer mytoken');
 
