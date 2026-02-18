@@ -98,7 +98,7 @@ export default class DashboardView {
 
     const postContent = post.isDeleted
       ? '[This post has been deleted]'
-      : this.#escapeHtml(post.text);
+      : this.#renderMarkdown(this.#escapeHtml(post.text));
 
     return `
       <article class="${postClasses.join(' ')}" data-post-id="${post.id}">
@@ -141,6 +141,14 @@ export default class DashboardView {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+  }
+
+  #renderMarkdown(escapedText) {
+    return escapedText
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g, '<em>$1</em>')
+      .replace(/~~(.+?)~~/g, '<del>$1</del>')
+      .replace(/`(.+?)`/g, '<code>$1</code>');
   }
 
   #showNotification(message, notificationType = 'user-joined') {

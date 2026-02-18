@@ -1,4 +1,5 @@
 import getElementsWithIds from '../lib/getElementsWithIds.js';
+import renderMarkdown from '../lib/markdown.js';
 import BaseView from './baseView.js';
 
 export default class HomeView extends BaseView {
@@ -39,6 +40,7 @@ export default class HomeView extends BaseView {
                 required
               ></textarea>
               <button type="submit" class="btn btn-primary">Post</button>
+              <p class="markdown-hint">Supports **bold**, *italic*, ~~strikethrough~~, and &#96;code&#96;</p>
             </form>
 
             <div id="postsList" class="posts-list"></div>
@@ -198,7 +200,7 @@ export default class HomeView extends BaseView {
           ${editedBadge}
         </div>
         <div class="post-body">
-          <p class="post-text">${this.#escapeHtml(post.text)}</p>
+          <p class="post-text">${renderMarkdown(this.#escapeHtml(post.text))}</p>
         </div>
         <div class="post-actions">
           <button class="btn btn-small btn-secondary edit-btn" data-id="${post.id}">Edit</button>

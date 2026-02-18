@@ -165,6 +165,14 @@ body {
   line-height: 1.5;
 }
 
+.post-content code {
+  background-color: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'SF Mono', 'Consolas', 'Liberation Mono', 'Menlo', monospace;
+  font-size: 0.9em;
+}
+
 .post-deleted-content {
   color: #657786;
   font-style: italic;

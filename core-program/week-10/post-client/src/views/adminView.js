@@ -1,4 +1,5 @@
 import getElementsWithIds from '../lib/getElementsWithIds.js';
+import renderMarkdown from '../lib/markdown.js';
 import BaseView from './baseView.js';
 
 export default class AdminView extends BaseView {
@@ -158,8 +159,9 @@ export default class AdminView extends BaseView {
       .map((post) => {
         const preview =
           post.text.length > 120
-            ? this.#escapeHtml(post.text.slice(0, 120)) + '&hellip;'
-            : this.#escapeHtml(post.text);
+            ? renderMarkdown(this.#escapeHtml(post.text.slice(0, 120))) +
+              '&hellip;'
+            : renderMarkdown(this.#escapeHtml(post.text));
         return `
         <div class="admin-post-card">
           <div class="admin-post-info">
