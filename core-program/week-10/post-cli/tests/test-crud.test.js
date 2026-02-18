@@ -7,23 +7,18 @@
  *
  * NOTE: Change the import path to test student code:
  * - Testing starter: import from '../services.js'
- * - Testing solution: import from '../services-solution.js'
+ * - Testing solution: import from '../services.solution.js'
  */
 
-import { existsSync } from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const studentFetchersPath = path.join(__dirname, '../src/services.js');
-const solutionFetchersPath = path.join(
-  __dirname,
-  '../src/services-solution.js'
-);
-
 // Import fetcher functions
-const solutionExists = existsSync(solutionFetchersPath); // Set to false to test starter code
+let services;
+try {
+  services = await import('../src/services.solution.js');
+} catch {
+  services = await import('../src/services.js');
+}
 const {
   createPost,
   createUser,
@@ -33,9 +28,7 @@ const {
   getPosts,
   setToken,
   updatePost,
-} = solutionExists
-  ? await import(solutionFetchersPath)
-  : await import(studentFetchersPath);
+} = services;
 
 describe('Complete CRUD Operations', () => {
   let fetchMock;

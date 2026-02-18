@@ -42,7 +42,7 @@ Since the `localhost` address will not work from their machines, your trainees w
 ### Before the Session
 
 - [ ] Ensure Post Central API server is running on the teacher's computer.
-- [ ] Copy the `services-solution.js` file from the TBC to the `src` folder. This will be used for demonstration purposes. Trainees will complete the `services.js` file on their own.
+- [ ] Copy the `services.solution.js` file from the TBC to the `src` folder. This will be used for demonstration purposes. Trainees will complete the `services.js` file on their own.
 - [ ] Ensure trainees have the Learning Resources repository available on their machines. This should have already have cloned it last week.
 - [ ] Verify trainees can reach the server by having them open `http://<IP>:3000/posts/hello` in a browser
 - [ ] Verify npm packages are installed (`npm install`)

@@ -1,17 +1,16 @@
 import chalk from 'chalk';
-import { existsSync } from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { select, confirm } from '@inquirer/prompts';
 import promptSync from 'prompt-sync';
 const prompt = promptSync();
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const studentServicePath = path.join(__dirname, '../src/services.js');
-const solutionServicePath = path.join(__dirname, '../src/services-solution.js');
-
 // Import fetcher functions
-const solutionExists = existsSync(solutionServicePath); // Set to false to test starter code
+let services;
+try {
+  services = await import('./services.solution.js');
+} catch {
+  services = await import('./services.js');
+}
+
 const {
   createPost,
   createUser,
@@ -22,9 +21,7 @@ const {
   loginUser,
   setToken,
   updatePost,
-} = solutionExists
-  ? await import(solutionServicePath)
-  : await import(studentServicePath);
+} = services;
 
 // ============================================================================
 // MAIN APPLICATION - Complete solution version

@@ -114,13 +114,13 @@ Both `post-cli.js` and the test files use the same pattern to decide which servi
 ```js
 const solutionExists = existsSync(solutionServicePath);
 const { loginUser, getPosts, ... } = solutionExists
-  ? await import(solutionServicePath)    // services-solution.js
+  ? await import(solutionServicePath)    // services.solution.js
   : await import(studentServicePath);    // services.js (your file)
 ```
 
 This means:
 
-- If `services-solution.js` exists, the CLI and tests use it. This file is a reference implementation for instructors so they can quickly demo a working version — it is not intended for you.
+- If `services.solution.js` exists, the CLI and tests use it. This file is a reference implementation for instructors so they can quickly demo a working version — it is not intended for you.
 - If it doesn't exist, they fall back to your `services.js`.
 
 When you receive this project as a homework assignment, only `services.js` (the starter file) will be present, so the CLI and tests will automatically use your code.

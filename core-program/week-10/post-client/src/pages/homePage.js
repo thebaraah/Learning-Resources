@@ -4,7 +4,7 @@ import {
   createPost,
   editPost,
   deletePost,
-} from '../services/services.js';
+} from '../services/loader.js';
 import { removeToken } from '../lib/tokenUtils.js';
 import HomeView from '../views/homeView.js';
 import BasePage from './basePage.js';
