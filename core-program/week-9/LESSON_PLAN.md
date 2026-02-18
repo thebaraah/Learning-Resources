@@ -7,11 +7,11 @@
 
 ## Introduction
 
-This exercise uses an API server, called Post Central, that runs on the teacher's computer. Trainees can send HTTP requests from their own laptop to the API server, using the local IP address (e.g. 192.168.xxx.xxx) of the teacher's machine. This local IP address will be shown when the server is started.
+This exercise uses an API server, called Post Central, that runs on the teacher's computer. Trainees can send HTTP requests from their own laptop to the API server, using the local IP address (e.g. 192.168.xxx.xxx) of the teacher's machine. This local IP address will be shown in the terminal when the server is started.
 
 The API server statically serves a portal application that visualizes the requests received from the endpoints in WhatsApp-like format. The portal communicates with the API in real-time using WebSockets.
 
-![post-central](../.assets/post-central.png)
+![post-central](.assets/post-central.png)
 
 The Post Central API provides endpoints for the following:
 
@@ -116,8 +116,8 @@ The Post Central API has one endpoint that does not require authentication: `GET
 
 **Discussion points for instructors walking around:**
 
-- What is the status code? (200)
-- What format is the response in? (JSON)
+- What is the status code?
+- What format is the response in?
 - What do the `-v` headers tell you?
 
 ## 5. Exercise 2: Explore the Scalar API Docs (5 min)
