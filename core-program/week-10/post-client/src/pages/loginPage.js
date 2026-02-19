@@ -1,4 +1,4 @@
-import { login } from '../services/loader.js';
+import { login } from '../services/services.js';
 import { putToken } from '../lib/tokenUtils.js';
 import LoginView from '../views/loginView.js';
 import BasePage from './basePage.js';

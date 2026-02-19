@@ -1,4 +1,4 @@
-import { register } from '../services/loader.js';
+import { register } from '../services/services.js';
 import RegisterView from '../views/registerView.js';
 import BasePage from './basePage.js';
 

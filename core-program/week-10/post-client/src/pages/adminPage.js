@@ -3,7 +3,7 @@ import {
   getUsers,
   deleteUserByAdmin,
 } from '../services/admin.js';
-import { getProfile, deletePost } from '../services/loader.js';
+import { getProfile, deletePost } from '../services/services.js';
 import { removeToken } from '../lib/tokenUtils.js';
 import AdminView from '../views/adminView.js';
 import BasePage from './basePage.js';
