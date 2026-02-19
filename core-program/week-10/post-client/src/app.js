@@ -26,4 +26,7 @@ function start() {
   router.start();
 }
 
-window.addEventListener('DOMContentLoaded', start);
+// Module scripts are deferred, so the DOM is already parsed when this runs.
+// Using DOMContentLoaded would fail because loader.js uses top-level await,
+// which can cause the event to fire before the module graph finishes evaluating.
+start();
