@@ -116,7 +116,7 @@ Inline Chat opens a small chat box right next to your code in the editor. It is 
 
 ### Make Sure You Are in Ask Mode
 
-At the bottom of the Chat panel, you will see a mode dropdown. Make sure it says **Ask**. If it says something else (like "Edit" or "Agent"), click the dropdown and select **Ask**.
+At the bottom of the Chat panel, you will see a mode dropdown. Make sure it says **Ask**. If it says something else (like "Agent" or "Plan"), click the dropdown and select **Ask**.
 
 ![Chat input showing Ask mode dropdown](.assets/copilot-ask-mode.png)
 
@@ -198,17 +198,17 @@ Here is how to combine inline suggestions and Ask mode when working on an assign
 > [!TIP]
 > Think of Copilot as a study partner who can explain things, not as someone who does the work for you. The learning happens when **you** write and understand the code.
 
-## What About Edit Mode and Agent Mode?
+## What About Agent Mode and Plan Mode?
 
-You may notice other options in the Chat mode dropdown: **Edit** and **Agent**.
+You may notice other options in the Chat mode dropdown: **Agent** and **Plan**.
 
-- **Edit mode** can directly modify your files based on instructions you give it.
-- **Agent mode** can autonomously create files, run terminal commands, and make changes across multiple files.
+- **Agent mode** can autonomously plan and implement changes across multiple files, run terminal commands, and invoke tools.
+- **Plan mode** creates a structured, step-by-step implementation plan before writing any code. It hands the plan off to an implementation agent when you approve it.
 
 At this stage of the program, we want you to focus on writing code yourself. You will learn more by typing code and understanding each line than by having an AI write it for you. Your mentors will introduce these more advanced modes when the time is right.
 
 > [!NOTE]
-> If the Chat dropdown is set to "Edit" or "Agent", Copilot may try to change your files. Always keep it set to **Ask** for now.
+> If the Chat dropdown is set to "Agent" or "Plan", Copilot may try to change your files. Always keep it set to **Ask** for now.
 
 ## Quick Reference
 
