@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "kill": "node kill-server.js",
-    "postinstall": "node scripts/generate-notification.js"
+    "postinstall": "node scripts/generate-notification.js",
+    "myip": "node scripts/myip.js"
   },
   "keywords": [],
   "author": "HackYourFuture",
