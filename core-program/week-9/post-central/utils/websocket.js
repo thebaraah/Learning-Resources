@@ -1,4 +1,5 @@
 import { getAllPosts } from '../services/postService.js';
+import chalk from 'chalk';
 
 let websocketServer;
 
@@ -7,7 +8,7 @@ export const initializeWebSocket = (wss) => {
 
   // Handle new client connections
   wss.on('connection', (ws) => {
-    console.log('New WebSocket client connected');
+    console.log(chalk.green('New WebSocket client connected'));
 
     // Send all existing posts to the newly connected client
     const posts = getAllPosts();
@@ -20,14 +21,14 @@ export const initializeWebSocket = (wss) => {
     });
 
     ws.on('close', () => {
-      console.log('WebSocket client disconnected');
+      console.log(chalk.green('WebSocket client disconnected'));
     });
   });
 };
 
 export const broadcast = (type, data) => {
   if (!websocketServer) {
-    console.error('WebSocket server not initialized');
+    console.error(chalk.red('WebSocket server not initialized'));
     return;
   }
 
