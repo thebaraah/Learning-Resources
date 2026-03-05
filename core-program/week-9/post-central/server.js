@@ -45,7 +45,7 @@ server.listen(PORT, () => {
     chalk.magenta(`\nClient app at http://${getLocalIP()}:${PORT}/client`)
   );
   console.log(
-    chalk.magenta(`Portal app at http://${getLocalIP()}:${PORT}/portal`)
+    chalk.magenta(`Portal app at http://${getLocalIP()}:${PORT}/`)
   );
   console.log(
     chalk.blue(`\nAPI Documentation at http://${getLocalIP()}:${PORT}/api-docs`)

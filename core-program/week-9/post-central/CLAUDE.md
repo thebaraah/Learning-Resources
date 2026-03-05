@@ -10,7 +10,7 @@ Post Central is an educational REST API app used during HackYourFuture classroom
 - **Auth:** jsonwebtoken + bcrypt
 - **WebSocket:** ws
 - **Persistence:** file-based JSON (`data/users.json`, `data/posts.json`)
-- **Portal frontend:** vanilla JS (served at `/portal`)
+- **Portal frontend:** vanilla JS (served at `/`)
 - **API docs:** OpenAPI 3.0 spec + Scalar UI
 - **Dev tooling:** eslint, prettier, vitest
 

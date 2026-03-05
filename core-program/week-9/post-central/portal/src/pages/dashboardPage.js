@@ -33,7 +33,7 @@ export default class DashboardPage {
     this.#showAudioBanner();
 
     // Pre-load notification sound
-    fetch('/portal/public/notification.wav')
+    fetch('/public/notification.wav')
       .then((res) => res.arrayBuffer())
       .then((buf) => this.#audioCtx.decodeAudioData(buf))
       .then((decoded) => {

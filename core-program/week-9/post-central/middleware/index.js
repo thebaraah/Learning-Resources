@@ -17,7 +17,7 @@ export const setupMiddleware = (app, __dirname) => {
     '/client',
     express.static(path.join(__dirname, 'post-client'))
   );
-  app.use('/portal', express.static(path.join(__dirname, 'portal')));
+  app.use('/', express.static(path.join(__dirname, 'portal')));
 
   // Set global JSON indentation to 2 spaces
   app.set('json spaces', 2);
