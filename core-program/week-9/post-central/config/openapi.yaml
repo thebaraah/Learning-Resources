@@ -6,8 +6,7 @@ info:
   contact:
     name: API Support
 servers:
-  - url: http://localhost:3000
-    description: Local server
+  - url: /
 components:
   securitySchemes:
     bearerAuth:
