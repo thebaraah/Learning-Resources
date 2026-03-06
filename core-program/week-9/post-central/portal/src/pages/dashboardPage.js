@@ -7,6 +7,8 @@ export default class DashboardPage {
   #wsClient;
   #audioCtx;
   #pingBuffer;
+  #soundEnabled = false;
+  #soundCheckbox;
 
   constructor({ state, container }) {
     this.#state = state;
@@ -28,9 +30,8 @@ export default class DashboardPage {
       onStatusChange: (status) => state.update({ connectionStatus: status }),
     });
 
-    // Create AudioContext early; browsers suspend it until a user gesture
     this.#audioCtx = new AudioContext();
-    this.#showAudioBanner();
+    this.#setupSoundCheckbox();
 
     // Pre-load notification sound
     fetch('/public/notification.wav')
@@ -109,14 +110,16 @@ export default class DashboardPage {
       }, 2000);
     }
 
-    if (post.user === 'admin' && post.isNew !== false) {
+    if (postWithTimestamp.isNew) {
       this.#playPing();
     }
   }
 
   #playPing() {
+    if (!this.#soundEnabled || !this.#pingBuffer) return;
+
     const ctx = this.#audioCtx;
-    if (ctx.state === 'suspended' || !this.#pingBuffer) return;
+    if (ctx.state === 'suspended') return;
 
     const source = ctx.createBufferSource();
     source.buffer = this.#pingBuffer;
@@ -124,25 +127,14 @@ export default class DashboardPage {
     source.start();
   }
 
-  #showAudioBanner() {
-    const banner = document.createElement('div');
-    banner.className = 'audio-banner';
-    banner.innerHTML =
-      '<span>Click to enable notification sounds for admin posts</span>' +
-      '<button class="audio-banner-dismiss" aria-label="Dismiss">&times;</button>';
-
-    banner.addEventListener('click', () => {
-      this.#audioCtx.resume();
-      banner.remove();
+  #setupSoundCheckbox() {
+    this.#soundCheckbox = document.getElementById('sound-checkbox');
+    this.#soundCheckbox.addEventListener('change', () => {
+      this.#soundEnabled = this.#soundCheckbox.checked;
+      if (this.#soundEnabled) {
+        this.#audioCtx.resume();
+      }
     });
-
-    setTimeout(() => {
-      banner.classList.add('fade-out');
-      banner.addEventListener('animationend', () => banner.remove());
-    }, 3000);
-
-    const header = document.querySelector('.header');
-    header.insertAdjacentElement('afterend', banner);
   }
 
   #handlePostUpdate(updatedPost) {
@@ -183,6 +175,7 @@ export default class DashboardPage {
       lastAction: { type: 'user:register', user },
     });
     queueMicrotask(() => this.#state.update({ lastAction: null }));
+    this.#playPing();
   }
 
   #handleUserLogin(user) {
@@ -196,6 +189,7 @@ export default class DashboardPage {
       lastAction: { type: 'user:login', user },
     });
     queueMicrotask(() => this.#state.update({ lastAction: null }));
+    this.#playPing();
   }
 
   #handleUserDelete(deletedUser) {
@@ -210,5 +204,6 @@ export default class DashboardPage {
       lastAction: { type: 'user:delete', user: deletedUser },
     });
     queueMicrotask(() => this.#state.update({ lastAction: null }));
+    this.#playPing();
   }
 }
