@@ -96,6 +96,19 @@ export default class DashboardPage {
     });
     queueMicrotask(() => this.#state.update({ lastAction: null }));
 
+    // Clear the isNew flag after the highlight animation finishes (2s)
+    // so it doesn't replay on every timestamp-refresh re-render.
+    if (postWithTimestamp.isNew) {
+      setTimeout(() => {
+        const { posts: currentPosts } = this.#state.get();
+        this.#state.update({
+          posts: currentPosts.map((p) =>
+            p.id === postWithTimestamp.id ? { ...p, isNew: false } : p
+          ),
+        });
+      }, 2000);
+    }
+
     if (post.user === 'admin' && post.isNew !== false) {
       this.#playPing();
     }
