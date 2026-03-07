@@ -1,0 +1,17 @@
+{
+  "name": "raw-server",
+  "version": "1.0.0",
+  "description": "A minimal TCP server that displays the raw HTTP request text exactly as it arrives on the wire. This helps you understand what HTTP requests actually look like at the protocol level — before any framework parses them.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.6.2"
+  }
+}
