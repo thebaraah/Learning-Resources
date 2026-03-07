@@ -64,7 +64,7 @@ _Image suggestion: side-by-side screenshots of the README and the Scalar docs pa
 
 ## Slide 6: The Portal — live feedback
 
-The portal at `/portal` shows all activity in real time.
+The portal at the server's root URL shows all activity in real time.
 
 When you create a post via the API, it appears on the portal instantly.
 
@@ -77,7 +77,7 @@ _Image suggestion: screenshot of the portal with a few posts visible_
 ## Slide 7: Pair setup
 
 **Laptop A (portal)**
-- Open `http://<instructor-ip>:3000/portal`
+- Open `http://<instructor-ip>:3000`
 
 **Laptop B (workstation)**
 - Open a terminal
