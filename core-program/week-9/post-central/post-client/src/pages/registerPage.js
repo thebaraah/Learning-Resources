@@ -1,4 +1,5 @@
 import { register } from '../services/services.js';
+import { putToken } from '../lib/tokenUtils.js';
 import RegisterView from '../views/registerView.js';
 import BasePage from './basePage.js';
 
@@ -13,8 +14,12 @@ export default class RegisterPage extends BasePage {
 
   #onSubmit = async (name, password) => {
     try {
-      await register(name, password);
-      this.router.navigateTo('register-success');
+      const data = await register(name, password);
+
+      putToken(data.token);
+      this.state.update({ token: data.token, user: data.user, error: null });
+
+      this.router.navigateTo('home');
     } catch (error) {
       this.state.update({ error: error.message });
     }
