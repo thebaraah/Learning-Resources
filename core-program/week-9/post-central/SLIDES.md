@@ -50,15 +50,14 @@ Authentication: register or log in to get a **token**, include it in every reque
 
 ---
 
-## Slide 5: Three ways to read the docs
+## Slide 5: Two ways to read the docs
 
 1. **README** — written documentation
 2. **Scalar API docs** (`/api-docs`) — interactive, generated from the OpenAPI spec
-3. **Try it yourself** — send requests and read the responses
 
 _Image suggestion: side-by-side screenshots of the README and the Scalar docs page_
 
-> Speaker notes: Show each briefly on the projector. Point out that the Scalar docs let you send requests directly from the browser.
+> Speaker notes: Show each briefly on the projector. Point out that the Scalar docs let you send requests directly from the browser. 
 
 ---
 
@@ -114,7 +113,7 @@ Check the portal — does anything change? Why not?
 2. Find `GET /posts/hello` and use "Try it"
 3. Browse the other endpoints — which ones need authentication?
 
-> Speaker notes: Let them click around. The key discovery is that some endpoints have a lock icon — they require a Bearer token. Ask: "What do you think a Bearer token is?"
+> Speaker notes: Let them click around. The key discovery is that some endpoints show "Authentication Required" — they require a Bearer token. Ask: "What do you think a Bearer token is?"
 
 ---
 
