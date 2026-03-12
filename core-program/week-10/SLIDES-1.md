@@ -31,6 +31,16 @@ JavaScript is **single-threaded** — it can only run one thing at a time.
 
 ---
 
+# 💬 Discussion: What Does "Asynchronous" Mean?
+
+**Ask the group:**
+
+> "What does 'asynchronous' mean to you? Have you encountered the word before — in tech or in everyday life?"
+
+Give trainees 1-2 minutes to discuss.
+
+---
+
 # Synchronous = Blocking
 
 Think of it as **standing at the door** waiting for a pizza delivery, doing nothing else.
@@ -65,6 +75,10 @@ setTimeout(() => {
 console.log("After timer");
 ```
 
+---
+
+# Asynchronous Output — Surprise!
+
 **Output:**
 ```
 Before timer
@@ -73,6 +87,28 @@ Timer done!       ← appears after ~1 second
 ```
 
 JavaScript moves on immediately — the callback runs *later*.
+
+---
+
+# 💬 Discussion: Real-Life Async
+
+**Ask the group:**
+
+> "Can you think of real-life examples of asynchronous behavior? Something where you start a task and do other things while waiting for it to finish."
+
+Give trainees 1-2 minutes to discuss.
+
+---
+
+# 💬 Discussion: Where Have You Used Callbacks?
+
+**Ask the group:**
+
+> "Where have you already used callbacks in JavaScript? Think about array methods you've worked with."
+
+Hint: `.forEach()`, `.map()`, `.filter()` all take callback functions!
+
+Give trainees 1-2 minutes to discuss.
 
 ---
 
@@ -93,11 +129,9 @@ greetLater(() => {
 });
 ```
 
-You already know callbacks from `.forEach()`, `.map()`, `.filter()`.
-
 ---
 
-# Timers: setTimeout & setInterval
+# setTimeout
 
 **setTimeout** — runs the callback **once** after a delay:
 
@@ -106,6 +140,12 @@ setTimeout(() => {
   console.log("Runs once after 1 second");
 }, 1000);
 ```
+
+The delay is in milliseconds (1000 ms = 1 second).
+
+---
+
+# setInterval
 
 **setInterval** — runs the callback **repeatedly** at an interval:
 
@@ -118,9 +158,11 @@ const id = setInterval(() => {
 clearInterval(id);
 ```
 
+Use `clearInterval(id)` to stop it — otherwise it runs forever.
+
 ---
 
-# Callback Hell (Pyramid of Doom)
+# Callback Hell — The Code
 
 When async operations depend on each other, callbacks get deeply nested:
 
@@ -137,7 +179,27 @@ fs.readFile(path1, (err, result1) => {
 });
 ```
 
-**Problems:** hard to read, hard to maintain, error handling everywhere.
+---
+
+# Callback Hell — The Problems
+
+This "pyramid of doom" is bad because:
+
+- **Hard to read** — indentation keeps growing to the right
+- **Hard to maintain** — adding a step means nesting deeper
+- **Error handling everywhere** — each level needs its own `if (err)` check
+
+There must be a better way...
+
+---
+
+# 💬 Discussion: What's Wrong With Callback Hell?
+
+**Ask the group:**
+
+> "Looking at the nested callbacks on the previous slide — what problems do you see? What would happen if you needed to add a fourth step?"
+
+Give trainees 1-2 minutes to discuss.
 
 ---
 
@@ -229,7 +291,7 @@ fetchData()
 
 ---
 
-# Async File I/O in Node.js
+# Async File I/O — Synchronous Version
 
 **Synchronous (blocking):**
 
@@ -237,6 +299,12 @@ fetchData()
 import fs from "node:fs";
 const content = fs.readFileSync("file.txt", "utf8");
 ```
+
+This blocks the entire program until the file is read.
+
+---
+
+# Async File I/O — Promise Version
 
 **Asynchronous with promises (non-blocking):**
 
@@ -252,36 +320,55 @@ Use `fs/promises` for async file operations in Node.js.
 
 ---
 
-# The Event Loop — Big Picture
+# 💬 Discussion: Predict the Output
+
+**Ask the group:**
+
+> "What order will these lines print? Write down your prediction before we reveal the answer."
+
+```js
+console.log("1. Hello!");
+
+Promise.resolve().then(() => {
+  console.log("2. promise then");
+});
+
+setTimeout(() => {
+  console.log("3. timeout");
+}, 0);
+
+console.log("4. Goodbye!");
+```
+
+Give trainees 2 minutes to think and discuss.
+
+---
+
+# The Event Loop — Concept
 
 JavaScript has **one thread** but uses **queues** to handle async work:
+
+- **Call Stack** — where your current code runs
+- **Microtask Queue** — Promise callbacks (.then, .catch)
+- **Task Queue** — Timer callbacks (setTimeout, setInterval), I/O
+
+**Key takeaway:** Promise callbacks (microtasks) always run **before** timer callbacks (tasks).
+
+---
+
+# The Event Loop — Steps
+
+The event loop follows these steps on repeat:
 
 1. Run current code on the **Call Stack**
 2. When the stack is empty → drain the **Microtask Queue** (Promise callbacks)
 3. Then take the next item from the **Task Queue** (setTimeout, I/O)
 4. Repeat
 
-**Key takeaway:** Promise callbacks (microtasks) always run **before** timer callbacks (tasks).
-
 ---
 
-# Event Loop — Predict the Output
+# Event Loop — Reveal the Answer
 
-```js
-console.log("Hello!");
-
-Promise.resolve().then(() => {
-  console.log("promise then");
-});
-
-setTimeout(() => {
-  console.log("timeout");
-}, 0);
-
-console.log("Goodbye!");
-```
-
-**Output:**
 ```
 Hello!
 Goodbye!
@@ -289,9 +376,23 @@ promise then     ← microtask runs first
 timeout          ← task runs after
 ```
 
+"Hello!" and "Goodbye!" run first (they're on the call stack). Then the promise callback (microtask). Then the timeout (task).
+
 ---
 
-# The Fetch API
+# 💬 Discussion: How Have We Made HTTP Requests?
+
+**Ask the group:**
+
+> "How have we been making HTTP requests so far in this course? What tools did we use in week 9?"
+
+Hint: think about the terminal and the browser.
+
+Give trainees 1-2 minutes to discuss.
+
+---
+
+# The Fetch API — Code
 
 `fetch()` makes HTTP requests from JavaScript and returns a **promise**.
 
@@ -307,13 +408,25 @@ fetch("https://jsonplaceholder.typicode.com/posts/1")
   .catch((error) => console.error(error));
 ```
 
+---
+
+# The Fetch API — The response.ok Rule
+
 **Important:** `fetch` only rejects on **network errors**, not on 404/500!
 
-Always check `response.ok`.
+A 404 response still counts as a "successful" fetch.
+
+**Always check `response.ok`** before using the data:
+
+```js
+if (!response.ok) {
+  throw new Error(`HTTP ${response.status}`);
+}
+```
 
 ---
 
-# Fetch — Common Pitfalls
+# Fetch Pitfall 1: Forgetting to Return
 
 **Forgetting to return `response.json()`:**
 
@@ -329,11 +442,21 @@ Always check `response.ok`.
 })
 ```
 
-**Ignoring `response.ok`:**
+---
+
+# Fetch Pitfall 2: Ignoring response.ok
 
 ```js
-// ❌ A 404 still resolves the promise
+// ❌ A 404 still resolves the promise — your code keeps going
+//    with an error response as if it were data
+
 // ✅ Always check response.ok and throw if false
+.then((response) => {
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}`);
+  }
+  return response.json();
+})
 ```
 
 ---
@@ -360,7 +483,17 @@ Same HTTP concepts as curl and Postman, now in JavaScript.
 
 ---
 
-# From Promises to async/await
+# 💬 Discussion: What's Annoying About .then() Chains?
+
+**Ask the group:**
+
+> "What's annoying about long `.then()` chains? If you could write async code that *looked* like normal code, what would that look like?"
+
+Give trainees 1-2 minutes to discuss.
+
+---
+
+# From Promises to async/await — Promise Version
 
 **Promise chain version:**
 
@@ -371,6 +504,12 @@ function ask() {
     .catch((err) => { /* handle */ });
 }
 ```
+
+Chains work, but they can get long and hard to follow...
+
+---
+
+# From Promises to async/await — Await Version
 
 **async/await version:**
 
@@ -387,15 +526,21 @@ async function ask() {
 
 `await` pauses the async function until the promise settles.
 
+Same behavior, much cleaner syntax!
+
 ---
 
-# async/await Rules
+# async/await — The Rules
 
 - `async` functions **always return a promise**
 - `await` can only be used **inside** an `async` function
 - `await` on a fulfilled promise → gives the value
 - `await` on a rejected promise → throws (catch with `try/catch`)
 - Under the hood, it's still promises and microtasks
+
+---
+
+# async/await — Example
 
 ```js
 async function add(a, b) {
@@ -404,6 +549,8 @@ async function add(a, b) {
 
 add(2, 3).then((val) => console.log(val)); // 5
 ```
+
+Even though `add` just returns a number, the `async` keyword wraps it in a promise automatically.
 
 ---
 
@@ -428,9 +575,19 @@ Reads like synchronous code, but is fully non-blocking.
 
 ---
 
-# Sequential vs Parallel
+# 💬 Discussion: Speeding Up Multiple Requests
 
-**Sequential (slow)** — each request waits for the previous one:
+**Ask the group:**
+
+> "If you need data from 3 different APIs, how would you speed it up instead of waiting for each one to finish before starting the next?"
+
+Give trainees 1-2 minutes to discuss.
+
+---
+
+# Sequential Requests (Slow)
+
+Each request waits for the previous one:
 
 ```js
 const post1 = await fetch(url1).then((r) => r.json());
@@ -438,7 +595,13 @@ const post2 = await fetch(url2).then((r) => r.json());
 // Total time ≈ time1 + time2
 ```
 
-**Parallel (fast)** — all requests start at once:
+If each request takes 1 second, two requests take 2 seconds.
+
+---
+
+# Parallel Requests with Promise.all (Fast)
+
+All requests start at once:
 
 ```js
 const [post1, post2] = await Promise.all([
@@ -447,6 +610,8 @@ const [post1, post2] = await Promise.all([
 ]);
 // Total time ≈ max(time1, time2)
 ```
+
+If each request takes 1 second, two requests still take ~1 second.
 
 ---
 
