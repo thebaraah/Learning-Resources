@@ -1,3 +1,5 @@
+// How many promises are created in this code?
+
 const promise = new Promise((resolve, reject) => {
   setTimeout(() => {
     resolve('Done!');
