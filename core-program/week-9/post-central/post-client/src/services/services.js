@@ -1,4 +1,4 @@
-import { BASE_URL } from './constants.js';
+import { BASE_URL } from "./constants.js";
 
 /**
  * Get a hello message from Post Central (no auth required).
@@ -8,7 +8,7 @@ import { BASE_URL } from './constants.js';
  * API endpoint: GET ${BASE_URL}/posts/hello
  */
 export async function getHello() {
-  const error = new Error('Not implemented');
+  const error = new Error("Not implemented");
   error.status = 501;
   throw error;
 }
@@ -25,8 +25,8 @@ export async function getHello() {
  */
 export async function register(name, password) {
   const response = await fetch(`${BASE_URL}/users/register`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, password }),
   });
   const data = await response.json();
@@ -49,7 +49,7 @@ export async function register(name, password) {
  * Request body: { name, password }
  */
 export async function login(name, password) {
-  const error = new Error('Not implemented');
+  const error = new Error("Not implemented");
   error.status = 501;
   throw error;
 }
@@ -64,7 +64,7 @@ export async function login(name, password) {
  * Headers: Authorization: Bearer <token>
  */
 export async function getProfile(token) {
-  const error = new Error('Not implemented');
+  const error = new Error("Not implemented");
   error.status = 501;
   throw error;
 }
@@ -79,7 +79,7 @@ export async function getProfile(token) {
  * Headers: Authorization: Bearer <token>
  */
 export async function getMyPosts(token) {
-  const error = new Error('Not implemented');
+  const error = new Error("Not implemented");
   error.status = 501;
   throw error;
 }
@@ -96,7 +96,7 @@ export async function getMyPosts(token) {
  * Request body: { text }
  */
 export async function createPost(token, text) {
-  const error = new Error('Not implemented');
+  const error = new Error("Not implemented");
   error.status = 501;
   throw error;
 }
@@ -114,7 +114,7 @@ export async function createPost(token, text) {
  * Request body: { text }
  */
 export async function editPost(token, id, text) {
-  const error = new Error('Not implemented');
+  const error = new Error("Not implemented");
   error.status = 501;
   throw error;
 }
@@ -130,7 +130,7 @@ export async function editPost(token, id, text) {
  * Headers: Authorization: Bearer <token>
  */
 export async function deletePost(token, id) {
-  const error = new Error('Not implemented');
+  const error = new Error("Not implemented");
   error.status = 501;
   throw error;
 }

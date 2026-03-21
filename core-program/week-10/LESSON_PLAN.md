@@ -33,15 +33,15 @@ The client runs locally in the browser via Live Server. It makes cross-origin re
 
 ## Schedule Overview
 
-| Time | Section | Format |
-| --- | --- | --- |
-| 0–3 min | Introduction | Instructor talk |
-| 3–8 min | Demo + setup | Instructor demo + trainees |
-| 8–15 min | Exercise 1: getHello + login | Instructor-led → pair work |
-| 15–23 min | Exercise 2: getProfile + getMyPosts | Pair work |
-| 23–33 min | Exercise 3: createPost | Pair work |
-| 33–43 min | Exercise 4: editPost + deletePost | Pair work |
-| 43–45 min | Wrap-up | Instructor talk |
+| Time      | Section                             | Format                     |
+| --------- | ----------------------------------- | -------------------------- |
+| 0–3 min   | Introduction                        | Instructor talk            |
+| 3–8 min   | Demo + setup                        | Instructor demo + trainees |
+| 8–15 min  | Exercise 1: getHello + login        | Instructor-led → pair work |
+| 15–23 min | Exercise 2: getProfile + getMyPosts | Pair work                  |
+| 23–33 min | Exercise 3: createPost              | Pair work                  |
+| 33–43 min | Exercise 4: editPost + deletePost   | Pair work                  |
+| 43–45 min | Wrap-up                             | Instructor talk            |
 
 ---
 

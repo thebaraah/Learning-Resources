@@ -1,6 +1,6 @@
-import getElementsWithIds from '../lib/getElementsWithIds.js';
-import renderMarkdown from '../lib/markdown.js';
-import BaseView from './baseView.js';
+import getElementsWithIds from "../lib/getElementsWithIds.js";
+import renderMarkdown from "../lib/markdown.js";
+import BaseView from "./baseView.js";
 
 export default class HomeView extends BaseView {
   #props;
@@ -10,7 +10,7 @@ export default class HomeView extends BaseView {
   #pendingDeleteId = null;
 
   constructor(props) {
-    super('div');
+    super("div");
     this.#props = props;
     this.root.innerHTML = String.raw`
       <div class="app-layout">
@@ -61,11 +61,11 @@ export default class HomeView extends BaseView {
 
     this.#dom = getElementsWithIds(this.root);
 
-    this.#dom.adminBtn.addEventListener('click', this.#onAdmin);
-    this.#dom.logoutBtn.addEventListener('click', this.#onLogout);
-    this.#dom.createPostForm.addEventListener('submit', this.#onCreatePost);
-    this.#dom.postsList.addEventListener('click', this.#onPostAction);
-    this.#dom.confirmDialog.addEventListener('close', this.#onDialogClose);
+    this.#dom.adminBtn.addEventListener("click", this.#onAdmin);
+    this.#dom.logoutBtn.addEventListener("click", this.#onLogout);
+    this.#dom.createPostForm.addEventListener("submit", this.#onCreatePost);
+    this.#dom.postsList.addEventListener("click", this.#onPostAction);
+    this.#dom.confirmDialog.addEventListener("close", this.#onDialogClose);
   }
 
   #onAdmin = (e) => {
@@ -83,15 +83,15 @@ export default class HomeView extends BaseView {
     const text = this.#dom.postText.value.trim();
     if (text) {
       this.#props.onCreatePost(text);
-      this.#dom.postText.value = '';
+      this.#dom.postText.value = "";
     }
   };
 
   #onPostAction = (e) => {
-    const editBtn = e.target.closest('.edit-btn');
-    const deleteBtn = e.target.closest('.delete-btn');
-    const saveBtn = e.target.closest('.save-btn');
-    const cancelBtn = e.target.closest('.cancel-btn');
+    const editBtn = e.target.closest(".edit-btn");
+    const deleteBtn = e.target.closest(".delete-btn");
+    const saveBtn = e.target.closest(".save-btn");
+    const cancelBtn = e.target.closest(".cancel-btn");
 
     if (editBtn) {
       this.#editingPostId = parseInt(editBtn.dataset.id);
@@ -100,7 +100,7 @@ export default class HomeView extends BaseView {
       this.#pendingDeleteId = parseInt(deleteBtn.dataset.id);
       this.#showDialogNear(deleteBtn);
     } else if (saveBtn) {
-      const textarea = this.#dom.postsList.querySelector('.edit-textarea');
+      const textarea = this.#dom.postsList.querySelector(".edit-textarea");
       if (textarea) {
         this.#props.onEditPost(parseInt(saveBtn.dataset.id), textarea.value);
         this.#editingPostId = null;
@@ -127,7 +127,7 @@ export default class HomeView extends BaseView {
       left > 16 && left + dlgRect.width < window.innerWidth - 16;
 
     if (fitsBelow && fitsHorizontally) {
-      dialog.style.margin = '0';
+      dialog.style.margin = "0";
       dialog.style.insetBlockStart = `${top}px`;
       dialog.style.insetInlineStart = `${left}px`;
     }
@@ -136,18 +136,18 @@ export default class HomeView extends BaseView {
   #onDialogClose = () => {
     // Reset any manual positioning so the next open starts fresh.
     const dialog = this.#dom.confirmDialog;
-    dialog.style.margin = '';
-    dialog.style.insetBlockStart = '';
-    dialog.style.insetInlineStart = '';
+    dialog.style.margin = "";
+    dialog.style.insetBlockStart = "";
+    dialog.style.insetInlineStart = "";
 
-    if (dialog.returnValue === 'confirm' && this.#pendingDeleteId != null) {
+    if (dialog.returnValue === "confirm" && this.#pendingDeleteId != null) {
       this.#props.onDeletePost(this.#pendingDeleteId);
     }
     this.#pendingDeleteId = null;
   };
 
   #escapeHtml(text) {
-    const div = document.createElement('div');
+    const div = document.createElement("div");
     div.textContent = text;
     return div.innerHTML;
   }
@@ -159,14 +159,14 @@ export default class HomeView extends BaseView {
     const diffMin = Math.floor(diffMs / 60000);
     const diffHr = Math.floor(diffMs / 3600000);
 
-    if (diffMin < 1) return 'Just now';
+    if (diffMin < 1) return "Just now";
     if (diffMin < 60) return `${diffMin}m ago`;
     if (diffHr < 24) return `${diffHr}h ago`;
 
-    return date.toLocaleDateString('nl-NL', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
+    return date.toLocaleDateString("nl-NL", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
     });
   }
 
@@ -175,7 +175,7 @@ export default class HomeView extends BaseView {
     const timestamp = this.#formatTimestamp(post.timestamp);
     const editedBadge = post.isEdited
       ? '<span class="post-edited">edited</span>'
-      : '';
+      : "";
 
     if (isEditing) {
       return `
@@ -219,12 +219,12 @@ export default class HomeView extends BaseView {
 
     // Sort newest first
     const sorted = [...posts].sort(
-      (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+      (a, b) => new Date(b.timestamp) - new Date(a.timestamp),
     );
 
     this.#dom.postsList.innerHTML = sorted
       .map((post) => this.#renderPost(post))
-      .join('');
+      .join("");
   }
 
   update(state) {
@@ -232,8 +232,8 @@ export default class HomeView extends BaseView {
       this.#dom.username.textContent = state.user;
     }
 
-    if (state.role === 'admin') {
-      this.#dom.adminBtn.classList.remove('hidden');
+    if (state.role === "admin") {
+      this.#dom.adminBtn.classList.remove("hidden");
     }
 
     if (state.posts) {
@@ -249,12 +249,12 @@ export default class HomeView extends BaseView {
         </div>
       `;
       this.#dom.errorSlot
-        .querySelector('.error-close-btn')
-        .addEventListener('click', () => {
-          this.#dom.errorSlot.innerHTML = '';
+        .querySelector(".error-close-btn")
+        .addEventListener("click", () => {
+          this.#dom.errorSlot.innerHTML = "";
         });
     } else {
-      this.#dom.errorSlot.innerHTML = '';
+      this.#dom.errorSlot.innerHTML = "";
     }
   }
 }

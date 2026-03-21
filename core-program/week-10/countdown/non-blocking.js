@@ -2,7 +2,7 @@ let isRunning = false;
 
 function speak(text) {
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'en-US';
+  utterance.lang = "en-US";
   speechSynthesis.speak(utterance);
 }
 
@@ -12,10 +12,10 @@ function timer(count) {
     return;
   }
 
-  console.log('count:', count);
+  console.log("count:", count);
   speak(count.toString());
 
-  document.querySelector('#counter').textContent = count;
+  document.querySelector("#counter").textContent = count;
 
   // If the count reaches zero, we're done.
   if (count === 0) {
@@ -48,6 +48,6 @@ function stopTimer() {
 }
 
 document
-  .querySelector('#start')
-  .addEventListener('click', () => startTimer(10));
-document.querySelector('#stop').addEventListener('click', stopTimer);
+  .querySelector("#start")
+  .addEventListener("click", () => startTimer(10));
+document.querySelector("#stop").addEventListener("click", stopTimer);

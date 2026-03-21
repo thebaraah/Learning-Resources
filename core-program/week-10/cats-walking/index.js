@@ -1,4 +1,4 @@
-import WalkingCat from './ui.js ';
+import WalkingCat from "./ui.js ";
 
 const DANCE_TIME_MS = 5000;
 const STEP_SIZE_PX = 10;

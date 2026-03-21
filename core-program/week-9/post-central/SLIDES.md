@@ -27,11 +27,11 @@ Post Central — Hands-on Session
 
 ## Slide 3: The tools
 
-| Tool | What it is | Best for |
-| --- | --- | --- |
-| **curl** | Command-line tool | Quick requests, scripting |
-| **Postman** | Graphical HTTP client | Building and saving complex requests |
-| **Scalar API docs** | Interactive docs in the browser | Exploring and testing endpoints |
+| Tool                | What it is                      | Best for                             |
+| ------------------- | ------------------------------- | ------------------------------------ |
+| **curl**            | Command-line tool               | Quick requests, scripting            |
+| **Postman**         | Graphical HTTP client           | Building and saving complex requests |
+| **Scalar API docs** | Interactive docs in the browser | Exploring and testing endpoints      |
 
 > Speaker notes: All three do the same thing — send HTTP requests. The difference is the interface. Developers typically use all of them depending on the situation.
 
@@ -57,7 +57,7 @@ Authentication: register or log in to get a **token**, include it in every reque
 
 _Image suggestion: side-by-side screenshots of the README and the Scalar docs page_
 
-> Speaker notes: Show each briefly on the projector. Point out that the Scalar docs let you send requests directly from the browser. 
+> Speaker notes: Show each briefly on the projector. Point out that the Scalar docs let you send requests directly from the browser.
 
 ---
 
@@ -76,9 +76,11 @@ _Image suggestion: screenshot of the portal with a few posts visible_
 ## Slide 7: Pair setup
 
 **Laptop A (portal)**
+
 - Open `http://<instructor-ip>:3000`
 
 **Laptop B (workstation)**
+
 - Open a terminal
 - Open Postman
 - Open `http://<instructor-ip>:3000/api-docs`
@@ -96,6 +98,7 @@ _Write the server IP address on the board._
 Find the `GET /posts/hello` endpoint in the docs and call it with curl.
 
 Hints:
+
 - `curl <url>`
 - Add `-v` to see the full HTTP conversation
 

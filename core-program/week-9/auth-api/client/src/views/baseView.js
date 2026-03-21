@@ -1,7 +1,7 @@
 export default class BaseView {
   #root;
 
-  constructor(tagName = 'div') {
+  constructor(tagName = "div") {
     this.#root = document.createElement(tagName);
   }
 

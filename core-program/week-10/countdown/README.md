@@ -27,7 +27,6 @@ The example provides two timer modes: a normal (non-blocking) mode using the sta
 2. Save the changes to `index.html` and refresh the page in your web browser.
 
 3. Click the "Start" button to start the timer. Because this version uses blocking code, you will notice:
-
    - The "Start" button appears depressed and unresponsive.
    - The counter display does not update.
    - The spoken countdown stops after the first count (10).

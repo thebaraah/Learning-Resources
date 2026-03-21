@@ -1,15 +1,15 @@
-import bcrypt from 'bcrypt';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { ADMIN_PASSWORD } from '../config/constants.js';
+import bcrypt from "bcrypt";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import { ADMIN_PASSWORD } from "../config/constants.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DATA_FILE = path.join(__dirname, '..', 'data', 'users.json');
+const DATA_FILE = path.join(__dirname, "..", "data", "users.json");
 
 const loadUsers = () => {
   try {
-    const data = fs.readFileSync(DATA_FILE, 'utf-8');
+    const data = fs.readFileSync(DATA_FILE, "utf-8");
     return JSON.parse(data);
   } catch {
     return null;
@@ -30,11 +30,11 @@ if (!users) {
   const adminPassword = await bcrypt.hash(ADMIN_PASSWORD, 10);
   users = [
     {
-      user: 'admin',
+      user: "admin",
       password: adminPassword,
-      role: 'admin',
-      createdAt: '2024-01-01T00:00:00.000Z',
-      lastLogin: '2024-01-01T00:00:00.000Z',
+      role: "admin",
+      createdAt: "2024-01-01T00:00:00.000Z",
+      lastLogin: "2024-01-01T00:00:00.000Z",
     },
   ];
   saveUsers();
@@ -55,13 +55,13 @@ export const createUser = (name, hashedPassword) => {
   const newUser = {
     user: name,
     password: hashedPassword,
-    role: 'user',
+    role: "user",
     createdAt: now,
     lastLogin: now,
   };
   users.push(newUser);
   saveUsers();
-  return { user: name, role: 'user', createdAt: now, lastLogin: now };
+  return { user: name, role: "user", createdAt: now, lastLogin: now };
 };
 
 export const updateLastLogin = (name) => {

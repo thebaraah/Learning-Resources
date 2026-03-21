@@ -1,7 +1,7 @@
-console.log('Before timer');
+console.log("Before timer");
 
 setTimeout(() => {
-  console.log('Timer done!');
+  console.log("Timer done!");
 }, 2000);
 
-console.log('After timer');
+console.log("After timer");

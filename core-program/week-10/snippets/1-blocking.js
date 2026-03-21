@@ -5,6 +5,6 @@ function wait(delay) {
   }
 }
 
-console.log('Hello!');
+console.log("Hello!");
 wait(2000);
-console.log('This waits until the loop is done');
+console.log("This waits until the loop is done");

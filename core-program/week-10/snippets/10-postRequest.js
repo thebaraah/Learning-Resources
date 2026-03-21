@@ -1,11 +1,11 @@
-fetch('https://jsonplaceholder.typicode.com/posts', {
-  method: 'POST',
+fetch("https://jsonplaceholder.typicode.com/posts", {
+  method: "POST",
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
   body: JSON.stringify({
-    title: 'Hello',
-    body: 'World',
+    title: "Hello",
+    body: "World",
     userId: 1,
   }),
 })

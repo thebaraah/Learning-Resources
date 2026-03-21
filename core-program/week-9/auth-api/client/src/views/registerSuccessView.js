@@ -1,12 +1,12 @@
-import getElementsWithIds from '../lib/getElementsWithIds.js';
-import BaseView from './baseView.js';
+import getElementsWithIds from "../lib/getElementsWithIds.js";
+import BaseView from "./baseView.js";
 
 export default class RegisterSuccessView extends BaseView {
   #props;
   #dom;
 
   constructor(props) {
-    super('div');
+    super("div");
     this.#props = props;
     this.root.innerHTML = String.raw`
       <div class="row">
@@ -36,11 +36,11 @@ export default class RegisterSuccessView extends BaseView {
 
     this.#dom = getElementsWithIds(this.root);
 
-    const sideNavElements = this.root.querySelectorAll('.sidenav');
+    const sideNavElements = this.root.querySelectorAll(".sidenav");
     this.sideNavInstances = M.Sidenav.init(sideNavElements);
 
-    this.#dom.loginBtn.addEventListener('click', this.#loginHandler);
-    this.#dom.mobileLoginBtn.addEventListener('click', this.#loginHandler);
+    this.#dom.loginBtn.addEventListener("click", this.#loginHandler);
+    this.#dom.mobileLoginBtn.addEventListener("click", this.#loginHandler);
   }
 
   #loginHandler = (e) => {

@@ -60,7 +60,7 @@ Tests verify that your functions make the correct `fetch()` calls **without need
 Before each test, Vitest replaces the global `fetch` function with a mock:
 
 ```js
-fetchMock = vi.spyOn(global, 'fetch');
+fetchMock = vi.spyOn(global, "fetch");
 ```
 
 This mock intercepts every `fetch()` call your functions make. The test then provides a fake response:
@@ -69,7 +69,7 @@ This mock intercepts every `fetch()` call your functions make. The test then pro
 fetchMock.mockResolvedValueOnce({
   ok: true,
   status: 200,
-  json: async () => ({ user: 'Alice' }),
+  json: async () => ({ user: "Alice" }),
 });
 ```
 

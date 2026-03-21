@@ -9,12 +9,12 @@
  * Usage: node scripts/generate-notification.js
  */
 
-import { writeFileSync } from 'fs';
-import { dirname, resolve } from 'path';
-import { fileURLToPath } from 'url';
+import { writeFileSync } from "fs";
+import { dirname, resolve } from "path";
+import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const OUTPUT_PATH = resolve(__dirname, '../portal/public/notification.wav');
+const OUTPUT_PATH = resolve(__dirname, "../portal/public/notification.wav");
 
 const SAMPLE_RATE = 44100;
 const BITS_PER_SAMPLE = 16;
@@ -79,12 +79,12 @@ const fileSize = 36 + dataSize;
 const header = Buffer.alloc(44);
 
 // RIFF header
-header.write('RIFF', 0);
+header.write("RIFF", 0);
 header.writeUInt32LE(fileSize, 4);
-header.write('WAVE', 8);
+header.write("WAVE", 8);
 
 // fmt chunk
-header.write('fmt ', 12);
+header.write("fmt ", 12);
 header.writeUInt32LE(16, 16); // chunk size
 header.writeUInt16LE(1, 20); // PCM format
 header.writeUInt16LE(NUM_CHANNELS, 22);
@@ -94,7 +94,7 @@ header.writeUInt16LE(NUM_CHANNELS * (BITS_PER_SAMPLE / 8), 32); // block align
 header.writeUInt16LE(BITS_PER_SAMPLE, 34);
 
 // data chunk
-header.write('data', 36);
+header.write("data", 36);
 header.writeUInt32LE(dataSize, 40);
 
 const wav = Buffer.concat([header, pcmData]);

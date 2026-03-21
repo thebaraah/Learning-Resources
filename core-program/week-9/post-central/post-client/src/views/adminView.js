@@ -1,6 +1,6 @@
-import getElementsWithIds from '../lib/getElementsWithIds.js';
-import renderMarkdown from '../lib/markdown.js';
-import BaseView from './baseView.js';
+import getElementsWithIds from "../lib/getElementsWithIds.js";
+import renderMarkdown from "../lib/markdown.js";
+import BaseView from "./baseView.js";
 
 export default class AdminView extends BaseView {
   #props;
@@ -9,7 +9,7 @@ export default class AdminView extends BaseView {
   #pendingDeletePost = null;
 
   constructor(props) {
-    super('div');
+    super("div");
     this.#props = props;
     this.root.innerHTML = String.raw`
       <div class="app-layout">
@@ -58,11 +58,11 @@ export default class AdminView extends BaseView {
 
     this.#dom = getElementsWithIds(this.root);
 
-    this.#dom.backBtn.addEventListener('click', this.#onBack);
-    this.#dom.reloadPostsBtn.addEventListener('click', this.#onReloadPosts);
-    this.#dom.usersList.addEventListener('click', this.#onUserAction);
-    this.#dom.postsList.addEventListener('click', this.#onPostAction);
-    this.#dom.confirmDialog.addEventListener('close', this.#onDialogClose);
+    this.#dom.backBtn.addEventListener("click", this.#onBack);
+    this.#dom.reloadPostsBtn.addEventListener("click", this.#onReloadPosts);
+    this.#dom.usersList.addEventListener("click", this.#onUserAction);
+    this.#dom.postsList.addEventListener("click", this.#onPostAction);
+    this.#dom.confirmDialog.addEventListener("close", this.#onDialogClose);
   }
 
   #onBack = (e) => {
@@ -75,7 +75,7 @@ export default class AdminView extends BaseView {
   };
 
   #onUserAction = (e) => {
-    const deleteBtn = e.target.closest('.admin-delete-user-btn');
+    const deleteBtn = e.target.closest(".admin-delete-user-btn");
     if (deleteBtn) {
       this.#pendingDeleteUser = deleteBtn.dataset.name;
       this.#dom.confirmMessage.textContent = `Delete user "${deleteBtn.dataset.name}"?`;
@@ -84,7 +84,7 @@ export default class AdminView extends BaseView {
   };
 
   #onPostAction = (e) => {
-    const deleteBtn = e.target.closest('.admin-delete-post-btn');
+    const deleteBtn = e.target.closest(".admin-delete-post-btn");
     if (deleteBtn) {
       this.#pendingDeletePost = parseInt(deleteBtn.dataset.id);
       this.#dom.confirmMessage.textContent = `Delete post #${deleteBtn.dataset.id}?`;
@@ -94,7 +94,7 @@ export default class AdminView extends BaseView {
 
   #onDialogClose = () => {
     const dialog = this.#dom.confirmDialog;
-    if (dialog.returnValue === 'confirm') {
+    if (dialog.returnValue === "confirm") {
       if (this.#pendingDeleteUser != null) {
         this.#props.onDeleteUser(this.#pendingDeleteUser);
       } else if (this.#pendingDeletePost != null) {
@@ -106,19 +106,19 @@ export default class AdminView extends BaseView {
   };
 
   #escapeHtml(text) {
-    const div = document.createElement('div');
+    const div = document.createElement("div");
     div.textContent = text;
     return div.innerHTML;
   }
 
   #formatDate(isoString) {
-    if (!isoString) return 'N/A';
-    return new Date(isoString).toLocaleDateString('nl-NL', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
+    if (!isoString) return "N/A";
+    return new Date(isoString).toLocaleDateString("nl-NL", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   }
 
@@ -139,9 +139,9 @@ export default class AdminView extends BaseView {
           </div>
           <button class="btn btn-danger btn-small admin-delete-user-btn" data-name="${this.#escapeHtml(user.user)}">Delete</button>
         </div>
-      `
+      `,
       )
-      .join('');
+      .join("");
   }
 
   #renderPosts(posts) {
@@ -152,7 +152,7 @@ export default class AdminView extends BaseView {
     }
 
     const sorted = [...posts].sort(
-      (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+      (a, b) => new Date(b.timestamp) - new Date(a.timestamp),
     );
 
     this.#dom.postsList.innerHTML = sorted
@@ -160,7 +160,7 @@ export default class AdminView extends BaseView {
         const preview =
           post.text.length > 120
             ? renderMarkdown(this.#escapeHtml(post.text.slice(0, 120))) +
-              '&hellip;'
+              "&hellip;"
             : renderMarkdown(this.#escapeHtml(post.text));
         return `
         <div class="admin-post-card">
@@ -175,7 +175,7 @@ export default class AdminView extends BaseView {
         </div>
       `;
       })
-      .join('');
+      .join("");
   }
 
   update(state) {
@@ -195,12 +195,12 @@ export default class AdminView extends BaseView {
         </div>
       `;
       this.#dom.errorSlot
-        .querySelector('.error-close-btn')
-        .addEventListener('click', () => {
-          this.#dom.errorSlot.innerHTML = '';
+        .querySelector(".error-close-btn")
+        .addEventListener("click", () => {
+          this.#dom.errorSlot.innerHTML = "";
         });
     } else {
-      this.#dom.errorSlot.innerHTML = '';
+      this.#dom.errorSlot.innerHTML = "";
     }
 
     if (state.success) {
@@ -211,12 +211,12 @@ export default class AdminView extends BaseView {
         </div>
       `;
       this.#dom.successSlot
-        .querySelector('.success-close-btn')
-        .addEventListener('click', () => {
-          this.#dom.successSlot.innerHTML = '';
+        .querySelector(".success-close-btn")
+        .addEventListener("click", () => {
+          this.#dom.successSlot.innerHTML = "";
         });
     } else {
-      this.#dom.successSlot.innerHTML = '';
+      this.#dom.successSlot.innerHTML = "";
     }
   }
 }

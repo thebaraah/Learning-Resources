@@ -1,5 +1,5 @@
-import RegisterSuccessView from '../views/registerSuccessView.js';
-import BasePage from './basePage.js';
+import RegisterSuccessView from "../views/registerSuccessView.js";
+import BasePage from "./basePage.js";
 
 export default class RegisterSuccessPage extends BasePage {
   constructor(props) {
@@ -10,6 +10,6 @@ export default class RegisterSuccessPage extends BasePage {
   }
 
   #onLogin = () => {
-    this.router.navigateTo('login');
+    this.router.navigateTo("login");
   };
 }

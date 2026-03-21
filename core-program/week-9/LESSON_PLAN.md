@@ -51,17 +51,17 @@ Trainees will work in pairs. The laptop of one of the trainees will run an insta
 
 ## Schedule Overview
 
-| Time | Section | Format |
-| --- | --- | --- |
-| 0–5 min | Session introduction | Instructor talk |
-| 5–10 min | Demo: Portal, API docs, README | Instructor demo |
-| 10–12 min | Pair setup | Trainees |
-| 12–17 min | Exercise 1: First request with curl | Pair exercise |
-| 17–22 min | Exercise 2: Explore the Scalar API docs | Pair exercise |
-| 22–30 min | Exercise 3: Register and login with curl | Pair exercise |
-| 30–38 min | Exercise 4: Create a post with Postman | Pair exercise |
-| 38–43 min | Exercise 5: Update and delete via Scalar | Pair exercise |
-| 43–45 min | Wrap-up | Instructor talk |
+| Time      | Section                                  | Format          |
+| --------- | ---------------------------------------- | --------------- |
+| 0–5 min   | Session introduction                     | Instructor talk |
+| 5–10 min  | Demo: Portal, API docs, README           | Instructor demo |
+| 10–12 min | Pair setup                               | Trainees        |
+| 12–17 min | Exercise 1: First request with curl      | Pair exercise   |
+| 17–22 min | Exercise 2: Explore the Scalar API docs  | Pair exercise   |
+| 22–30 min | Exercise 3: Register and login with curl | Pair exercise   |
+| 30–38 min | Exercise 4: Create a post with Postman   | Pair exercise   |
+| 38–43 min | Exercise 5: Update and delete via Scalar | Pair exercise   |
+| 43–45 min | Wrap-up                                  | Instructor talk |
 
 ---
 

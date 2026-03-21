@@ -34,17 +34,17 @@ Register a new user. Returns a JWT token.
 **Request body:**
 
 | Field      | Type   | Required | Description              |
-|------------|--------|----------|--------------------------|
+| ---------- | ------ | -------- | ------------------------ |
 | `name`     | string | Yes      | The username to register |
 | `password` | string | Yes      | The account password     |
 
 **Responses:**
 
-| Status            | Description                            |
-|-------------------|----------------------------------------|
-| `201 Created`     | User registered successfully           |
-| `400 Bad Request` | `name` or `password` field is missing  |
-| `409 Conflict`    | A user with that name already exists   |
+| Status            | Description                           |
+| ----------------- | ------------------------------------- |
+| `201 Created`     | User registered successfully          |
+| `400 Bad Request` | `name` or `password` field is missing |
+| `409 Conflict`    | A user with that name already exists  |
 
 **Response body (success):**
 
@@ -64,15 +64,15 @@ Log in with an existing account. Returns a JWT token.
 
 **Request body:**
 
-| Field      | Type   | Required | Description  |
-|------------|--------|----------|--------------|
-| `name`     | string | Yes      | Username     |
-| `password` | string | Yes      | Password     |
+| Field      | Type   | Required | Description |
+| ---------- | ------ | -------- | ----------- |
+| `name`     | string | Yes      | Username    |
+| `password` | string | Yes      | Password    |
 
 **Responses:**
 
 | Status             | Description                           |
-|--------------------|---------------------------------------|
+| ------------------ | ------------------------------------- |
 | `200 OK`           | Login successful                      |
 | `400 Bad Request`  | `name` or `password` field is missing |
 | `401 Unauthorized` | Invalid credentials                   |
@@ -94,14 +94,14 @@ Returns a list of all registered users. **Requires authentication.**
 
 **Headers:**
 
-| Header          | Value              |
-|-----------------|--------------------|
-| `Authorization` | `Bearer <token>`   |
+| Header          | Value            |
+| --------------- | ---------------- |
+| `Authorization` | `Bearer <token>` |
 
 **Responses:**
 
 | Status             | Description                          |
-|--------------------|--------------------------------------|
+| ------------------ | ------------------------------------ |
 | `200 OK`           | List of users                        |
 | `401 Unauthorized` | Authorization token required/invalid |
 
@@ -126,14 +126,14 @@ Get the authenticated user's information. **Requires authentication.**
 
 **Headers:**
 
-| Header          | Value              |
-|-----------------|--------------------|
-| `Authorization` | `Bearer <token>`   |
+| Header          | Value            |
+| --------------- | ---------------- |
+| `Authorization` | `Bearer <token>` |
 
 **Responses:**
 
 | Status             | Description                          |
-|--------------------|--------------------------------------|
+| ------------------ | ------------------------------------ |
 | `200 OK`           | The current user                     |
 | `401 Unauthorized` | Authorization token required/invalid |
 | `404 Not Found`    | User not found                       |
@@ -157,14 +157,14 @@ Delete the authenticated user's account. **Requires authentication.**
 
 **Headers:**
 
-| Header          | Value              |
-|-----------------|--------------------|
-| `Authorization` | `Bearer <token>`   |
+| Header          | Value            |
+| --------------- | ---------------- |
+| `Authorization` | `Bearer <token>` |
 
 **Responses:**
 
 | Status             | Description                          |
-|--------------------|--------------------------------------|
+| ------------------ | ------------------------------------ |
 | `200 OK`           | User deleted successfully            |
 | `401 Unauthorized` | Authorization token required/invalid |
 | `404 Not Found`    | User not found                       |
@@ -182,7 +182,7 @@ Returns a sample post with a greeting message. **No authentication required.** T
 **Responses:**
 
 | Status   | Description         |
-|----------|---------------------|
+| -------- | ------------------- |
 | `200 OK` | A sample hello post |
 
 **Response body:**
@@ -205,7 +205,7 @@ Get all posts created by the authenticated user.
 **Responses:**
 
 | Status             | Description                          |
-|--------------------|--------------------------------------|
+| ------------------ | ------------------------------------ |
 | `200 OK`           | List of the user's posts             |
 | `401 Unauthorized` | Authorization token required/invalid |
 
@@ -230,14 +230,14 @@ Create a new post.
 
 **Request body:**
 
-| Field  | Type   | Required | Description       |
-|--------|--------|----------|-------------------|
-| `text` | string | Yes      | The post content  |
+| Field  | Type   | Required | Description      |
+| ------ | ------ | -------- | ---------------- |
+| `text` | string | Yes      | The post content |
 
 **Responses:**
 
 | Status             | Description                          |
-|--------------------|--------------------------------------|
+| ------------------ | ------------------------------------ |
 | `200 OK`           | Post created successfully            |
 | `400 Bad Request`  | `text` field is missing              |
 | `401 Unauthorized` | Authorization token required/invalid |
@@ -261,24 +261,24 @@ Update an existing post. You can only edit your own posts.
 **URL parameters:**
 
 | Parameter | Description           |
-|-----------|-----------------------|
+| --------- | --------------------- |
 | `:id`     | The post ID to update |
 
 **Request body:**
 
-| Field  | Type   | Required | Description           |
-|--------|--------|----------|-----------------------|
-| `text` | string | Yes      | The new post content  |
+| Field  | Type   | Required | Description          |
+| ------ | ------ | -------- | -------------------- |
+| `text` | string | Yes      | The new post content |
 
 **Responses:**
 
-| Status             | Description                                     |
-|--------------------|-------------------------------------------------|
-| `200 OK`           | Post updated successfully                       |
-| `400 Bad Request`  | `text` field is missing                         |
-| `401 Unauthorized` | Authorization token required/invalid            |
-| `403 Forbidden`    | Post belongs to another user                    |
-| `404 Not Found`    | Post not found                                  |
+| Status             | Description                          |
+| ------------------ | ------------------------------------ |
+| `200 OK`           | Post updated successfully            |
+| `400 Bad Request`  | `text` field is missing              |
+| `401 Unauthorized` | Authorization token required/invalid |
+| `403 Forbidden`    | Post belongs to another user         |
+| `404 Not Found`    | Post not found                       |
 
 ---
 
@@ -289,17 +289,17 @@ Delete a post. You can only delete your own posts.
 **URL parameters:**
 
 | Parameter | Description           |
-|-----------|-----------------------|
+| --------- | --------------------- |
 | `:id`     | The post ID to delete |
 
 **Responses:**
 
-| Status             | Description                                     |
-|--------------------|-------------------------------------------------|
-| `200 OK`           | Post deleted successfully                       |
-| `401 Unauthorized` | Authorization token required/invalid            |
-| `403 Forbidden`    | Post belongs to another user                    |
-| `404 Not Found`    | Post not found                                  |
+| Status             | Description                          |
+| ------------------ | ------------------------------------ |
+| `200 OK`           | Post deleted successfully            |
+| `401 Unauthorized` | Authorization token required/invalid |
+| `403 Forbidden`    | Post belongs to another user         |
+| `404 Not Found`    | Post not found                       |
 
 ---
 
@@ -318,10 +318,10 @@ The server also runs a WebSocket server on the same port. Clients receive real-t
 
 **Event types:**
 
-| Event | Trigger |
-|-------|---------|
-| `user:register` | A new user registers |
-| `user:delete` | A user is deleted |
-| `post:create` | A new post is created |
-| `post:update` | A post is updated |
-| `post:delete` | A post is deleted |
+| Event           | Trigger               |
+| --------------- | --------------------- |
+| `user:register` | A new user registers  |
+| `user:delete`   | A user is deleted     |
+| `post:create`   | A new post is created |
+| `post:update`   | A post is updated     |
+| `post:delete`   | A post is deleted     |

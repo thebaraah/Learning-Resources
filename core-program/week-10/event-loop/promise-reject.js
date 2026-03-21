@@ -4,14 +4,14 @@ function whatIsTheMeaningOfLife() {
   return new Promise((resolve, reject) => {
     setTimeout(
       () =>
-        reject(new Error('Come back in 7.5 million years and ask me again!')),
-      2000
+        reject(new Error("Come back in 7.5 million years and ask me again!")),
+      2000,
     );
   });
 }
 
 function ask() {
-  let text = new Date().toLocaleTimeString('nl-NL') + ' ';
+  let text = new Date().toLocaleTimeString("nl-NL") + " ";
 
   return whatIsTheMeaningOfLife()
     .then((result) => {
@@ -24,10 +24,10 @@ function ask() {
       return console.log(text);
     })
     .catch((err) => {
-      console.error('Failed to write to log file:', err);
+      console.error("Failed to write to log file:", err);
     });
 }
 
-console.log('Hello!');
+console.log("Hello!");
 ask();
-console.log('Goodbye!');
+console.log("Goodbye!");

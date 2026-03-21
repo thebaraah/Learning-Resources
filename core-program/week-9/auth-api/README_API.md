@@ -40,5 +40,3 @@
 - Passwords are hashed with bcrypt (10 salt rounds) before storage.
 - Requests and JSON responses are logged to the console.
 - Users are kept in-memory for this demo; restart clears registrations.
-
-

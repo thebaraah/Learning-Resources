@@ -1,10 +1,10 @@
-import fs from 'node:fs';
+import fs from "node:fs";
 
-const path1 = 'data/file1.txt';
-const path2 = 'data/file2.txt';
-const path3 = 'data/file3.txt';
+const path1 = "data/file1.txt";
+const path2 = "data/file2.txt";
+const path3 = "data/file3.txt";
 
-let content = '';
+let content = "";
 
 fs.readFile(path1, (err, result1) => {
   if (err) return;
@@ -14,7 +14,7 @@ fs.readFile(path1, (err, result1) => {
     content += result2;
     fs.writeFile(path3, content, (err) => {
       if (err) return;
-      console.log('All done!');
+      console.log("All done!");
     });
   });
 });

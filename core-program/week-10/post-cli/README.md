@@ -72,17 +72,17 @@ Build the correct headers inline for each request: `Authorization: Bearer <your-
 
 ### Endpoints
 
-| Method | Endpoint          | Auth Required | Request Body                          | Response                                     |
-| ------ | ----------------- | ------------- | ------------------------------------- | -------------------------------------------- |
-| POST   | `/users/register` | No            | `{ name: string, password: string }`  | `{ user: string, token: string }`            |
-| POST   | `/users/login`    | No            | `{ name: string, password: string }`  | `{ user: string, token: string }`            |
-| GET    | `/posts/hello`    | No            | -                                     | `{ id: number, user: string, text: string, timestamp: string }` |
-| GET    | `/users/me`       | Yes           | -                                     | `{ user: string, createdAt: string, lastLogin: string }` |
-| DELETE | `/users/me`       | Yes           | -                                     | `{ user: string, message: string }`          |
-| GET    | `/posts/me`       | Yes           | -                                     | `Array of posts`                             |
-| POST   | `/posts`          | Yes           | `{ text: string }`                    | `{ id: number, text: string, user: string }` |
-| PUT    | `/posts/:id`      | Yes           | `{ text: string }`                    | `{ id: number, text: string }`               |
-| DELETE | `/posts/:id`      | Yes           | -                                     | `{ id: number, text: string, message: string }` |
+| Method | Endpoint          | Auth Required | Request Body                         | Response                                                        |
+| ------ | ----------------- | ------------- | ------------------------------------ | --------------------------------------------------------------- |
+| POST   | `/users/register` | No            | `{ name: string, password: string }` | `{ user: string, token: string }`                               |
+| POST   | `/users/login`    | No            | `{ name: string, password: string }` | `{ user: string, token: string }`                               |
+| GET    | `/posts/hello`    | No            | -                                    | `{ id: number, user: string, text: string, timestamp: string }` |
+| GET    | `/users/me`       | Yes           | -                                    | `{ user: string, createdAt: string, lastLogin: string }`        |
+| DELETE | `/users/me`       | Yes           | -                                    | `{ user: string, message: string }`                             |
+| GET    | `/posts/me`       | Yes           | -                                    | `Array of posts`                                                |
+| POST   | `/posts`          | Yes           | `{ text: string }`                   | `{ id: number, text: string, user: string }`                    |
+| PUT    | `/posts/:id`      | Yes           | `{ text: string }`                   | `{ id: number, text: string }`                                  |
+| DELETE | `/posts/:id`      | Yes           | -                                    | `{ id: number, text: string, message: string }`                 |
 
 ### Common HTTP Status Codes
 

@@ -80,13 +80,14 @@ console.log("After timer");
 # Asynchronous Output — Surprise!
 
 **Output:**
+
 ```
 Before timer
 After timer
 Timer done!       ← appears after ~1 second
 ```
 
-JavaScript moves on immediately — the callback runs *later*.
+JavaScript moves on immediately — the callback runs _later_.
 
 ---
 
@@ -168,11 +169,17 @@ When async operations depend on each other, callbacks get deeply nested:
 
 ```js
 fs.readFile(path1, (err, result1) => {
-  if (err) { /* handle */ return; }
+  if (err) {
+    /* handle */ return;
+  }
   fs.readFile(path2, (err, result2) => {
-    if (err) { /* handle */ return; }
+    if (err) {
+      /* handle */ return;
+    }
     fs.writeFile(path3, result2, (err) => {
-      if (err) { /* handle */ return; }
+      if (err) {
+        /* handle */ return;
+      }
       // done
     });
   });
@@ -260,7 +267,7 @@ When one async step depends on another, **chain** your `.then()` calls:
 getUser(1)
   .then((user) => {
     console.log("User:", user.name);
-    return getPosts(user.name);  // ← must return!
+    return getPosts(user.name); // ← must return!
   })
   .then((posts) => {
     console.log("Posts:", posts);
@@ -282,8 +289,12 @@ Runs regardless of success or failure. Does not receive the value or error.
 
 ```js
 fetchData()
-  .then((data) => { /* use data */ })
-  .catch((err) => { /* handle error */ })
+  .then((data) => {
+    /* use data */
+  })
+  .catch((err) => {
+    /* handle error */
+  })
   .finally(() => {
     // cleanup: close connections, stop spinners, etc.
   });
@@ -311,9 +322,14 @@ This blocks the entire program until the file is read.
 ```js
 import fsPromises from "node:fs/promises";
 
-fsPromises.readFile("file.txt", "utf8")
-  .then((content) => { /* use content */ })
-  .catch((err) => { /* handle error */ });
+fsPromises
+  .readFile("file.txt", "utf8")
+  .then((content) => {
+    /* use content */
+  })
+  .catch((err) => {
+    /* handle error */
+  });
 ```
 
 Use `fs/promises` for async file operations in Node.js.
@@ -487,7 +503,7 @@ Same HTTP concepts as curl and Postman, now in JavaScript.
 
 **Ask the group:**
 
-> "What's annoying about long `.then()` chains? If you could write async code that *looked* like normal code, what would that look like?"
+> "What's annoying about long `.then()` chains? If you could write async code that _looked_ like normal code, what would that look like?"
 
 Give trainees 1-2 minutes to discuss.
 
@@ -500,8 +516,12 @@ Give trainees 1-2 minutes to discuss.
 ```js
 function ask() {
   return whatIsTheMeaningOfLife()
-    .then((result) => { /* handle */ })
-    .catch((err) => { /* handle */ });
+    .then((result) => {
+      /* handle */
+    })
+    .catch((err) => {
+      /* handle */
+    });
 }
 ```
 
@@ -623,13 +643,9 @@ Takes an **array of promises**, returns a single promise that:
 - **Rejects** as soon as **any** promise rejects
 
 ```js
-const responses = await Promise.all(
-  urls.map((url) => fetch(url))
-);
+const responses = await Promise.all(urls.map((url) => fetch(url)));
 
-const data = await Promise.all(
-  responses.map((r) => r.json())
-);
+const data = await Promise.all(responses.map((r) => r.json()));
 ```
 
 Pattern: "start everything, then `await Promise.all()`"
@@ -638,12 +654,12 @@ Pattern: "start everything, then `await Promise.all()`"
 
 # When to Use What?
 
-| Situation | Approach |
-|---|---|
+| Situation                       | Approach                            |
+| ------------------------------- | ----------------------------------- |
 | Operations depend on each other | **Sequential** (`await` one by one) |
-| Operations are independent | **Parallel** (`Promise.all()`) |
-| Need the first result only | `Promise.race()` |
-| Simple one-off async call | `.then()` chain or `async/await` |
+| Operations are independent      | **Parallel** (`Promise.all()`)      |
+| Need the first result only      | `Promise.race()`                    |
+| Simple one-off async call       | `.then()` chain or `async/await`    |
 
 ---
 

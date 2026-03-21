@@ -1,7 +1,7 @@
-import fetchJson from '../lib/fetchJson.js';
-import { removeToken } from '../lib/tokenUtils.js';
-import HomeView from '../views/homeView.js';
-import BasePage from './basePage.js';
+import fetchJson from "../lib/fetchJson.js";
+import { removeToken } from "../lib/tokenUtils.js";
+import HomeView from "../views/homeView.js";
+import BasePage from "./basePage.js";
 
 export default class HomePage extends BasePage {
   constructor(props) {
@@ -14,17 +14,17 @@ export default class HomePage extends BasePage {
     this.state.clear();
 
     try {
-      const result = await fetchJson('/user/logout', { method: 'POST' });
+      const result = await fetchJson("/user/logout", { method: "POST" });
       if (!result.ok) {
         throw new Error(
-          result.message || `Logout failed. HTTP ${result.status}`
+          result.message || `Logout failed. HTTP ${result.status}`,
         );
       }
     } catch (error) {
       this.state.update({ error: error.message });
     } finally {
       removeToken();
-      this.router.navigateTo('login');
+      this.router.navigateTo("login");
     }
   };
 
@@ -32,10 +32,10 @@ export default class HomePage extends BasePage {
     try {
       const { token } = this.state.get();
       if (!token) {
-        throw new Error('No token found');
+        throw new Error("No token found");
       }
-      const result = await fetchJson('/user/me', {
-        method: 'GET',
+      const result = await fetchJson("/user/me", {
+        method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -43,7 +43,7 @@ export default class HomePage extends BasePage {
         this.state.update({ error: result.message });
         removeToken();
         this.state.clear();
-        this.router.navigateTo('login');
+        this.router.navigateTo("login");
         return;
       }
 

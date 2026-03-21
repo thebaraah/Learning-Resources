@@ -1,7 +1,7 @@
-import fetchJson from '../lib/fetchJson.js';
-import { putToken } from '../lib/tokenUtils.js';
-import LoginView from '../views/loginView.js';
-import BasePage from './basePage.js';
+import fetchJson from "../lib/fetchJson.js";
+import { putToken } from "../lib/tokenUtils.js";
+import LoginView from "../views/loginView.js";
+import BasePage from "./basePage.js";
 
 export default class LoginPage extends BasePage {
   constructor(props) {
@@ -14,26 +14,26 @@ export default class LoginPage extends BasePage {
 
   #onSubmit = async (username, password) => {
     try {
-      const result = await fetchJson('/user/login', {
-        method: 'POST',
+      const result = await fetchJson("/user/login", {
+        method: "POST",
         body: { username, password },
       });
 
       if (!result.ok) {
-        throw new Error(result.message || 'Login failed');
+        throw new Error(result.message || "Login failed");
       }
 
       const token = result.data?.token;
       putToken(token);
       this.state.update({ token, error: null });
 
-      this.router.navigateTo('home');
+      this.router.navigateTo("home");
     } catch (error) {
       this.state.update({ error: error.message });
     }
   };
 
   #onRegister = () => {
-    this.router.navigateTo('register');
+    this.router.navigateTo("register");
   };
 }

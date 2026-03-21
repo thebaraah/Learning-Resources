@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #1e3a8a 0%, #7c2d12 100%);
   min-height: 100vh;
   padding: 2rem;
@@ -64,7 +64,7 @@ h1 {
   font-size: 1.3rem;
   font-weight: 700;
   color: #1e293b;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
 }
 
 .controls {
@@ -232,7 +232,7 @@ h1 {
 }
 
 .card-back::before {
-  content: '🂠';
+  content: "🂠";
 }
 
 @media (max-width: 768px) {

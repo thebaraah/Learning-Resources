@@ -7,10 +7,9 @@ export default class DashboardView {
 
   constructor(container) {
     this.#container = container;
-    this.#postsContainer = container.querySelector('#posts-container');
-    this.#connectionStatusElement = container.querySelector(
-      '#connection-status'
-    );
+    this.#postsContainer = container.querySelector("#posts-container");
+    this.#connectionStatusElement =
+      container.querySelector("#connection-status");
 
     this.#timestampUpdateInterval = setInterval(() => {
       if (this.#lastState) {
@@ -30,21 +29,20 @@ export default class DashboardView {
   }
 
   #renderConnectionStatus(status) {
-    const indicator = this.#connectionStatusElement.querySelector(
-      '.status-indicator'
-    );
-    const text = this.#connectionStatusElement.querySelector('.status-text');
+    const indicator =
+      this.#connectionStatusElement.querySelector(".status-indicator");
+    const text = this.#connectionStatusElement.querySelector(".status-text");
 
-    indicator.className = 'status-indicator';
+    indicator.className = "status-indicator";
 
-    if (status === 'connected') {
-      indicator.classList.add('connected');
-      text.textContent = 'Connected';
-    } else if (status === 'disconnected') {
-      indicator.classList.add('disconnected');
-      text.textContent = 'Disconnected';
+    if (status === "connected") {
+      indicator.classList.add("connected");
+      text.textContent = "Connected";
+    } else if (status === "disconnected") {
+      indicator.classList.add("disconnected");
+      text.textContent = "Disconnected";
     } else {
-      text.textContent = 'Connecting...';
+      text.textContent = "Connecting...";
     }
   }
 
@@ -54,18 +52,18 @@ export default class DashboardView {
 
     if (
       lastAction &&
-      ['user:register', 'user:login'].includes(lastAction.type)
+      ["user:register", "user:login"].includes(lastAction.type)
     ) {
       this.#showNotification(
         `${lastAction.user.user} joined Post Central`,
-        'user-joined'
+        "user-joined",
       );
     }
 
-    if (lastAction && lastAction.type === 'user:delete') {
+    if (lastAction && lastAction.type === "user:delete") {
       this.#showNotification(
         `${lastAction.user.user} left Post Central`,
-        'user-left'
+        "user-left",
       );
     }
 
@@ -80,28 +78,28 @@ export default class DashboardView {
 
     this.#postsContainer.innerHTML = posts
       .map((post) => this.#renderPost(post))
-      .join('');
+      .join("");
   }
 
   #renderPost(post) {
-    const postClasses = ['post-item'];
+    const postClasses = ["post-item"];
     if (post.isNew) {
-      postClasses.push('new-post');
+      postClasses.push("new-post");
     }
     if (post.isDeleted) {
-      postClasses.push('deleted-post');
+      postClasses.push("deleted-post");
     }
 
     const timestamp = post.timestamp
       ? this.#formatTimestamp(post.timestamp)
-      : 'Just now';
+      : "Just now";
 
     const postContent = post.isDeleted
-      ? '[This post has been deleted]'
+      ? "[This post has been deleted]"
       : this.#renderMarkdown(this.#escapeHtml(post.text));
 
     return `
-      <article class="${postClasses.join(' ')}" data-post-id="${post.id}">
+      <article class="${postClasses.join(" ")}" data-post-id="${post.id}">
         <div class="post-header">
           <div>
             <span class="post-author">${this.#escapeHtml(post.user)}</span>
@@ -109,8 +107,8 @@ export default class DashboardView {
           </div>
           <time class="post-timestamp">${timestamp}</time>
         </div>
-        <div class="post-content ${post.isDeleted ? 'post-deleted-content' : ''}">${postContent}</div>
-        ${post.isEdited && !post.isDeleted ? '<div class="post-meta post-edited">Edited</div>' : ''}
+        <div class="post-content ${post.isDeleted ? "post-deleted-content" : ""}">${postContent}</div>
+        ${post.isEdited && !post.isDeleted ? '<div class="post-meta post-edited">Edited</div>' : ""}
       </article>
     `;
   }
@@ -121,7 +119,7 @@ export default class DashboardView {
     const diffInSeconds = Math.floor((now - date) / 1000);
 
     if (diffInSeconds < 60) {
-      return 'Just now';
+      return "Just now";
     } else if (diffInSeconds < 3600) {
       const minutes = Math.floor(diffInSeconds / 60);
       return `${minutes}m ago`;
@@ -129,37 +127,37 @@ export default class DashboardView {
       const hours = Math.floor(diffInSeconds / 3600);
       return `${hours}h ago`;
     } else {
-      return date.toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
-        year: date.getFullYear() !== now.getFullYear() ? 'numeric' : undefined,
+      return date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: date.getFullYear() !== now.getFullYear() ? "numeric" : undefined,
       });
     }
   }
 
   #escapeHtml(text) {
-    const div = document.createElement('div');
+    const div = document.createElement("div");
     div.textContent = text;
     return div.innerHTML;
   }
 
   #renderMarkdown(escapedText) {
     return escapedText
-      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.+?)\*/g, '<em>$1</em>')
-      .replace(/~~(.+?)~~/g, '<del>$1</del>')
-      .replace(/`(.+?)`/g, '<code>$1</code>');
+      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+      .replace(/\*(.+?)\*/g, "<em>$1</em>")
+      .replace(/~~(.+?)~~/g, "<del>$1</del>")
+      .replace(/`(.+?)`/g, "<code>$1</code>");
   }
 
-  #showNotification(message, notificationType = 'user-joined') {
-    const notification = document.createElement('div');
+  #showNotification(message, notificationType = "user-joined") {
+    const notification = document.createElement("div");
     notification.className = `notification ${notificationType}`;
     notification.textContent = message;
 
-    this.#postsContainer.insertAdjacentElement('beforebegin', notification);
+    this.#postsContainer.insertAdjacentElement("beforebegin", notification);
 
     setTimeout(() => {
-      notification.classList.add('fade-out');
+      notification.classList.add("fade-out");
       setTimeout(() => {
         notification.remove();
       }, 500);

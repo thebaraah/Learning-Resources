@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitest/config';
+import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
@@ -11,10 +11,10 @@ export default defineConfig({
     },
 
     // Display options
-    reporters: ['verbose'],
+    reporters: ["verbose"],
 
     // Include test files
-    include: ['tests/**/*.test.js'],
+    include: ["tests/**/*.test.js"],
 
     // Global setup - you can add setup/teardown hooks here if needed
     globals: true,

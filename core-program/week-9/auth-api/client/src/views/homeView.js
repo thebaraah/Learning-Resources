@@ -1,6 +1,6 @@
-import getElementsWithIds from '../lib/getElementsWithIds.js';
-import BaseView from './baseView.js';
-import ModalDialogView from './modalDialogView.js';
+import getElementsWithIds from "../lib/getElementsWithIds.js";
+import BaseView from "./baseView.js";
+import ModalDialogView from "./modalDialogView.js";
 
 export default class HomeView extends BaseView {
   #props;
@@ -9,7 +9,7 @@ export default class HomeView extends BaseView {
   #sideNavInstances;
 
   constructor(props) {
-    super('div');
+    super("div");
     this.#props = props;
     this.root.innerHTML = String.raw`
       <div class="row">
@@ -35,16 +35,16 @@ export default class HomeView extends BaseView {
       </div>
     `;
 
-    this.#modalView = new ModalDialogView({ title: 'Error' });
+    this.#modalView = new ModalDialogView({ title: "Error" });
     this.root.append(this.#modalView.root);
 
     this.#dom = getElementsWithIds(this.root);
 
-    const sideNavElements = this.root.querySelectorAll('.sidenav');
+    const sideNavElements = this.root.querySelectorAll(".sidenav");
     this.#sideNavInstances = M.Sidenav.init(sideNavElements);
 
-    this.#dom.logoutBtn.addEventListener('click', this.#logoutHandler);
-    this.#dom.mobileLogoutBtn.addEventListener('click', this.#logoutHandler);
+    this.#dom.logoutBtn.addEventListener("click", this.#logoutHandler);
+    this.#dom.mobileLogoutBtn.addEventListener("click", this.#logoutHandler);
   }
 
   #logoutHandler = (e) => {

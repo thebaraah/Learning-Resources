@@ -6,8 +6,8 @@ class UI {
     this.populateYearSelect();
 
     // Set up change listeners on both dropdowns
-    this.dom.yearSelect.addEventListener('change', () => this.loadHolidays());
-    this.dom.countrySelect.addEventListener('change', () => {
+    this.dom.yearSelect.addEventListener("change", () => this.loadHolidays());
+    this.dom.countrySelect.addEventListener("change", () => {
       this.updateCountryName();
       this.loadHolidays();
     });
@@ -18,7 +18,7 @@ class UI {
       this.hideLoading();
       if (err) {
         console.error(err);
-        this.showError('Failed to load countries. Please try again later.');
+        this.showError("Failed to load countries. Please try again later.");
         return;
       }
       this.populateCountrySelect(countries);
@@ -35,7 +35,7 @@ class UI {
       this.hideLoading();
       if (err) {
         console.error(err);
-        this.showError('Failed to load holidays. Please try again later.');
+        this.showError("Failed to load holidays. Please try again later.");
       } else {
         this.renderHolidays(data);
       }
@@ -43,21 +43,21 @@ class UI {
   }
 
   getDefaultCountryCode(countries) {
-    const locale = navigator.language || '';
-    const parts = locale.split('-');
+    const locale = navigator.language || "";
+    const parts = locale.split("-");
     if (parts.length > 1) {
       const code = parts[1].toUpperCase();
       if (countries.some((c) => c.countryCode === code)) {
         return code;
       }
     }
-    return 'NL';
+    return "NL";
   }
 
   populateCountrySelect(countries) {
     const defaultCode = this.getDefaultCountryCode(countries);
     countries.forEach((country) => {
-      const option = document.createElement('option');
+      const option = document.createElement("option");
       option.value = country.countryCode;
       option.textContent = country.name;
       if (country.countryCode === defaultCode) {
@@ -70,20 +70,21 @@ class UI {
   updateCountryName() {
     const select = this.dom.countrySelect;
     const selectedOption = select.options[select.selectedIndex];
-    this.dom.countryName.textContent =
-      selectedOption ? selectedOption.textContent : '';
+    this.dom.countryName.textContent = selectedOption
+      ? selectedOption.textContent
+      : "";
   }
 
   getElementsWithIds(root) {
-    const elements = root.querySelectorAll('[id]');
+    const elements = root.querySelectorAll("[id]");
     return Array.from(elements).reduce((obj, element) => {
       const name = element.id
-        .split('-')
+        .split("-")
         .map((part, index) => {
           if (index === 0) return part;
           return part.charAt(0).toUpperCase() + part.slice(1);
         })
-        .join('');
+        .join("");
       obj[name] = element;
       return obj;
     }, {});
@@ -91,8 +92,8 @@ class UI {
 
   formatDate(dateString) {
     const date = new Date(dateString);
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return date.toLocaleDateString("en-US", options);
   }
 
   getTypeBadgeClass(type) {
@@ -100,26 +101,26 @@ class UI {
   }
 
   createHolidayCard(holiday) {
-    const card = document.createElement('div');
-    card.className = 'holiday-card';
+    const card = document.createElement("div");
+    card.className = "holiday-card";
 
-    const date = document.createElement('div');
-    date.className = 'holiday-date';
+    const date = document.createElement("div");
+    date.className = "holiday-date";
     date.textContent = this.formatDate(holiday.date);
 
-    const name = document.createElement('div');
-    name.className = 'holiday-name';
+    const name = document.createElement("div");
+    name.className = "holiday-name";
     name.textContent = holiday.name;
 
-    const localName = document.createElement('div');
-    localName.className = 'holiday-local-name';
+    const localName = document.createElement("div");
+    localName.className = "holiday-local-name";
     localName.textContent = holiday.localName;
 
-    const typesContainer = document.createElement('div');
-    typesContainer.className = 'holiday-types';
+    const typesContainer = document.createElement("div");
+    typesContainer.className = "holiday-types";
 
     holiday.types.forEach((type) => {
-      const badge = document.createElement('span');
+      const badge = document.createElement("span");
       badge.className = `holiday-type-badge ${this.getTypeBadgeClass(type)}`;
       badge.textContent = type;
       typesContainer.appendChild(badge);
@@ -139,7 +140,7 @@ class UI {
     const endYear = currentYear + 1;
 
     for (let year = startYear; year <= endYear; year++) {
-      const option = document.createElement('option');
+      const option = document.createElement("option");
       option.value = year;
       option.textContent = year;
       if (year === currentYear) {
@@ -151,7 +152,7 @@ class UI {
 
   renderHolidays(holidays) {
     const container = this.dom.holidaysContainer;
-    container.innerHTML = '';
+    container.innerHTML = "";
 
     if (holidays.length === 0) {
       container.innerHTML = '<div class="empty-state">No holidays found</div>';
@@ -167,16 +168,16 @@ class UI {
   showError(message) {
     const errorElement = this.dom.errorMessage;
     errorElement.textContent = message;
-    errorElement.classList.add('active');
+    errorElement.classList.add("active");
   }
 
   showLoading() {
-    this.dom.loading.classList.add('active');
-    this.dom.errorMessage.classList.remove('active');
+    this.dom.loading.classList.add("active");
+    this.dom.errorMessage.classList.remove("active");
   }
 
   hideLoading() {
-    this.dom.loading.classList.remove('active');
+    this.dom.loading.classList.remove("active");
   }
 }
 

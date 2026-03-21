@@ -1,4 +1,4 @@
-const TOKEN_NAME = 'token';
+const TOKEN_NAME = "token";
 
 export function getToken() {
   return localStorage.getItem(TOKEN_NAME);

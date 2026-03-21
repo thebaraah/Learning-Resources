@@ -4,10 +4,10 @@ import {
   createPost,
   editPost,
   deletePost,
-} from '../services/services.js';
-import { removeToken } from '../lib/tokenUtils.js';
-import HomeView from '../views/homeView.js';
-import BasePage from './basePage.js';
+} from "../services/services.js";
+import { removeToken } from "../lib/tokenUtils.js";
+import HomeView from "../views/homeView.js";
+import BasePage from "./basePage.js";
 
 export default class HomePage extends BasePage {
   constructor(props) {
@@ -26,7 +26,7 @@ export default class HomePage extends BasePage {
     if (error.status === 401) {
       removeToken();
       this.state.clear();
-      this.router.navigateTo('login');
+      this.router.navigateTo("login");
       return true;
     }
     return false;
@@ -35,7 +35,7 @@ export default class HomePage extends BasePage {
   async #loadData() {
     const { token } = this.state.get();
     if (!token) {
-      this.router.navigateTo('login');
+      this.router.navigateTo("login");
       return;
     }
 
@@ -57,13 +57,13 @@ export default class HomePage extends BasePage {
   }
 
   #onAdmin = () => {
-    this.router.navigateTo('admin');
+    this.router.navigateTo("admin");
   };
 
   #onLogout = () => {
     removeToken();
     this.state.clear();
-    this.router.navigateTo('login');
+    this.router.navigateTo("login");
   };
 
   #onCreatePost = async (text) => {

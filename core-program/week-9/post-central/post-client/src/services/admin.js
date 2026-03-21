@@ -1,4 +1,4 @@
-import { BASE_URL } from './constants.js';
+import { BASE_URL } from "./constants.js";
 
 /**
  * Get all posts (admin only).
@@ -11,9 +11,9 @@ import { BASE_URL } from './constants.js';
  */
 export async function getAllPosts(token) {
   const response = await fetch(`${BASE_URL}/posts`, {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   });
@@ -37,9 +37,9 @@ export async function getAllPosts(token) {
  */
 export async function getUsers(token) {
   const response = await fetch(`${BASE_URL}/users`, {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   });
@@ -63,13 +63,16 @@ export async function getUsers(token) {
  * Headers: Authorization: Bearer <token>
  */
 export async function deleteUserByAdmin(token, name) {
-  const response = await fetch(`${BASE_URL}/users/${encodeURIComponent(name)}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+  const response = await fetch(
+    `${BASE_URL}/users/${encodeURIComponent(name)}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     },
-  });
+  );
   const data = await response.json();
   if (!response.ok) {
     const error = new Error(data.error || response.statusText);

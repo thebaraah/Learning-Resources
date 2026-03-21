@@ -1,6 +1,6 @@
-import getElementsWithIds from '../lib/getElementsWithIds.js';
-import BaseView from './baseView.js';
-import ModalDialogView from './modalDialogView.js';
+import getElementsWithIds from "../lib/getElementsWithIds.js";
+import BaseView from "./baseView.js";
+import ModalDialogView from "./modalDialogView.js";
 
 export default class RegisterView extends BaseView {
   #props;
@@ -8,7 +8,7 @@ export default class RegisterView extends BaseView {
   #dom;
 
   constructor(props) {
-    super('div');
+    super("div");
     this.#props = props;
     this.root.innerHTML = String.raw`
     <div class="container">
@@ -39,12 +39,12 @@ export default class RegisterView extends BaseView {
     </div>     
     `;
 
-    this.#modalView = new ModalDialogView({ title: 'Registration Failed' });
+    this.#modalView = new ModalDialogView({ title: "Registration Failed" });
     this.root.append(this.#modalView.root);
 
     this.#dom = getElementsWithIds(this.root);
-    this.#dom.registerForm.addEventListener('submit', this.#onSumbit);
-    this.#dom.loginLink.addEventListener('click', this.#onLogin);
+    this.#dom.registerForm.addEventListener("submit", this.#onSumbit);
+    this.#dom.loginLink.addEventListener("click", this.#onLogin);
   }
 
   #onSumbit = (e) => {

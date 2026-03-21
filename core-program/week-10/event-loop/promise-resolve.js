@@ -9,7 +9,7 @@ function whatIsTheMeaningOfLife() {
 }
 
 function ask() {
-  let text = new Date().toLocaleTimeString('nl-NL') + ' ';
+  let text = new Date().toLocaleTimeString("nl-NL") + " ";
 
   return whatIsTheMeaningOfLife()
     .then((result) => {
@@ -22,10 +22,10 @@ function ask() {
       return console.log(text);
     })
     .catch((err) => {
-      console.error('Failed to write to log file:', err);
+      console.error("Failed to write to log file:", err);
     });
 }
 
-console.log('Hello!');
+console.log("Hello!");
 ask();
-console.log('Goodbye!');
+console.log("Goodbye!");

@@ -1,12 +1,12 @@
-import getElementsWithIds from '../lib/getElementsWithIds.js';
-import BaseView from './baseView.js';
+import getElementsWithIds from "../lib/getElementsWithIds.js";
+import BaseView from "./baseView.js";
 
 export default class LoginView extends BaseView {
   #props;
   #dom;
 
   constructor(props) {
-    super('div');
+    super("div");
     this.#props = props;
     this.root.innerHTML = String.raw`
       <div class="auth-container">
@@ -32,8 +32,8 @@ export default class LoginView extends BaseView {
     `;
 
     this.#dom = getElementsWithIds(this.root);
-    this.#dom.form.addEventListener('submit', this.#onSubmit);
-    this.#dom.registerLink.addEventListener('click', this.#onRegister);
+    this.#dom.form.addEventListener("submit", this.#onSubmit);
+    this.#dom.registerLink.addEventListener("click", this.#onRegister);
   }
 
   #onSubmit = (e) => {
@@ -56,12 +56,12 @@ export default class LoginView extends BaseView {
         </div>
       `;
       this.#dom.errorSlot
-        .querySelector('.error-close-btn')
-        .addEventListener('click', () => {
-          this.#dom.errorSlot.innerHTML = '';
+        .querySelector(".error-close-btn")
+        .addEventListener("click", () => {
+          this.#dom.errorSlot.innerHTML = "";
         });
     } else {
-      this.#dom.errorSlot.innerHTML = '';
+      this.#dom.errorSlot.innerHTML = "";
     }
   }
 }

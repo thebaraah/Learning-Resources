@@ -4,7 +4,7 @@
  * @returns An object with `id` as key and an element reference as value.
  */
 function getElementsWithIds(root) {
-  const elementsWithIds = Array.from(root.querySelectorAll('[id]'));
+  const elementsWithIds = Array.from(root.querySelectorAll("[id]"));
   const dom = {};
   for (const elem of elementsWithIds) {
     dom[elem.id] = elem;

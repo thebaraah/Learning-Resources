@@ -59,8 +59,8 @@ what it looks like:
 ```js
 export async function register(name, password) {
   const response = await fetch(`${BASE_URL}/users/register`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, password }),
   });
   const data = await response.json();
@@ -77,12 +77,12 @@ export async function register(name, password) {
 server. Every `fetch()` call must use it as a prefix.
 
 > :exclamation: A note about `response.json()` and `response.ok`: Normally you would need
-to check `response.ok` _before_ calling `response.json()`, because not every
-server returns JSON for error responses. This API is different — it **always**
-returns JSON, even when the response is not OK. That means you can safely call
-`response.json()` first and then check `response.ok` afterwards (as you can see
-in the `register` function above). This is convenient because the parsed JSON
-body contains the error message you need for the thrown `Error`.
+> to check `response.ok` _before_ calling `response.json()`, because not every
+> server returns JSON for error responses. This API is different — it **always**
+> returns JSON, even when the response is not OK. That means you can safely call
+> `response.json()` first and then check `response.ok` afterwards (as you can see
+> in the `register` function above). This is convenient because the parsed JSON
+> body contains the error message you need for the thrown `Error`.
 
 ### Implementation
 
@@ -91,16 +91,16 @@ headers, and request body.
 
 Here is a summary:
 
-| Function       | Method   | Path             | Auth   | Request Body       |
-| -------------- | -------- | ---------------- | ------ | ------------------ |
-| `getHello`     | `GET`    | `/posts/hello`   | No     | —                  |
-| `login`        | `POST`   | `/users/login`   | No     | `{ name, password }` |
-| `register`     | `POST`   | `/users/register`| No     | `{ name, password }` |
-| `getProfile`   | `GET`    | `/users/me`      | Bearer | —                  |
-| `getMyPosts`   | `GET`    | `/posts/me`      | Bearer | —                  |
-| `createPost`   | `POST`   | `/posts`         | Bearer | `{ text }`         |
-| `editPost`     | `PUT`    | `/posts/:id`     | Bearer | `{ text }`         |
-| `deletePost`   | `DELETE` | `/posts/:id`     | Bearer | —                  |
+| Function     | Method   | Path              | Auth   | Request Body         |
+| ------------ | -------- | ----------------- | ------ | -------------------- |
+| `getHello`   | `GET`    | `/posts/hello`    | No     | —                    |
+| `login`      | `POST`   | `/users/login`    | No     | `{ name, password }` |
+| `register`   | `POST`   | `/users/register` | No     | `{ name, password }` |
+| `getProfile` | `GET`    | `/users/me`       | Bearer | —                    |
+| `getMyPosts` | `GET`    | `/posts/me`       | Bearer | —                    |
+| `createPost` | `POST`   | `/posts`          | Bearer | `{ text }`           |
+| `editPost`   | `PUT`    | `/posts/:id`      | Bearer | `{ text }`           |
+| `deletePost` | `DELETE` | `/posts/:id`      | Bearer | —                    |
 
 All paths must be prefixed with `BASE_URL` in your `fetch()` calls (e.g.
 `` `${BASE_URL}/posts/hello` ``).

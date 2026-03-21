@@ -46,11 +46,13 @@ Routes → controllers → services pattern. Services read/write JSON files dire
 - `req.user` is set by the `authenticate` middleware with `{ user, role }` from the JWT payload
 
 **Public endpoints:**
+
 - `POST /users/register`
 - `POST /users/login`
 - `GET /posts/hello`
 
 **Protected endpoints (require Bearer token):**
+
 - `GET /users` — returns all non-admin users
 - `GET /users/me`, `DELETE /users/me`
 - `DELETE /users/:name` — admin only
@@ -77,14 +79,14 @@ Routes → controllers → services pattern. Services read/write JSON files dire
 
 Six event types are broadcast to all connected portal clients:
 
-| Event | Trigger |
-|---|---|
-| `user:register` | New user registers |
-| `user:login` | User logs in |
-| `user:delete` | User is deleted |
-| `post:create` | Post is created (includes `isNew: true`) |
-| `post:update` | Post is updated |
-| `post:delete` | Post is deleted |
+| Event           | Trigger                                  |
+| --------------- | ---------------------------------------- |
+| `user:register` | New user registers                       |
+| `user:login`    | User logs in                             |
+| `user:delete`   | User is deleted                          |
+| `post:create`   | Post is created (includes `isNew: true`) |
+| `post:update`   | Post is updated                          |
+| `post:delete`   | Post is deleted                          |
 
 Message format: `{ type, data }`. On initial connection, all existing posts are sent with `isNew: false`.
 

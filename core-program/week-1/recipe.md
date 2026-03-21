@@ -11,7 +11,7 @@
 - 2 large eggs
 - 2 tsp vanilla extract
 - 2 cups chocolate chips
-- *Optional:* 1 cup chopped walnuts
+- _Optional:_ 1 cup chopped walnuts
 
 ## Instructions
 
@@ -26,11 +26,11 @@
 
 ## Baking Time
 
-| Cookie Size | Time | Temperature |
-|------------|------|-------------|
-| Small | 9-11 min | 190°C |
-| Medium | 11-13 min | 190°C |
-| Large | 13-15 min | 190°C |
+| Cookie Size | Time      | Temperature |
+| ----------- | --------- | ----------- |
+| Small       | 9-11 min  | 190°C       |
+| Medium      | 11-13 min | 190°C       |
+| Large       | 13-15 min | 190°C       |
 
 ## Storage & Variations
 
@@ -43,12 +43,12 @@
 ```javascript
 // Scale the recipe
 function scaleRecipe(servings, amount) {
-    return (servings / 24) * amount;
+  return (servings / 24) * amount;
 }
 ```
 
 ---
 
-**Happy Baking!** 🍪 | *Last updated: November 2025*
+**Happy Baking!** 🍪 | _Last updated: November 2025_
 
-***Made with ❤️ by home bakers everywhere***
+**_Made with ❤️ by home bakers everywhere_**

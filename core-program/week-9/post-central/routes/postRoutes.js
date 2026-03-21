@@ -1,4 +1,4 @@
-import express from 'express';
+import express from "express";
 import {
   createPost,
   deletePost,
@@ -6,16 +6,16 @@ import {
   getMyPosts,
   getPosts,
   updatePost,
-} from '../controllers/postController.js';
-import { authenticate } from '../middleware/auth.js';
+} from "../controllers/postController.js";
+import { authenticate } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.get('/hello', getHello);
-router.get('/', authenticate, getPosts);
-router.get('/me', authenticate, getMyPosts);
-router.post('/', authenticate, createPost);
-router.put('/:id', authenticate, updatePost);
-router.delete('/:id', authenticate, deletePost);
+router.get("/hello", getHello);
+router.get("/", authenticate, getPosts);
+router.get("/me", authenticate, getMyPosts);
+router.post("/", authenticate, createPost);
+router.put("/:id", authenticate, updatePost);
+router.delete("/:id", authenticate, deletePost);
 
 export default router;

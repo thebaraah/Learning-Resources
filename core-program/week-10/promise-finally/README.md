@@ -57,10 +57,10 @@ To run the example, `cd` into the `promise-finally` folder and run:
 node 1-finally.js`
 ```
 
-The main focus of this code is to simulate a long-running asynchronous operation (thinking about the meaning of life), display a dynamic "Thinking..." message, and handle the result or error. However, there is a subtle issue: the interval timer (setInterval) is never cleared, so the "Thinking..." message continues even after the promise settles. 
+The main focus of this code is to simulate a long-running asynchronous operation (thinking about the meaning of life), display a dynamic "Thinking..." message, and handle the result or error. However, there is a subtle issue: the interval timer (setInterval) is never cleared, so the "Thinking..." message continues even after the promise settles.
 
 ```plaintext
-What is the answer to the Ultimate Question of Life, the Universe, 
+What is the answer to the Ultimate Question of Life, the Universe,
 and Everything?
  __________________________________________________
 < Come back in 7.5 million years and ask me again! >
@@ -77,7 +77,7 @@ To force the program to stop running in the terminal, you need to press <kbd>CTR
 
 ### Example 2: `2-finally.js`
 
-In this example, we use `.then()` and  `.catch()` to stop the "Thinking..." messages after the promise is settled by calling `clearInterval()` in both `.then()` and `catch()`. We need both because we don't know in advance whether the promise will be fulfilled or rejected, and we need to clear the interval in either case. Moreover, we also need to ensure that the promise returned by `whatIsTheMeaningOfLife()` still reflects the answer (i.e. 42 or "_Come back in 7.5 million years and ask me again!_"). That's why we return the `result` from the `.then()` handler and rethrow the error in the `.catch()` handler.
+In this example, we use `.then()` and `.catch()` to stop the "Thinking..." messages after the promise is settled by calling `clearInterval()` in both `.then()` and `catch()`. We need both because we don't know in advance whether the promise will be fulfilled or rejected, and we need to clear the interval in either case. Moreover, we also need to ensure that the promise returned by `whatIsTheMeaningOfLife()` still reflects the answer (i.e. 42 or "_Come back in 7.5 million years and ask me again!_"). That's why we return the `result` from the `.then()` handler and rethrow the error in the `.catch()` handler.
 
 To run the example, run the following command in the terminal:
 
@@ -97,4 +97,4 @@ Run the example, by typing the following command in the terminal:
 node 3-finally.js
 ```
 
-Note that `.finally()` is called regardless of the promise's outcome. It returns a promise that will settle with the same state as the promise it was called upon.  Therefore, we don't need to manually return the result or rethrow the error, as we did in the previous example.
+Note that `.finally()` is called regardless of the promise's outcome. It returns a promise that will settle with the same state as the promise it was called upon. Therefore, we don't need to manually return the result or rethrow the error, as we did in the previous example.

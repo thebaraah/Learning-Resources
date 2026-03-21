@@ -2,7 +2,7 @@
 
 const promise = new Promise((resolve, reject) => {
   setTimeout(() => {
-    resolve('Done!');
+    resolve("Done!");
     // reject(new Error("Failed"));
   }, 2000);
 });

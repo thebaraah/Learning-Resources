@@ -1,12 +1,8 @@
-import {
-  getAllPosts,
-  getUsers,
-  deleteUserByAdmin,
-} from '../services/admin.js';
-import { getProfile, deletePost } from '../services/services.js';
-import { removeToken } from '../lib/tokenUtils.js';
-import AdminView from '../views/adminView.js';
-import BasePage from './basePage.js';
+import { getAllPosts, getUsers, deleteUserByAdmin } from "../services/admin.js";
+import { getProfile, deletePost } from "../services/services.js";
+import { removeToken } from "../lib/tokenUtils.js";
+import AdminView from "../views/adminView.js";
+import BasePage from "./basePage.js";
 
 export default class AdminPage extends BasePage {
   constructor(props) {
@@ -24,7 +20,7 @@ export default class AdminPage extends BasePage {
     if (error.status === 401) {
       removeToken();
       this.state.clear();
-      this.router.navigateTo('login');
+      this.router.navigateTo("login");
       return true;
     }
     return false;
@@ -33,14 +29,14 @@ export default class AdminPage extends BasePage {
   async #loadData() {
     const { token } = this.state.get();
     if (!token) {
-      this.router.navigateTo('login');
+      this.router.navigateTo("login");
       return;
     }
 
     try {
       const profile = await getProfile(token);
-      if (profile.role !== 'admin') {
-        this.router.navigateTo('home');
+      if (profile.role !== "admin") {
+        this.router.navigateTo("home");
         return;
       }
 
@@ -55,7 +51,7 @@ export default class AdminPage extends BasePage {
   }
 
   #onBack = () => {
-    this.router.navigateTo('home');
+    this.router.navigateTo("home");
   };
 
   #onDeleteUser = async (name) => {

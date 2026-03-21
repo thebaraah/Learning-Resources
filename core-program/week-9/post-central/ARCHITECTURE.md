@@ -110,14 +110,14 @@ export default class ObservableState {
 
 ### API
 
-| Method | Description |
-|---|---|
-| `subscribe(subscriber)` | Register an object with an `update(state)` method |
-| `unsubscribe(subscriber)` | Remove a subscriber |
-| `update(updates)` | Shallow-merge `updates` into state, notify all subscribers |
-| `set(nextState)` | Replace entire state, notify all subscribers |
-| `get()` | Return a shallow copy of current state |
-| `clear()` | Reset state to `{}`, notify all subscribers |
+| Method                    | Description                                                |
+| ------------------------- | ---------------------------------------------------------- |
+| `subscribe(subscriber)`   | Register an object with an `update(state)` method          |
+| `unsubscribe(subscriber)` | Remove a subscriber                                        |
+| `update(updates)`         | Shallow-merge `updates` into state, notify all subscribers |
+| `set(nextState)`          | Replace entire state, notify all subscribers               |
+| `get()`                   | Return a shallow copy of current state                     |
+| `clear()`                 | Reset state to `{}`, notify all subscribers                |
 
 Subscribers must implement `{ update(state) }`. Views satisfy this contract naturally.
 
@@ -128,8 +128,8 @@ A Page owns all business logic for one screen (or the entire app in single-page 
 ### Single-page pattern (no BasePage)
 
 ```js
-import SomeTransport from '../lib/someTransport.js';
-import DashboardView from '../views/dashboardView.js';
+import SomeTransport from "../lib/someTransport.js";
+import DashboardView from "../views/dashboardView.js";
 
 export default class DashboardPage {
   #state;
@@ -142,7 +142,7 @@ export default class DashboardPage {
     // 1. Define initial state shape
     state.set({
       items: [],
-      connectionStatus: 'connecting',
+      connectionStatus: "connecting",
       lastAction: null,
     });
 
@@ -158,7 +158,7 @@ export default class DashboardPage {
 
   mount() {
     this.#state.subscribe(this.#view);
-    this.#view.update(this.#state.get());  // initial render
+    this.#view.update(this.#state.get()); // initial render
     this.#transport.connect();
   }
 
@@ -170,7 +170,7 @@ export default class DashboardPage {
 
   #handleMessage(message) {
     // Update state — the ONLY place that calls state.update()
-    this.#state.update({ items: newItems, lastAction: { type: '...' } });
+    this.#state.update({ items: newItems, lastAction: { type: "..." } });
     queueMicrotask(() => this.#state.update({ lastAction: null }));
   }
 }
@@ -221,10 +221,10 @@ export default class BasePage {
 **Concrete page:**
 
 ```js
-import { login } from '../services/services.js';
-import { putToken } from '../lib/tokenUtils.js';
-import LoginView from '../views/loginView.js';
-import BasePage from './basePage.js';
+import { login } from "../services/services.js";
+import { putToken } from "../lib/tokenUtils.js";
+import LoginView from "../views/loginView.js";
+import BasePage from "./basePage.js";
 
 export default class LoginPage extends BasePage {
   constructor(props) {
@@ -241,14 +241,14 @@ export default class LoginPage extends BasePage {
       const data = await login(name, password);
       putToken(data.token);
       this.state.update({ token: data.token, user: data.user, error: null });
-      this.router.navigateTo('home');
+      this.router.navigateTo("home");
     } catch (error) {
       this.state.update({ error: error.message });
     }
   };
 
   #onRegister = () => {
-    this.router.navigateTo('register');
+    this.router.navigateTo("register");
   };
 }
 ```
@@ -274,7 +274,7 @@ A View renders DOM and fires callbacks. It never writes to state or calls servic
 export default class BaseView {
   #root;
 
-  constructor(tagName = 'div') {
+  constructor(tagName = "div") {
     this.#root = document.createElement(tagName);
   }
 
@@ -291,15 +291,15 @@ export default class BaseView {
 **Concrete view:**
 
 ```js
-import getElementsWithIds from '../lib/getElementsWithIds.js';
-import BaseView from './baseView.js';
+import getElementsWithIds from "../lib/getElementsWithIds.js";
+import BaseView from "./baseView.js";
 
 export default class LoginView extends BaseView {
   #props;
   #dom;
 
   constructor(props) {
-    super('div');
+    super("div");
     this.#props = props;
 
     // 1. Build DOM with innerHTML (using String.raw for template clarity)
@@ -319,8 +319,8 @@ export default class LoginView extends BaseView {
     this.#dom = getElementsWithIds(this.root);
 
     // 3. Attach event listeners — fire callbacks to the page
-    this.#dom.form.addEventListener('submit', this.#onSubmit);
-    this.#dom.registerLink.addEventListener('click', this.#onRegister);
+    this.#dom.form.addEventListener("submit", this.#onSubmit);
+    this.#dom.registerLink.addEventListener("click", this.#onRegister);
   }
 
   // Event handlers delegate to page via props callbacks
@@ -340,7 +340,7 @@ export default class LoginView extends BaseView {
     if (state.error) {
       this.#dom.errorSlot.innerHTML = `<div class="error-banner">${state.error}</div>`;
     } else {
-      this.#dom.errorSlot.innerHTML = '';
+      this.#dom.errorSlot.innerHTML = "";
     }
   }
 }
@@ -398,7 +398,7 @@ Used in multi-page views to cache DOM references by `id` attribute. Copy this in
  * @returns An object with `id` as key and an element reference as value.
  */
 function getElementsWithIds(root) {
-  const elementsWithIds = Array.from(root.querySelectorAll('[id]'));
+  const elementsWithIds = Array.from(root.querySelectorAll("[id]"));
   const dom = {};
   for (const elem of elementsWithIds) {
     dom[elem.id] = elem;
@@ -445,7 +445,7 @@ The thrown error always has a `.status` property (HTTP status code) so pages can
 ```js
 // GET (no auth)
 export async function getHello() {
-  const response = await fetch('/posts/hello');
+  const response = await fetch("/posts/hello");
   const data = await response.json();
   if (!response.ok) {
     const error = new Error(data.error || response.statusText);
@@ -457,9 +457,9 @@ export async function getHello() {
 
 // POST (no auth)
 export async function register(name, password) {
-  const response = await fetch('/users/register', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+  const response = await fetch("/users/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, password }),
   });
   const data = await response.json();
@@ -473,10 +473,10 @@ export async function register(name, password) {
 
 // GET (with auth)
 export async function getMyPosts(token) {
-  const response = await fetch('/posts/me', {
-    method: 'GET',
+  const response = await fetch("/posts/me", {
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   });
@@ -492,9 +492,9 @@ export async function getMyPosts(token) {
 // PUT (with auth)
 export async function editPost(token, id, text) {
   const response = await fetch(`/posts/${id}`, {
-    method: 'PUT',
+    method: "PUT",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ text }),
@@ -511,9 +511,9 @@ export async function editPost(token, id, text) {
 // DELETE (with auth)
 export async function deletePost(token, id) {
   const response = await fetch(`/posts/${id}`, {
-    method: 'DELETE',
+    method: "DELETE",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   });
@@ -540,12 +540,12 @@ export default class Router {
 
   constructor(state) {
     this.#state = state;
-    window.addEventListener('hashchange', this.#onHashChange);
+    window.addEventListener("hashchange", this.#onHashChange);
   }
 
   #getRouteParts() {
-    const [hash, ...rest] = decodeURI(window.location.hash).split('/');
-    const path = hash.replace('#', '');
+    const [hash, ...rest] = decodeURI(window.location.hash).split("/");
+    const path = hash.replace("#", "");
     return [path, ...rest];
   }
 
@@ -558,7 +558,7 @@ export default class Router {
 
     let route = this.#findRouteByPathname(pathname);
     if (!route) {
-      route = 'login';
+      route = "login";
     }
 
     // Lifecycle: unmount previous page
@@ -570,7 +570,7 @@ export default class Router {
     let newPage = new route.page({ router: this, params, state: this.#state });
 
     // Swap DOM
-    this.#pageRoot.innerHTML = '';
+    this.#pageRoot.innerHTML = "";
     this.#pageRoot.appendChild(newPage.root);
     window.scrollTo(0, 0);
 
@@ -592,7 +592,7 @@ export default class Router {
   }
 
   navigateTo(path, ...params) {
-    const encodedHash = encodeURI('#' + [path, ...params].join('/'));
+    const encodedHash = encodeURI("#" + [path, ...params].join("/"));
     window.location.assign(encodedHash);
   }
 }
@@ -602,12 +602,12 @@ export default class Router {
 
 ```js
 // routes.js
-import HomePage from './pages/homePage.js';
-import LoginPage from './pages/loginPage.js';
+import HomePage from "./pages/homePage.js";
+import LoginPage from "./pages/loginPage.js";
 
 const routes = [
-  { path: 'home', page: HomePage },
-  { path: 'login', page: LoginPage },
+  { path: "home", page: HomePage },
+  { path: "login", page: LoginPage },
 ];
 
 export default routes;
@@ -635,7 +635,7 @@ navigateTo('home')
 // In the page handler:
 this.#state.update({
   items: newItems,
-  lastAction: { type: 'item:create', item: newItem },
+  lastAction: { type: "item:create", item: newItem },
 });
 queueMicrotask(() => this.#state.update({ lastAction: null }));
 ```
@@ -644,17 +644,17 @@ The view processes `lastAction` in the current render cycle (showing a notificat
 
 ## 9. Naming conventions
 
-| What | Convention | Example |
-|---|---|---|
-| Files | `camelCase.js` | `homePage.js`, `homeView.js` |
-| Classes | `PascalCase` | `HomePage`, `HomeView` |
-| Page classes | `*Page` suffix | `DashboardPage`, `LoginPage` |
-| View classes | `*View` suffix | `DashboardView`, `LoginView` |
-| Private fields | `#` prefix | `#state`, `#view`, `#dom` |
-| Callbacks (props) | `on*` prefix | `onSubmit`, `onDelete`, `onLogout` |
-| Event handlers (view-internal) | `#on*` prefix | `#onSubmit`, `#onPostAction` |
-| State update handlers (page-internal) | `#handle*` prefix | `#handlePostCreate` |
-| Module system | ES modules | `import`/`export`, `"type": "module"` |
+| What                                  | Convention        | Example                               |
+| ------------------------------------- | ----------------- | ------------------------------------- |
+| Files                                 | `camelCase.js`    | `homePage.js`, `homeView.js`          |
+| Classes                               | `PascalCase`      | `HomePage`, `HomeView`                |
+| Page classes                          | `*Page` suffix    | `DashboardPage`, `LoginPage`          |
+| View classes                          | `*View` suffix    | `DashboardView`, `LoginView`          |
+| Private fields                        | `#` prefix        | `#state`, `#view`, `#dom`             |
+| Callbacks (props)                     | `on*` prefix      | `onSubmit`, `onDelete`, `onLogout`    |
+| Event handlers (view-internal)        | `#on*` prefix     | `#onSubmit`, `#onPostAction`          |
+| State update handlers (page-internal) | `#handle*` prefix | `#handlePostCreate`                   |
+| Module system                         | ES modules        | `import`/`export`, `"type": "module"` |
 
 ## 10. Wiring it all together
 
@@ -662,12 +662,12 @@ The view processes `lastAction` in the current render cycle (showing a notificat
 
 ```js
 // app.js
-import ObservableState from './lib/observableState.js';
-import DashboardPage from './pages/dashboardPage.js';
+import ObservableState from "./lib/observableState.js";
+import DashboardPage from "./pages/dashboardPage.js";
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener("DOMContentLoaded", () => {
   const state = new ObservableState();
-  const container = document.getElementById('app-root');
+  const container = document.getElementById("app-root");
   const page = new DashboardPage({ state, container });
   page.mount();
 });
@@ -677,16 +677,16 @@ window.addEventListener('DOMContentLoaded', () => {
 
 ```js
 // app.js
-import ObservableState from './lib/observableState.js';
-import Router from './lib/router.js';
-import { getToken } from './lib/tokenUtils.js';
-import routes from './routes.js';
+import ObservableState from "./lib/observableState.js";
+import Router from "./lib/router.js";
+import { getToken } from "./lib/tokenUtils.js";
+import routes from "./routes.js";
 
 function start() {
-  const appRoot = document.getElementById('app-root');
+  const appRoot = document.getElementById("app-root");
 
-  const pageRoot = document.createElement('div');
-  pageRoot.id = 'page-root';
+  const pageRoot = document.createElement("div");
+  pageRoot.id = "page-root";
   appRoot.appendChild(pageRoot);
 
   const state = new ObservableState();
@@ -698,26 +698,26 @@ function start() {
 
   const router = new Router(state);
   router.initialize(routes, pageRoot);
-  router.navigateTo(token ? 'home' : 'login');
+  router.navigateTo(token ? "home" : "login");
   router.start();
 }
 
-window.addEventListener('DOMContentLoaded', start);
+window.addEventListener("DOMContentLoaded", start);
 ```
 
 ## 11. Portal vs Post-Client comparison
 
-| Aspect | Portal | Post-Client |
-|---|---|---|
-| Type | Single-page | Multi-page (SPA with hash router) |
-| Page class | `DashboardPage` (standalone) | Multiple pages extending `BasePage` |
-| View class | `DashboardView` (takes container) | Multiple views extending `BaseView` |
-| I/O layer | WebSocket transport | HTTP services (fetch) |
-| Routing | None | Hash-based `Router` |
-| Auth | None (read-only dashboard) | JWT tokens in localStorage |
+| Aspect      | Portal                                           | Post-Client                           |
+| ----------- | ------------------------------------------------ | ------------------------------------- |
+| Type        | Single-page                                      | Multi-page (SPA with hash router)     |
+| Page class  | `DashboardPage` (standalone)                     | Multiple pages extending `BasePage`   |
+| View class  | `DashboardView` (takes container)                | Multiple views extending `BaseView`   |
+| I/O layer   | WebSocket transport                              | HTTP services (fetch)                 |
+| Routing     | None                                             | Hash-based `Router`                   |
+| Auth        | None (read-only dashboard)                       | JWT tokens in localStorage            |
 | State shape | `{ posts, users, connectionStatus, lastAction }` | `{ token, user, role, posts, error }` |
-| HTML | Pre-defined in `index.html` | Views create DOM via `innerHTML` |
-| DOM utility | `querySelector` on container | `getElementsWithIds` on view root |
+| HTML        | Pre-defined in `index.html`                      | Views create DOM via `innerHTML`      |
+| DOM utility | `querySelector` on container                     | `getElementsWithIds` on view root     |
 
 ## 12. Checklist for creating a new app
 

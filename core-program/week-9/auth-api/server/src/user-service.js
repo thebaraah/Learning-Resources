@@ -1,6 +1,6 @@
 const SALT_ROUNDS = 10;
-import { compare, hash } from 'bcrypt';
-import { randomUUID } from 'crypto';
+import { compare, hash } from "bcrypt";
+import { randomUUID } from "crypto";
 
 export default class UserService {
   constructor() {

@@ -1,4 +1,4 @@
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from "http-status-codes";
 
 export default class UserController {
   constructor(userService, authService) {
@@ -11,13 +11,13 @@ export default class UserController {
     if (!username || !password) {
       return res
         .status(400)
-        .json({ message: 'Username and password are required' });
+        .json({ message: "Username and password are required" });
     }
     const existingUser = this.userService.getUserByUsername(username);
     if (existingUser) {
       return res
         .status(StatusCodes.BAD_REQUEST)
-        .json({ message: 'Username already exists' });
+        .json({ message: "Username already exists" });
     }
     const newUser = await this.userService.createUser({ username, password });
     res.status(StatusCodes.CREATED).json(newUser);
@@ -28,13 +28,13 @@ export default class UserController {
     if (!username || !password) {
       return res
         .status(StatusCodes.BAD_REQUEST)
-        .json({ message: 'Username and password are required' });
+        .json({ message: "Username and password are required" });
     }
     const user = await this.userService.validateUser(username, password);
     if (!user) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .json({ message: 'Invalid username or password' });
+        .json({ message: "Invalid username or password" });
     }
     const token = this.authService.generateToken(user);
     res.json({ token });
@@ -42,28 +42,28 @@ export default class UserController {
 
   logout(req, res) {
     // In a real application, you might handle token blacklisting here
-    res.json({ message: 'Logged out successfully' });
+    res.json({ message: "Logged out successfully" });
   }
 
   getProfile(req, res) {
-    const authHeader = req.headers['authorization'];
+    const authHeader = req.headers["authorization"];
     if (!authHeader) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .json({ message: 'Authorization header missing' });
+        .json({ message: "Authorization header missing" });
     }
-    const token = authHeader.split(' ')[1];
+    const token = authHeader.split(" ")[1];
     const decoded = this.authService.verifyToken(token);
     if (!decoded) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .json({ message: 'Invalid or expired token' });
+        .json({ message: "Invalid or expired token" });
     }
     const user = this.userService.getUserById(decoded.id);
     if (!user) {
       return res
         .status(StatusCodes.NOT_FOUND)
-        .json({ message: 'User not found' });
+        .json({ message: "User not found" });
     }
     // Return user profile
     res.status(StatusCodes.OK).json({

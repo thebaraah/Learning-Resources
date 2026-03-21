@@ -2,25 +2,28 @@
 // after a promise is settled, regardless of whether it was resolved or rejected.
 // It also shows how to handle errors in a promise chain and ensure that cleanup
 // code runs.
-import chalk from 'chalk';
-import cowsay from 'cowsay';
+import chalk from "chalk";
+import cowsay from "cowsay";
 
 function whatIsTheMeaningOfLife() {
   let count = 0;
   const intervalTimer = setInterval(() => {
     count += 1;
-    process.stdout.write(chalk.dim('\rThinking' + '.'.repeat(count)));
+    process.stdout.write(chalk.dim("\rThinking" + ".".repeat(count)));
   }, 1000);
 
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (Math.random() > 0.5) {
-        resolve(42);
-      } else {
-        reject(new Error('Come back in 7.5 million years and ask me again!'));
-      }
-      process.stdout.write('\r');
-    }, Math.floor(Math.random() * 5000) + 3000);
+    setTimeout(
+      () => {
+        if (Math.random() > 0.5) {
+          resolve(42);
+        } else {
+          reject(new Error("Come back in 7.5 million years and ask me again!"));
+        }
+        process.stdout.write("\r");
+      },
+      Math.floor(Math.random() * 5000) + 3000,
+    );
   })
     .then((result) => {
       console.log();
@@ -35,7 +38,7 @@ function whatIsTheMeaningOfLife() {
 }
 
 console.log(
-  'What is the answer to the Ultimate Question of Life, the Universe, and Everything?'
+  "What is the answer to the Ultimate Question of Life, the Universe, and Everything?",
 );
 
 whatIsTheMeaningOfLife()
@@ -44,10 +47,10 @@ whatIsTheMeaningOfLife()
       chalk.green(
         cowsay.say({
           text: `The answer is ${result}`,
-          e: 'oO',
-          T: 'U ',
-        })
-      )
+          e: "oO",
+          T: "U ",
+        }),
+      ),
     );
   })
   .catch((err) => {
@@ -55,9 +58,9 @@ whatIsTheMeaningOfLife()
       chalk.red(
         cowsay.say({
           text: err.message,
-          e: 'oO',
-          T: 'U ',
-        })
-      )
+          e: "oO",
+          T: "U ",
+        }),
+      ),
     );
   });

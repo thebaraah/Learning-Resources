@@ -1,5 +1,5 @@
-import promptSync from 'prompt-sync';
+import promptSync from "prompt-sync";
 const prompt = promptSync();
 
-const name = prompt('What is your name? ');
+const name = prompt("What is your name? ");
 console.log(`Hello, ${name}! This is a beautiful name`);

@@ -2,8 +2,8 @@ export class UserService {
   constructor() {
     // Simple in-memory data store
     this.users = [
-      { id: 1, name: 'Alice', email: 'alice@example.com' },
-      { id: 2, name: 'Bob', email: 'bob@example.com' },
+      { id: 1, name: "Alice", email: "alice@example.com" },
+      { id: 2, name: "Bob", email: "bob@example.com" },
     ];
     this.nextId = 3;
   }

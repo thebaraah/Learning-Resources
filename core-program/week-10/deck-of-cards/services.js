@@ -1,6 +1,6 @@
 // API Documentation: https://deckofcardsapi.com/
 
-const API_BASE_URL = 'https://deckofcardsapi.com/api/deck';
+const API_BASE_URL = "https://deckofcardsapi.com/api/deck";
 
 export async function fetchNewDeck() {
   // TODO: Implement this function to fetch a new shuffled deck

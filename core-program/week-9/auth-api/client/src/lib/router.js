@@ -6,14 +6,14 @@ export default class Router {
 
   constructor(state) {
     this.#state = state;
-    window.addEventListener('hashchange', this.#onHashChange);
+    window.addEventListener("hashchange", this.#onHashChange);
   }
 
   #getRouteParts() {
     // Example:
     // '#repos/HackYourFuture/my-repo' => ['repos', 'HackYourFuture', 'my-repo']
-    const [hash, ...rest] = decodeURI(window.location.hash).split('/');
-    const path = hash.replace('#', '');
+    const [hash, ...rest] = decodeURI(window.location.hash).split("/");
+    const path = hash.replace("#", "");
     return [path, ...rest];
   }
 
@@ -29,7 +29,7 @@ export default class Router {
 
     // If not found, redirect to login page
     if (!route) {
-      route = 'login';
+      route = "login";
     }
 
     // Call optional willUnmount lifecycle method.
@@ -39,13 +39,13 @@ export default class Router {
 
     // Create the page corresponding to the route.
     let newPage = new route.page({ router: this, params, state: this.#state });
-    if (typeof newPage !== 'object') {
+    if (typeof newPage !== "object") {
       throw new Error(`Page ${pathname} did not return an object`);
     }
 
     // Clear the content of the pageRoot container and append the page
     // root element as its new child.
-    this.#pageRoot.innerHTML = '';
+    this.#pageRoot.innerHTML = "";
     this.#pageRoot.appendChild(newPage.root);
 
     // Reset scroll position to top of page
@@ -69,7 +69,7 @@ export default class Router {
   }
 
   navigateTo(path, ...params) {
-    const encodedHash = encodeURI('#' + [path, ...params].join('/'));
+    const encodedHash = encodeURI("#" + [path, ...params].join("/"));
     window.location.assign(encodedHash);
   }
 }

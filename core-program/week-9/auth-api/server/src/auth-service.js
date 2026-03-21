@@ -1,6 +1,6 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
-const JWT_SECRET = 'eE8slP+RtiBVAH7zcY0vYttsKlDY5o0jeKLjEgSLllo=';
+const JWT_SECRET = "eE8slP+RtiBVAH7zcY0vYttsKlDY5o0jeKLjEgSLllo=";
 
 export default class AuthService {
   constructor(userService) {
@@ -9,7 +9,7 @@ export default class AuthService {
 
   generateToken(user) {
     return jwt.sign({ id: user.id, username: user.username }, JWT_SECRET, {
-      expiresIn: '1h',
+      expiresIn: "1h",
     });
   }
 

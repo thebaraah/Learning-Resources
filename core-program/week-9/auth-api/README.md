@@ -37,14 +37,14 @@ The server listens on `http://localhost:3000`. Continue once the server is runni
 
 1. In Postman, create a **POST** request to the **Register user** endpoint.
 2. Set the request body to **raw JSON**, for example:
-    
-    ```json
-    {
-      "username": "alice",
-      "password": "secret123"
-    }
-    ```
-    
+
+   ```json
+   {
+     "username": "alice",
+     "password": "secret123"
+   }
+   ```
+
 3. Send the request and check that the status and JSON response match `README_API.md`.
 
 ---
@@ -55,9 +55,8 @@ The server listens on `http://localhost:3000`. Continue once the server is runni
 2. Use the same username and password in the JSON body.
 3. Send the request. The response should contain a `token` field.
 4. Copy the token value (without quotes).
-    
-    The token is valid for a limited time (1 hour in this example).
-    
+
+   The token is valid for a limited time (1 hour in this example).
 
 ---
 

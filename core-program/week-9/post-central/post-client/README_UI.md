@@ -11,11 +11,11 @@ you understand the full picture so you can see your service functions in action.
 
 The app has three layers:
 
-| Layer | Files | What it does |
-| --- | --- | --- |
-| View | `loginView.js`, `homeView.js`, ... | What the user sees and clicks. |
-| Page | `loginPage.js`, `homePage.js`, ... | Logic that decides what to do. |
-| Services | `services/services.js` | **Your code** — Talks to the server. |
+| Layer    | Files                              | What it does                         |
+| -------- | ---------------------------------- | ------------------------------------ |
+| View     | `loginView.js`, `homeView.js`, ... | What the user sees and clicks.       |
+| Page     | `loginPage.js`, `homePage.js`, ... | Logic that decides what to do.       |
+| Services | `services/services.js`             | **Your code** — Talks to the server. |
 
 **You are writing the bottom layer.** The Views and Pages are already done. When
 you implement `login()`, `getMyPosts()`, and the other functions, the app will
@@ -72,7 +72,7 @@ browser fires **events** when these things happen. JavaScript can listen for
 them:
 
 ```js
-form.addEventListener('submit', (e) => {
+form.addEventListener("submit", (e) => {
   e.preventDefault(); // stop the browser from reloading the page
   // do something with the form data
 });
@@ -92,10 +92,10 @@ When the browser finishes loading `index.html`, the following happens in
 
 ```js
 function start() {
-  const appRoot = document.getElementById('app-root');
+  const appRoot = document.getElementById("app-root");
 
-  const pageRoot = document.createElement('div');
-  pageRoot.id = 'page-root';
+  const pageRoot = document.createElement("div");
+  pageRoot.id = "page-root";
   appRoot.appendChild(pageRoot);
 
   const state = new ObservableState();
@@ -107,11 +107,11 @@ function start() {
 
   const router = new Router(state);
   router.initialize(routes, pageRoot);
-  router.navigateTo(token ? 'home' : 'login');
+  router.navigateTo(token ? "home" : "login");
   router.start();
 }
 
-window.addEventListener('DOMContentLoaded', start);
+window.addEventListener("DOMContentLoaded", start);
 ```
 
 In plain English:
@@ -153,7 +153,7 @@ this.root.innerHTML = String.raw`
 It then listens for the form's `submit` event:
 
 ```js
-this.#dom.form.addEventListener('submit', this.#onSubmit);
+this.#dom.form.addEventListener("submit", this.#onSubmit);
 ```
 
 ### Step 2 — The User Clicks "Login"
@@ -336,10 +336,10 @@ Here is the pattern:
 
 ```js
 try {
-  await createPost(token, text);  // your function throws on error
+  await createPost(token, text); // your function throws on error
   // success — update state with new data
 } catch (error) {
-  this.state.update({ error: error.message });  // put error message in state
+  this.state.update({ error: error.message }); // put error message in state
 }
 ```
 
@@ -385,17 +385,17 @@ app distinguish "wrong input" errors from "you need to log in again" errors.
 
 ## File Map
 
-| File | What it does |
-| --- | --- |
-| `index.html` | The single HTML page the browser loads |
-| `src/app.js` | Starts the app: creates state, router, and navigates to the first page |
-| `src/services/services.js` | **Your code** — the functions that talk to the server |
-| `src/routes.js` | Maps page names (like `'login'`) to their Page classes |
-| `src/pages/loginPage.js` | Login logic — calls `login()` from your services |
-| `src/pages/registerPage.js` | Registration logic — calls `register()` |
-| `src/pages/homePage.js` | Home logic — calls `getProfile()`, `getMyPosts()`, `createPost()`, `editPost()`, `deletePost()` |
-| `src/views/loginView.js` | Builds the login form and captures user input |
-| `src/views/homeView.js` | Builds the post list, create form, and edit/delete UI |
-| `src/lib/observableState.js` | Shared state container — when data changes, views are notified automatically |
-| `src/lib/router.js` | Switches between pages |
-| `src/lib/tokenUtils.js` | Saves/reads/removes the login token from `localStorage` |
+| File                         | What it does                                                                                    |
+| ---------------------------- | ----------------------------------------------------------------------------------------------- |
+| `index.html`                 | The single HTML page the browser loads                                                          |
+| `src/app.js`                 | Starts the app: creates state, router, and navigates to the first page                          |
+| `src/services/services.js`   | **Your code** — the functions that talk to the server                                           |
+| `src/routes.js`              | Maps page names (like `'login'`) to their Page classes                                          |
+| `src/pages/loginPage.js`     | Login logic — calls `login()` from your services                                                |
+| `src/pages/registerPage.js`  | Registration logic — calls `register()`                                                         |
+| `src/pages/homePage.js`      | Home logic — calls `getProfile()`, `getMyPosts()`, `createPost()`, `editPost()`, `deletePost()` |
+| `src/views/loginView.js`     | Builds the login form and captures user input                                                   |
+| `src/views/homeView.js`      | Builds the post list, create form, and edit/delete UI                                           |
+| `src/lib/observableState.js` | Shared state container — when data changes, views are notified automatically                    |
+| `src/lib/router.js`          | Switches between pages                                                                          |
+| `src/lib/tokenUtils.js`      | Saves/reads/removes the login token from `localStorage`                                         |

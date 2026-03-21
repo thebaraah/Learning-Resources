@@ -1,7 +1,7 @@
-import { register } from '../services/services.js';
-import { putToken } from '../lib/tokenUtils.js';
-import RegisterView from '../views/registerView.js';
-import BasePage from './basePage.js';
+import { register } from "../services/services.js";
+import { putToken } from "../lib/tokenUtils.js";
+import RegisterView from "../views/registerView.js";
+import BasePage from "./basePage.js";
 
 export default class RegisterPage extends BasePage {
   constructor(props) {
@@ -19,13 +19,13 @@ export default class RegisterPage extends BasePage {
       putToken(data.token);
       this.state.update({ token: data.token, user: data.user, error: null });
 
-      this.router.navigateTo('home');
+      this.router.navigateTo("home");
     } catch (error) {
       this.state.update({ error: error.message });
     }
   };
 
   #onLogin = () => {
-    this.router.navigateTo('login');
+    this.router.navigateTo("login");
   };
 }

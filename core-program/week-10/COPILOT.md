@@ -27,13 +27,13 @@ As you type code in the editor, Copilot shows dimmed (gray) text ahead of your c
 
 ### How to Respond to a Suggestion
 
-| Action | Mac | Windows / Linux |
-| --- | --- | --- |
-| Accept the full suggestion | <kbd>Tab</kbd> | <kbd>Tab</kbd> |
-| Accept word by word | <kbd>Cmd</kbd>+<kbd>&#8594;</kbd> | <kbd>Ctrl</kbd>+<kbd>&#8594;</kbd> |
-| Dismiss the suggestion | <kbd>Esc</kbd> | <kbd>Esc</kbd> |
-| See the next suggestion | <kbd>Option</kbd>+<kbd>]</kbd> | <kbd>Alt</kbd>+<kbd>]</kbd> |
-| See the previous suggestion | <kbd>Option</kbd>+<kbd>[</kbd> | <kbd>Alt</kbd>+<kbd>[</kbd> |
+| Action                      | Mac                               | Windows / Linux                    |
+| --------------------------- | --------------------------------- | ---------------------------------- |
+| Accept the full suggestion  | <kbd>Tab</kbd>                    | <kbd>Tab</kbd>                     |
+| Accept word by word         | <kbd>Cmd</kbd>+<kbd>&#8594;</kbd> | <kbd>Ctrl</kbd>+<kbd>&#8594;</kbd> |
+| Dismiss the suggestion      | <kbd>Esc</kbd>                    | <kbd>Esc</kbd>                     |
+| See the next suggestion     | <kbd>Option</kbd>+<kbd>]</kbd>    | <kbd>Alt</kbd>+<kbd>]</kbd>        |
+| See the previous suggestion | <kbd>Option</kbd>+<kbd>[</kbd>    | <kbd>Alt</kbd>+<kbd>[</kbd>        |
 
 > [!TIP]
 > **Accept word by word** is often the best approach when you are learning. It lets you read and think about each part of the suggestion before accepting it. You stay in control.
@@ -96,8 +96,8 @@ Ask mode lets you have a conversation with Copilot about your code. You can ask 
 
 The Chat panel is best for longer questions and follow-up conversations.
 
-| Action | Mac | Windows / Linux |
-| --- | --- | --- |
+| Action          | Mac                                         | Windows / Linux                             |
+| --------------- | ------------------------------------------- | ------------------------------------------- |
 | Open Chat panel | <kbd>Ctrl</kbd>+<kbd>Cmd</kbd>+<kbd>I</kbd> | <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>I</kbd> |
 
 You can also click the Copilot icon in the VS Code title bar:
@@ -108,8 +108,8 @@ You can also click the Copilot icon in the VS Code title bar:
 
 Inline Chat opens a small chat box right next to your code in the editor. It is handy for quick questions about a specific line or function.
 
-| Action | Mac | Windows / Linux |
-| --- | --- | --- |
+| Action           | Mac                         | Windows / Linux              |
+| ---------------- | --------------------------- | ---------------------------- |
 | Open Inline Chat | <kbd>Cmd</kbd>+<kbd>I</kbd> | <kbd>Ctrl</kbd>+<kbd>I</kbd> |
 
 ![Inline chat next to code](.assets/copilot-inline-chat.png)
@@ -124,10 +124,10 @@ At the bottom of the Chat panel, you will see a mode dropdown. Make sure it says
 
 You can type a slash command to tell Copilot what kind of help you need:
 
-| Command | What it does |
-| --- | --- |
-| `/explain` | Explains selected code in plain language |
-| `/fix` | Suggests how to fix a problem in selected code |
+| Command    | What it does                                   |
+| ---------- | ---------------------------------------------- |
+| `/explain` | Explains selected code in plain language       |
+| `/fix`     | Suggests how to fix a problem in selected code |
 
 You can also just type a question in plain English without any slash command. For example:
 
@@ -214,12 +214,12 @@ At this stage of the program, we want you to focus on writing code yourself. You
 
 All keyboard shortcuts in one place:
 
-| Action | Mac | Windows / Linux |
-| --- | --- | --- |
-| Accept inline suggestion | <kbd>Tab</kbd> | <kbd>Tab</kbd> |
-| Accept word by word | <kbd>Cmd</kbd>+<kbd>&#8594;</kbd> | <kbd>Ctrl</kbd>+<kbd>&#8594;</kbd> |
-| Dismiss suggestion | <kbd>Esc</kbd> | <kbd>Esc</kbd> |
-| Next suggestion | <kbd>Option</kbd>+<kbd>]</kbd> | <kbd>Alt</kbd>+<kbd>]</kbd> |
-| Previous suggestion | <kbd>Option</kbd>+<kbd>[</kbd> | <kbd>Alt</kbd>+<kbd>[</kbd> |
-| Open Chat panel | <kbd>Ctrl</kbd>+<kbd>Cmd</kbd>+<kbd>I</kbd> | <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>I</kbd> |
-| Open Inline Chat | <kbd>Cmd</kbd>+<kbd>I</kbd> | <kbd>Ctrl</kbd>+<kbd>I</kbd> |
+| Action                   | Mac                                         | Windows / Linux                             |
+| ------------------------ | ------------------------------------------- | ------------------------------------------- |
+| Accept inline suggestion | <kbd>Tab</kbd>                              | <kbd>Tab</kbd>                              |
+| Accept word by word      | <kbd>Cmd</kbd>+<kbd>&#8594;</kbd>           | <kbd>Ctrl</kbd>+<kbd>&#8594;</kbd>          |
+| Dismiss suggestion       | <kbd>Esc</kbd>                              | <kbd>Esc</kbd>                              |
+| Next suggestion          | <kbd>Option</kbd>+<kbd>]</kbd>              | <kbd>Alt</kbd>+<kbd>]</kbd>                 |
+| Previous suggestion      | <kbd>Option</kbd>+<kbd>[</kbd>              | <kbd>Alt</kbd>+<kbd>[</kbd>                 |
+| Open Chat panel          | <kbd>Ctrl</kbd>+<kbd>Cmd</kbd>+<kbd>I</kbd> | <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>I</kbd> |
+| Open Inline Chat         | <kbd>Cmd</kbd>+<kbd>I</kbd>                 | <kbd>Ctrl</kbd>+<kbd>I</kbd>                |

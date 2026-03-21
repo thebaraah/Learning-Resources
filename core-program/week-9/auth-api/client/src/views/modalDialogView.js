@@ -4,7 +4,7 @@ export default class ModalDialogView {
   #modalInstances;
 
   constructor(props) {
-    this.#root = document.createElement('div');
+    this.#root = document.createElement("div");
     this.#root.innerHTML = String.raw`
       <!-- Modal Structure: https://materializecss.com/modals.html -->
     <div class="modal">
@@ -18,9 +18,9 @@ export default class ModalDialogView {
     </div>        
   `;
 
-    this.#dom.modalText = this.#root.querySelector('#modal-text');
+    this.#dom.modalText = this.#root.querySelector("#modal-text");
 
-    const modalElements = this.#root.querySelectorAll('.modal');
+    const modalElements = this.#root.querySelectorAll(".modal");
     this.#modalInstances = M.Modal.init(modalElements);
   }
 

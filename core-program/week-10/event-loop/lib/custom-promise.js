@@ -9,7 +9,7 @@
 //
 // Loosely based on:
 // https://medium.com/swlh/implement-a-simple-promise-in-javascript-20c9705f197a
-import chalk from 'chalk';
+import chalk from "chalk";
 
 export class CustomPromise {
   static resolve(value) {
@@ -25,7 +25,7 @@ export class CustomPromise {
 
   static #count = 0;
 
-  #state = 'pending';
+  #state = "pending";
   #value = undefined;
   #reason = undefined;
   #rejectedHandlers = [];
@@ -37,8 +37,8 @@ export class CustomPromise {
     this.#id = ++CustomPromise.#count;
 
     const resolve = (value) => {
-      if (this.#state === 'pending') {
-        this.#state = 'fulfilled';
+      if (this.#state === "pending") {
+        this.#state = "fulfilled";
         this.#value = value;
         console.log(chalk.green(`[promise#${this.#id} fulfilled → ${value}]`));
         this.#fulfilledHandlers.forEach((handler) => handler());
@@ -46,8 +46,8 @@ export class CustomPromise {
     };
 
     const reject = (reason) => {
-      if (this.#state === 'pending') {
-        this.#state = 'rejected';
+      if (this.#state === "pending") {
+        this.#state = "rejected";
         this.#reason = reason;
         console.log(chalk.red(`[promise#${this.#id} rejected → ${reason}]`));
         this.#rejectedHandlers.forEach((handler) => handler());
@@ -60,7 +60,7 @@ export class CustomPromise {
       reject(err);
     }
 
-    if (this.#state === 'pending') {
+    if (this.#state === "pending") {
       console.log(chalk.dim(`[promise#${this.#id} created (pending)]`));
     }
   }
@@ -71,7 +71,7 @@ export class CustomPromise {
       console.log(chalk.yellow(`\n[microtask#${this.#id} start]`));
 
       try {
-        if (typeof onFulfilled === 'function') {
+        if (typeof onFulfilled === "function") {
           const result = onFulfilled(this.#value);
           if (isThenable(result)) {
             result.then(resolve, reject);
@@ -94,7 +94,7 @@ export class CustomPromise {
     queueMicrotask(() => {
       console.log(chalk.yellow(`\n[microtask#${this.#id} start]`));
       try {
-        if (typeof onRejected === 'function') {
+        if (typeof onRejected === "function") {
           const result = onRejected(this.#reason);
           if (isThenable(result)) {
             result.then(resolve, reject);
@@ -114,17 +114,17 @@ export class CustomPromise {
 
   then(onFulfilled, onRejected) {
     return new CustomPromise((resolve, reject) => {
-      if (this.#state === 'fulfilled') {
+      if (this.#state === "fulfilled") {
         this.#handleFulfilled(resolve, reject, onFulfilled);
-      } else if (this.#state === 'rejected') {
+      } else if (this.#state === "rejected") {
         this.#handleRejected(resolve, reject, onRejected);
       } else {
         // pending
         this.#fulfilledHandlers.push(() =>
-          this.#handleFulfilled(resolve, reject, onFulfilled)
+          this.#handleFulfilled(resolve, reject, onFulfilled),
         );
         this.#rejectedHandlers.push(() =>
-          this.#handleRejected(resolve, reject, onRejected)
+          this.#handleRejected(resolve, reject, onRejected),
         );
       }
     });
@@ -141,7 +141,7 @@ export class CustomPromise {
 // This is used to determine if the result of a function call should be chained as a Promise.
 function isThenable(result) {
   return (
-    ['object', 'function'].includes(typeof result) &&
-    typeof result.then === 'function'
+    ["object", "function"].includes(typeof result) &&
+    typeof result.then === "function"
   );
 }

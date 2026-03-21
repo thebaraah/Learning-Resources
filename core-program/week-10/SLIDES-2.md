@@ -79,7 +79,7 @@ _Image suggestion: screenshot of the login screen_
 - `getProfile()` and `getMyPosts()` follow the same pattern
 - After implementing, the **home page** should load (but empty — no posts yet)
 
-> Speaker notes: Walk through `getProfile()` together to introduce the auth header concept. Show how to add `Authorization: \`Bearer ${token}\`` to the headers object. Then let pairs do `getMyPosts()` on their own — same pattern, different URL.
+> Speaker notes: Walk through `getProfile()` together to introduce the auth header concept. Show how to add `Authorization: \`Bearer ${token}\``to the headers object. Then let pairs do`getMyPosts()` on their own — same pattern, different URL.
 
 ---
 

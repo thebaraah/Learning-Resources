@@ -1,6 +1,7 @@
 body {
-  font-family: apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
+  font-family:
+    apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
 }
 button:active {
   background-color: red;
@@ -13,7 +14,7 @@ button:active {
   height: 100vh;
 }
 #counter {
-  font-family: 'Seven Segment';
+  font-family: "Seven Segment";
   font-size: 100px;
   color: red;
 }
