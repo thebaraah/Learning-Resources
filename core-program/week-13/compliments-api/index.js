@@ -13,7 +13,7 @@ app.get("/compliment/:name", (req, res) => {
   const compliment = compliments[randomIndex].replace("{name}", name)
 
   res.json({
-    id: randomIndex + 1,
+    number: randomIndex + 1,
     compliment: compliment,
   });
 });
