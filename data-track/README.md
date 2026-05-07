@@ -10,7 +10,7 @@ A single Codespace covers every week's exercises:
 
 > 💻 [Open in GitHub Codespaces](https://github.com/codespaces/new/HackYourFuture/Learning-Resources?devcontainer_path=.devcontainer%2Fdata-track%2Fdevcontainer.json)
 
-The Codespace opens directly in `data-track/` with Python 3.11 + the VS Code Python extensions provisioned via [`.devcontainer/data-track/devcontainer.json`](../.devcontainer/data-track/devcontainer.json). Navigate into whichever week and exercise you're working on from the Explorer.
+The Codespace opens the repo root with Python 3.11 + Node.js LTS + VS Code extensions for both the Data Track (ruff, Pylance) and Core program (ESLint, Prettier) provisioned via [`.devcontainer/data-track/devcontainer.json`](../.devcontainer/data-track/devcontainer.json). Navigate to `data-track/week-N/exercise_X/` from the Explorer.
 
 To clone instead:
 
