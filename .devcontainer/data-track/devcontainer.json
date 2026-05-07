@@ -18,6 +18,7 @@
             }
         }
     },
+    "workspaceFolder": "/workspaces/Learning-Resources/data-track",
     "postCreateCommand": "echo '✅ HYF Data Track Codespace ready. Exercises live under data-track/week-N/. Each exercise that ships requirements.txt should be installed from its own folder: cd data-track/week-N/exercise_X && pip install -r requirements.txt'",
     "remoteUser": "vscode"
 }

@@ -10,7 +10,7 @@ A single Codespace covers every week's exercises:
 
 > 💻 [Open in GitHub Codespaces](https://github.com/codespaces/new/HackYourFuture/Learning-Resources?devcontainer_path=.devcontainer%2Fdata-track%2Fdevcontainer.json)
 
-The Codespace boots into the `data-track/` folder with Python 3.11 + the VS Code Python extensions provisioned via [`.devcontainer/data-track/devcontainer.json`](../.devcontainer/data-track/devcontainer.json). Navigate to whichever week and exercise you're working on from the Explorer.
+The Codespace opens directly in `data-track/` with Python 3.11 + the VS Code Python extensions provisioned via [`.devcontainer/data-track/devcontainer.json`](../.devcontainer/data-track/devcontainer.json). Navigate into whichever week and exercise you're working on from the Explorer.
 
 To clone instead:
 
