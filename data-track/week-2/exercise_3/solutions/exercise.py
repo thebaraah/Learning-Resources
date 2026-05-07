@@ -25,7 +25,7 @@ def process_sales():
 # get the data in?". It does not decide what's valid or what's a row
 # worth keeping. That decision belongs in calculate_revenue.
 def read_sales(path: str) -> list[dict]:
-    with open(path) as f:
+    with open(path, newline="", encoding="utf-8") as f:
         return list(csv.DictReader(f))
 
 
@@ -47,7 +47,7 @@ def calculate_revenue(rows: list[dict]) -> float:
 
 # TODO 3: write_report(total, path) — write the formatted line to disk.
 def write_report(total: float, path: str) -> None:
-    with open(path, "w") as f:
+    with open(path, "w", encoding="utf-8") as f:
         f.write(f"Total revenue: €{total:.2f}")
 
 
