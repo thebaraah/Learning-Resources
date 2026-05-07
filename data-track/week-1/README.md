@@ -33,9 +33,9 @@ week-1/
 
 Spin up a single Codespace covering all data-track exercises:
 
-> 💻 [Open in GitHub Codespaces](https://github.com/codespaces/new/HackYourFuture/Learning-Resources?folder=data-track)
+> 💻 [Open in GitHub Codespaces](https://github.com/codespaces/new/HackYourFuture/Learning-Resources?devcontainer_path=.devcontainer%2Fdata-track%2Fdevcontainer.json)
 
-The repo's `data-track/.devcontainer/` provisions Python 3.11 + the VS Code Python extensions for every exercise folder. From the Codespace's Explorer, navigate into `data-track/week-1/exercise_N/`.
+The repo's `.devcontainer/data-track/` provisions Python 3.11 + ruff + Pylance + debugpy for every exercise folder. From the Codespace's Explorer, navigate into `data-track/week-1/exercise_N/`.
 
 ### B. Local clone (use your own VS Code)
 

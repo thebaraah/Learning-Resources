@@ -12,7 +12,7 @@ A big part of Data Engineering is reading data from files. Let’s practice read
 
 1. Create a text file named `raw_data.txt` in your folder. Add these lines:
 
-```plain text
+```text
 amsterdam
 rotterdam
 the hague

@@ -17,13 +17,25 @@ Each exercise lives in its own subfolder so you can open a single Codespace and 
 ```text
 week-2/
 ├── exercise_1/
-│   ├── starter.py       # starter with TODOs
-│   ├── README.md        # what to do
+│   ├── exercise.py        # starter with TODOs
+│   ├── .env.example       # copy to .env (gitignored) before running
+│   ├── README.md          # what to do
 │   └── solutions/
-│       └── starter.py   # reference answer with `# WHY …` commentary
+│       └── exercise.py    # reference answer with `# WHY …` commentary
 ├── exercise_2/
 │   └── …
-└── exercise_5/
+├── exercise_4/            # tests-focused: starter is `test_sales.py`
+│   ├── sales.py
+│   ├── test_sales.py
+│   └── solutions/
+│       └── test_sales.py
+└── exercise_5/            # capstone: solution is a multi-file refactor
+    ├── exercise.py
+    └── solutions/
+        ├── main.py
+        ├── models.py
+        ├── transforms.py
+        └── io_layer.py
 ```
 
 ## Two ways to run
@@ -32,9 +44,9 @@ week-2/
 
 Spin up a single Codespace covering all data-track exercises:
 
-> 💻 [Open in GitHub Codespaces](https://github.com/codespaces/new/HackYourFuture/Learning-Resources?folder=data-track)
+> 💻 [Open in GitHub Codespaces](https://github.com/codespaces/new/HackYourFuture/Learning-Resources?devcontainer_path=.devcontainer%2Fdata-track%2Fdevcontainer.json)
 
-The repo's `data-track/.devcontainer/` provisions Python 3.11 + the VS Code Python extensions for every exercise folder. From the Codespace's Explorer, navigate into `data-track/week-2/exercise_N/`.
+The repo's `.devcontainer/data-track/` provisions Python 3.11 + ruff + Pylance + debugpy for every exercise folder. From the Codespace's Explorer, navigate into `data-track/week-2/exercise_N/`.
 
 ### B. Local clone (use your own VS Code)
 

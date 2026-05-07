@@ -2,3 +2,16 @@
 node_modules/
 .vscode/
 playground/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.env
+
+# Generated outputs from data-track exercises (students should not commit these)
+data-track/**/active_users.json
+data-track/**/report.txt
+data-track/**/cleaned.json

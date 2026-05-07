@@ -54,8 +54,12 @@ def run():
 #   out (age 17), Carol is filtered out (status inactive).
 #
 # (You can keep `exercise.py` here as a comparison reference. The real
-# refactored work goes in new files: models.py, transforms.py, io.py,
-# config.py, main.py, tests/test_transforms.py.)
+# refactored work goes in new files: models.py, transforms.py, io_layer.py,
+# config.py, main.py, tests/test_transforms.py.
+#
+# WHY io_layer.py and not io.py: the stdlib already ships an `io` module.
+# Naming your file `io.py` shadows it and breaks any `import io` elsewhere
+# in the project. `io_layer.py` is the standard workaround.)
 
 
 if __name__ == "__main__":

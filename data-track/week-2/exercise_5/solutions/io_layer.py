@@ -9,7 +9,10 @@ from dataclasses import asdict
 
 def read_users(path: str) -> list[dict]:
     """Read JSON, return raw list of dicts. No filtering, no validation."""
-    with open(path) as f:
+    # WHY encoding="utf-8": Windows defaults to cp1252 for text files.
+    # Pinning UTF-8 makes the read identical on macOS / Linux / Windows
+    # and avoids decode errors when names carry non-ASCII characters.
+    with open(path, encoding="utf-8") as f:
         return json.load(f)
 
 
@@ -20,5 +23,9 @@ def save_users(users: list, path: str) -> None:
     # dicts depending on whether validation was applied. asdict()
     # only works on dataclasses; for plain dicts we serialise as-is.
     payload = [asdict(u) if hasattr(u, "__dataclass_fields__") else u for u in users]
-    with open(path, "w") as f:
-        json.dump(payload, f, indent=2)
+    # WHY encoding="utf-8" + ensure_ascii=False: same locale-portability
+    # reason as the read above. ensure_ascii=False writes real Unicode
+    # characters (e.g. "Renée") instead of escape sequences ("Ren\u00e9e"),
+    # so the JSON file is human-readable and round-trips byte-identical.
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(payload, f, indent=2, ensure_ascii=False)

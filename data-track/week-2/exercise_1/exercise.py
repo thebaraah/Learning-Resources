@@ -12,8 +12,8 @@ Steps:
 A starter `.env.example` is included next to this file. Copy it to `.env`
 and fill in real-looking values, then refactor the code.
 """
-# BAD: secrets in code
-API_KEY = "sk-abc123-secret"
+# BAD: secrets in code (placeholder values: never commit a real key here)
+API_KEY = "REPLACE_WITH_YOUR_API_KEY"
 BASE_URL = "https://api.example.com"
 
 # TODO 1: import the config module you create in step 2 instead of
