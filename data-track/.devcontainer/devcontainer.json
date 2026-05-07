@@ -1,0 +1,23 @@
+{
+    "name": "HYF Data Track Exercises",
+    "image": "mcr.microsoft.com/devcontainers/python:3.11",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-python.debugpy",
+                "charliermarsh.ruff"
+            ],
+            "settings": {
+                "python.defaultInterpreterPath": "/usr/local/bin/python",
+                "[python]": {
+                    "editor.defaultFormatter": "charliermarsh.ruff",
+                    "editor.formatOnSave": true
+                }
+            }
+        }
+    },
+    "postCreateCommand": "echo '✅ HYF Data Track Codespace ready. Exercises live under data-track/week-N/. Each exercise that ships requirements.txt should be installed from its own folder: cd data-track/week-N/exercise_X && pip install -r requirements.txt'",
+    "remoteUser": "vscode"
+}
