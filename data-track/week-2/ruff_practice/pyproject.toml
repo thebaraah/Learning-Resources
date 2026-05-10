@@ -1,0 +1,11 @@
+# Minimal ruff config so the messy.py exercise triggers all 5 promised rule codes.
+# Without B + the line-length opt-in, ruff's default config only flags 3 of them.
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+# E: pycodestyle errors (E501 line-too-long, E711 comparison-to-None)
+# F: pyflakes (F401 unused imports, F841 unused local var)
+# B: flake8-bugbear (B006 mutable default argument)
+select = ["E", "F", "B"]
