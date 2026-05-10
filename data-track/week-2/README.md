@@ -14,6 +14,13 @@ Each exercise lives in its own subfolder so you can open a single Codespace and 
 | [`exercise_4/`](exercise_4/) | Write Tests with Pytest | `pytest`, fixtures, parametrize |
 | [`exercise_5/`](exercise_5/) | Refactor a "god function" | Combine all five concepts on one messy script |
 
+### Session Workshops (Live)
+
+| Folder | Topic | Concepts |
+|---|---|---|
+| [`workshop_1/`](workshop_1/) | Config + Separation | `.env`, `config.py`, pure functions |
+| [`workshop_2/`](workshop_2/) | Composable + Dataclasses | `@dataclass`, `__post_init__`, pipelines |
+
 ```text
 week-2/
 ├── exercise_1/
@@ -29,13 +36,19 @@ week-2/
 │   ├── test_sales.py
 │   └── solutions/
 │       └── test_sales.py
-└── exercise_5/            # capstone: solution is a multi-file refactor
-    ├── exercise.py
+├── exercise_5/            # capstone: solution is a multi-file refactor
+│   ├── exercise.py
+│   └── solutions/
+│       ├── main.py
+│       ├── models.py
+│       ├── transforms.py
+│       └── io_layer.py
+└── workshop_1/            # live workshop: config + separation
+    ├── pipeline.py
+    ├── config.py
     └── solutions/
-        ├── main.py
-        ├── models.py
-        ├── transforms.py
-        └── io_layer.py
+        ├── pipeline.py
+        └── config.py
 ```
 
 ## Two ways to run
