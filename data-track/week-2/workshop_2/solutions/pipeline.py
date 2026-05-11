@@ -10,14 +10,16 @@ from pathlib import Path
 from models import Transaction
 from transforms import calculate_revenue, clean_names, remove_invalid
 
+_ROOT = Path(__file__).resolve().parent.parent  # workshop_2/
 
-def load_rows(path: str) -> list[dict]:
+
+def load_rows(path: Path) -> list[dict]:
     with open(path, newline="", encoding="utf-8") as f:
         return list(csv.DictReader(f))
 
 
 if __name__ == "__main__":
-    raw = load_rows("data/sales.csv")
+    raw = load_rows(_ROOT / "data" / "sales.csv")
     print(f"raw: {len(raw)} rows")
 
     data = remove_invalid(raw)
@@ -43,7 +45,8 @@ if __name__ == "__main__":
         except ValueError as e:
             print(f"  skipped row {r.get('transaction_id')}: {e}")
 
-    print(f"\nfinal: {len(transactions)} valid Transactions")
+    print(f"
+final: {len(transactions)} valid Transactions")
     print(f"total revenue: {sum(t.revenue for t in transactions):.2f}")
 
-    Path("output").mkdir(exist_ok=True)
+    (_ROOT / "output").mkdir(exist_ok=True)
