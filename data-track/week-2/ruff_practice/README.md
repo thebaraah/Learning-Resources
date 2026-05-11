@@ -4,11 +4,11 @@ A deliberately messy Python file plus a tiny `pyproject.toml` so ruff has the ri
 
 ## Setup
 
+From the Codespace you opened for Week 2 exercises, navigate into this folder:
+
 ```bash
+cd data-track/week-2/ruff_practice
 pip install ruff
-mkdir -p ruff_practice && cd ruff_practice
-curl -L https://gist.githubusercontent.com/lassebenni/38c2e8fb384302cdcd2d0ecc82120b16/raw/messy.py -o messy.py
-curl -L https://gist.githubusercontent.com/lassebenni/38c2e8fb384302cdcd2d0ecc82120b16/raw/pyproject.toml -o pyproject.toml
 ruff check messy.py
 ```
 
