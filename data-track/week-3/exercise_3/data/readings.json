@@ -1,0 +1,4 @@
+[
+  {"station": "Malmö", "temperature_c": 14.8, "humidity_pct": 68, "timestamp": "2025-01-15T11:00"},
+  {"station": "Lund", "temperature_c": 15.4, "humidity_pct": 71, "timestamp": "2025-01-15T11:00"}
+]
