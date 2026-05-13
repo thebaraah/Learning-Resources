@@ -31,8 +31,9 @@ class NameCleaner:
 class DatabaseSink:
     """Writes rows to a database and tracks how many were written.
 
-    In this exercise the DB write is stubbed with a list, but pretend
-    self.conn is a real psycopg2 connection.
+    self._written stubs the DB write (a real version would use a connection
+    object like psycopg2.connect(...)). self.written_count persists across
+    multiple calls to .write().
     """
 
     def __init__(self):
