@@ -37,7 +37,7 @@ class DatabaseSink:
     """
 
     def __init__(self):
-        self._written: list[dict] = []   # stands in for a real DB connection
+        self._written: list[dict] = []   # in-memory store: rows that would be persisted to the DB
         self.written_count: int = 0
 
     def write(self, row: dict) -> None:
