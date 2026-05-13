@@ -44,17 +44,18 @@ def read_json_file(path: Path | str) -> list[dict]:
 # TODO 3: normalize_record
 def normalize_record(record: dict) -> dict:
     """Map any source row into the canonical pipeline shape."""
-    # WHY chained .get(): each source uses different keys. record.get("station",
-    # record.get("station_name")) reads as "first try station, fall back to
-    # station_name". The first match wins.
+    # WHY nested .get(): each source uses different keys. record.get("station",
+    # record.get("station_name")) reads as "if station is present return it,
+    # otherwise return station_name". The first match wins, and key absence
+    # (not value falsiness) controls the fallback — so 0 and 0.0 are preserved.
     # WHY cast types explicitly: CSV values are always strings (`"18.5"` and
     # `"72"`), so float()/int() coerce them. JSON already has the right types,
     # but float(18.5) is a no-op so this is safe to apply to both.
     return {
         "station": str(record.get("station") or record.get("station_name", "unknown")),
-        "temperature_c": float(record.get("temperature_c") or record.get("temp")),
-        "humidity_pct": int(record.get("humidity_pct") or record.get("humidity")),
-        "timestamp": str(record.get("timestamp") or record.get("date", "")),
+        "temperature_c": float(record.get("temperature_c", record.get("temp"))),
+        "humidity_pct": int(record.get("humidity_pct", record.get("humidity"))),
+        "timestamp": str(record.get("timestamp", record.get("date", ""))),
     }
 
 

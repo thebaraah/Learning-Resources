@@ -17,6 +17,8 @@ Steps:
 
 Hint: use `for attempt in range(max_retries):` and `time.sleep(wait_time)`.
 """
+import time
+
 import requests
 
 

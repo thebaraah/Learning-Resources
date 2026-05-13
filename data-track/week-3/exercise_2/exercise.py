@@ -22,6 +22,8 @@ paginator so you can verify your implementation offline.
 """
 from __future__ import annotations
 
+import time
+
 
 # TODO 1: implement fetch_all_pages
 def fetch_all_pages(base_url: str, fetcher=None) -> list[dict]:
