@@ -10,7 +10,7 @@ pip install -r requirements.txt
 
 ## The task
 
-The starter `exercise.py` contains a `fetch_data(url)` that crashes on the first failure. Your job is to refactor it into a retry loop with exponential backoff.
+The starter `exercise.py` contains a `fetch_data(url)` that crashes on the first failure. Your job is to implement `fetch_data_retried` — the resilient version — using the TODO stubs in the file.
 
 1. Add a `max_retries: int = 3` parameter.
 2. Wrap the request in a `for attempt in range(max_retries):` loop.
@@ -21,8 +21,8 @@ The starter `exercise.py` contains a `fetch_data(url)` that crashes on the first
 
 ## Success criteria
 
-- Calling `fetch_data(<a working URL>)` returns a JSON dict on the first try.
-- Calling `fetch_data(<a URL that timeouts>)` prints two retry messages, then raises after the third attempt.
+- Calling `fetch_data_retried(<a working URL>)` returns a JSON dict on the first try.
+- Calling `fetch_data_retried(<a URL that timeouts>)` prints two retry messages, then raises after the third attempt.
 - A 404 raises immediately without retrying.
 
 ## Stretch

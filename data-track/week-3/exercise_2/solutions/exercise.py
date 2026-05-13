@@ -49,7 +49,9 @@ def fetch_all_pages(base_url: str, fetcher=None) -> list[dict]:
 def _request_page(base_url: str, page: int) -> dict:
     """Real HTTP call for production use."""
     import requests
-    return requests.get(base_url, params={"page": page}, timeout=10).json()
+    response = requests.get(base_url, params={"page": page}, timeout=10)
+    response.raise_for_status()
+    return response.json()
 
 
 # --- Local stub so you can verify without a real paginated API -------------

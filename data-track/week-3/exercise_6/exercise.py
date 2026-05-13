@@ -8,8 +8,8 @@ upsert into SQLite. Re-running the script must not duplicate rows
 Steps:
   1. Implement `fetch_weather(latitude, longitude, days=1)` using `requests`
      with a `timeout=10` and the retry pattern from Exercise 1.
-  2. Implement `normalize_open_meteo(api_response) -> list[dict]` that
-     flattens Open-Meteo's columnar response into one record per hour with
+  2. Implement `normalize_open_meteo(api_response: dict, station: str) -> list[dict]`
+     that flattens Open-Meteo's columnar response into one record per hour with
      keys: station, timestamp, temperature_c, humidity_pct.
   3. Reuse the `WeatherReading` model and `validate_batch` function from
      Exercise 4.

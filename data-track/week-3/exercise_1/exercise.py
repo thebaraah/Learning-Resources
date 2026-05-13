@@ -32,11 +32,12 @@ def fetch_data(url: str) -> dict:
 # TODO 3: catch only ConnectionError + Timeout, not HTTPError
 # TODO 4: on the final attempt, re-raise instead of swallowing
 # TODO 5: print "Attempt {n} failed, retrying in {wait}s..." before each sleep
+def fetch_data_retried(url: str, max_retries: int = 3) -> dict:
+    raise NotImplementedError("Implement me using the TODOs above.")
 
 
 if __name__ == "__main__":
-    # Expected after refactor: the call below either succeeds (returns a dict)
-    # or fails 3 times with the retry messages and then raises.
-    # Use a real URL that returns JSON to verify success:
-    data = fetch_data("https://api.open-meteo.com/v1/forecast?latitude=55.67&longitude=12.56&hourly=temperature_2m&forecast_days=1")
+    # Expected: prints "Got 24 timestamps" on success, or prints retry messages
+    # then raises after max_retries failed attempts.
+    data = fetch_data_retried("https://api.open-meteo.com/v1/forecast?latitude=55.67&longitude=12.56&hourly=temperature_2m&forecast_days=1")
     print(f"Got {len(data.get('hourly', {}).get('time', []))} timestamps")

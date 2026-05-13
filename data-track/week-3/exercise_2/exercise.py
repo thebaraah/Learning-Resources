@@ -4,28 +4,32 @@ Write a function that fetches every page of a paginated endpoint and returns
 the combined results.
 
 Steps:
-  1. Implement `fetch_all_pages(base_url: str) -> list[dict]`.
+  1. Implement `fetch_all_pages(base_url: str, fetcher=None) -> list[dict]`.
   2. Each page response has the shape:
        {"results": [...], "page": <int>, "total_pages": <int>}
-  3. Loop until `page >= total_pages`, incrementing the `?page=N` query param.
-  4. Collect all `results` into a single flat list.
-  5. Sleep 0.5 seconds between requests so you do not hammer the server.
+  3. Call `fetcher(page)` to get each page. When `fetcher` is None, default to
+     calling `simulate_paginated_request(page)` (or a real HTTP request for
+     production use).
+  4. Loop until `page >= total_pages`, incrementing the page counter each pass.
+  5. Collect all `results` into a single flat list.
+  6. Sleep 0.5 seconds between requests so you do not hammer the server.
 
-Hint: pass `params={"page": page}` to `requests.get()` so requests builds the
-query string for you. Set `timeout=10`.
+Hint: `fetcher` is a callable that takes a page number and returns a dict.
+Passing it in makes the function testable without a real server.
 
-For testing, this stand-in serves a fake 3-page paginator over Open-Meteo
-data. Run the file as `python exercise.py` to see your implementation in
-action against a local stub — no remote pagination needed.
+For testing, run `python exercise.py` — the stub below serves a fake 3-page
+paginator so you can verify your implementation offline.
 """
 from __future__ import annotations
 
-import requests
-
 
 # TODO 1: implement fetch_all_pages
-def fetch_all_pages(base_url: str) -> list[dict]:
-    """Fetch every page of a paginated API and return one flat list."""
+def fetch_all_pages(base_url: str, fetcher=None) -> list[dict]:
+    """Fetch every page of a paginated API and return one flat list.
+
+    fetcher: callable(page: int) -> dict. Defaults to simulate_paginated_request
+    for local testing; swap in a real HTTP caller for production.
+    """
     raise NotImplementedError("Implement me. See the steps in the module docstring.")
 
 
