@@ -29,7 +29,7 @@ from __future__ import annotations
 
 
 # TODO 1: fetch_weather with retry
-def fetch_weather(latitude: float, longitude: float, days: int = 1) -> dict:
+def fetch_weather(latitude: float, longitude: float, days: int = 1, max_retries: int = 3) -> dict:
     """Fetch hourly weather forecast from Open-Meteo. Retry on transient errors."""
     raise NotImplementedError
 

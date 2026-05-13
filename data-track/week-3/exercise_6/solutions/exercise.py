@@ -69,10 +69,12 @@ def fetch_weather(latitude: float, longitude: float, days: int = 1, max_retries:
 def normalize_open_meteo(api_response: dict, station: str) -> list[dict]:
     """Flatten Open-Meteo's {time:[], temperature_2m:[], ...} into row-dicts."""
     hourly = api_response["hourly"]
-    # WHY zip over a range-loop: zip iterates the three columns in lockstep
-    # and raises if their lengths disagree, catching schema drift early.
-    # A `for i in range(len(time))` would silently `IndexError` if one column
-    # came back short.
+    # WHY zip(..., strict=True) over a range-loop: strict=True raises a clear
+    # ValueError("zip() has arguments with different lengths") the moment the
+    # columns mismatch, pointing directly at the schema problem. A bare
+    # `for i in range(len(time))` would crash later with a less-informative
+    # IndexError — or, worse, silently truncate to the shortest column if you
+    # used plain zip() without strict=True.
     return [
         {
             "station": station,

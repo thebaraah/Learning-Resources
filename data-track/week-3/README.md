@@ -60,7 +60,7 @@ Python 3.11+ required locally. Each exercise that needs extra packages ships its
 
 ## Reference solutions
 
-Each `exercise_N/solutions/` folder holds the answer in-place: the same filename as the starter, filled in with the TODOs resolved and `# WHY ...:` comments under each non-obvious choice. The original `# TODO` lines are preserved so you can read the question and the answer side-by-side.
+Each `exercise_N/solutions/` folder holds the answer in-place: the same filename as the starter, filled in with the TODOs resolved and `# WHY ...:` comments under each non-obvious choice. For exercises 1–5, the original `# TODO` lines are preserved so you can read the question and the answer side-by-side. Exercise 6 is a capstone that assembles components from earlier exercises rather than following a step-by-step list, so its solution omits the intermediate TODO markers.
 
 **Spoiler discipline.** The point of the reference solution is the commentary, not the code. Use it as a check after an honest attempt (or when you have been stuck for 10+ minutes); don't open it first. The folder is named `solutions/` and you have to deliberately navigate into it — that one extra click is the whole barrier and it is enough.
 
