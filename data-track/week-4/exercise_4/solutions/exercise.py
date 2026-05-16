@@ -47,5 +47,8 @@ print(enriched)
 # WHY .size() not .count(): .count() counts non-null values per column and
 # returns a multi-column result. .size() counts rows per group (regardless of
 # nulls), which is exactly "how many orders" per segment.
-segment_counts = enriched.groupby("segment").size().sort_values(ascending=False)
+# WHY dropna=False: the left join above preserves unmatched orders as NaN in
+# 'segment'. Without dropna=False, groupby silently drops those rows — the same
+# kind of silent data loss we used the left join to avoid.
+segment_counts = enriched.groupby("segment", dropna=False).size().sort_values(ascending=False)
 print(segment_counts)
