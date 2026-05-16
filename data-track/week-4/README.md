@@ -1,6 +1,6 @@
 # HYF Data Track — Week 4 Practice Exercises
 
-Seven exercises that consolidate Week 4 (pandas fundamentals: EDA, filtering, groupby, joins, reshaping, string/date processing, and visualisation). Work through them in order: Exercises 2-5 build on the `orders` DataFrame you create in Exercise 1.
+Seven exercises that consolidate Week 4 (pandas fundamentals: EDA, filtering, groupby, joins, reshaping, string/date processing, and visualisation). Each exercise is self-contained: the same sample data is embedded in every starter file, so you can work on any exercise independently.
 
 ## Layout
 

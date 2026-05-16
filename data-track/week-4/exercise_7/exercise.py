@@ -24,7 +24,7 @@ _csv = StringIO(
 )
 orders = pd.read_csv(_csv)
 orders["amount"] = orders["amount"].fillna(0)
-Path("output").mkdir(exist_ok=True)
+Path(__file__).resolve().parent.joinpath("output").mkdir(exist_ok=True)
 
 # TODO 1: Group orders by 'region' and sum 'amount'.
 # Plot the result as a bar chart using .plot(kind='bar').

@@ -24,7 +24,8 @@ _csv = StringIO(
 )
 orders = pd.read_csv(_csv)
 orders["amount"] = orders["amount"].fillna(0)
-Path("output").mkdir(exist_ok=True)
+output_dir = Path(__file__).resolve().parent.parent / "output"
+output_dir.mkdir(exist_ok=True)
 
 # TODO 1: Group orders by 'region' and sum 'amount'.
 # Plot the result as a bar chart using .plot(kind='bar').
@@ -54,5 +55,5 @@ ax.set_title("Revenue by Region")
 # labels and titles do not clip. Without it, long axis labels are often cut off
 # at the edge of the saved image, even though they look fine on screen.
 plt.tight_layout()
-plt.savefig("output/revenue_by_region.png")
-print(Path("output/revenue_by_region.png").exists())  # expect True
+plt.savefig(output_dir / "revenue_by_region.png")
+print((output_dir / "revenue_by_region.png").exists())  # expect True

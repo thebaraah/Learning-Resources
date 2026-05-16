@@ -22,7 +22,7 @@ orders = pd.read_csv(_csv)
 orders["amount"] = orders["amount"].fillna(0)
 orders["order_date"] = pd.to_datetime(orders["order_date"])
 
-Path("output").mkdir(exist_ok=True)
+Path(__file__).resolve().parent.joinpath("output").mkdir(exist_ok=True)
 
 # TODO 1: Create a pivot table of total 'amount' by 'region' (rows) and
 # 'order_date' (columns). Use pd.pivot_table() with aggfunc='sum'.

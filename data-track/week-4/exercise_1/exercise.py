@@ -3,8 +3,8 @@
 You have a small orders dataset with a missing value. Explore it with
 pandas and fix the gap before moving on to later exercises.
 
-Exercises 2-5 build on the `orders` DataFrame you create here. Run
-this file first (or paste the setup block into your own script).
+Each exercise is self-contained: the same sample data is embedded in
+every starter file. You do not need to run this file first.
 """
 from io import StringIO
 
@@ -49,5 +49,9 @@ orders = pd.read_csv(csv_data)
 # order_date    0
 # dtype: int64
 # --- after fill ---
-# amount    0
+# order_id      0
+# customer_id   0
+# region        0
+# amount        0
+# order_date    0
 # dtype: int64

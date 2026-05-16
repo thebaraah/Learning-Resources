@@ -4,7 +4,7 @@
 
 ## Setup
 
-No extra packages needed. `pandas` is already installed in the Codespace.
+Use the Codespace at the top of the week-4 README for zero setup. If running locally, run `pip install -r requirements.txt` from inside this folder first.
 
 ## Task
 
@@ -27,4 +27,4 @@ You have a small CSV embedded in the script. Work through the three TODOs:
 
 ## Note
 
-The `orders` DataFrame produced at the end of this exercise (after the fill) is reused in Exercises 2-5. Keep this script open or paste the setup block at the top of your later scripts.
+Each exercise is self-contained: the same sample data is embedded in every starter file. You do not need to run this exercise before starting Exercise 2.

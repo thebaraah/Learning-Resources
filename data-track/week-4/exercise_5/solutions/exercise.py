@@ -22,7 +22,8 @@ orders = pd.read_csv(_csv)
 orders["amount"] = orders["amount"].fillna(0)
 orders["order_date"] = pd.to_datetime(orders["order_date"])
 
-Path("output").mkdir(exist_ok=True)
+output_dir = Path(__file__).resolve().parent.parent / "output"
+output_dir.mkdir(exist_ok=True)
 
 # TODO 1: Create a pivot table of total 'amount' by 'region' (rows) and
 # 'order_date' (columns). Use pd.pivot_table() with aggfunc='sum'.
@@ -49,14 +50,14 @@ print(pivot)
 # WHY Parquet: CSV is human-readable and universally supported but loses
 # dtype information (e.g. datetimes become strings). Parquet preserves dtypes,
 # compresses well, and is the default interchange format in modern data stacks.
-pivot.to_csv("output/pivot.csv")
-pivot.to_parquet("output/pivot.parquet")
-print("Files written: output/pivot.csv, output/pivot.parquet")
+pivot.to_csv(output_dir / "pivot.csv")
+pivot.to_parquet(output_dir / "pivot.parquet")
+print(f"Files written: {output_dir}/pivot.csv, {output_dir}/pivot.parquet")
 
 # TODO 3: Read back the Parquet file and confirm the row count matches.
 
 # WHY verify round-trip: writing and reading back confirms that the Parquet
 # encoding preserved the data correctly. A mismatch in row count would point
 # to a serialisation problem.
-pivot_back = pd.read_parquet("output/pivot.parquet")
+pivot_back = pd.read_parquet(output_dir / "pivot.parquet")
 print(f"Parquet row count: {len(pivot_back)}")  # expect 3

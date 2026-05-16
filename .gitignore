@@ -16,3 +16,4 @@ data-track/**/active_users.json
 data-track/**/report.txt
 data-track/**/cleaned.json
 data-track/**/weather.db
+data-track/**/output/
