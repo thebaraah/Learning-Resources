@@ -10,12 +10,12 @@ The setup block in `exercise.py` creates the `orders` DataFrame and the `output/
 
 1. Group `orders` by `region` and sum `amount`. Plot the result as a bar chart using `.plot(kind='bar')`.
 2. Add axis labels (`Region` on x, `Total Revenue (€)` on y) and a title (`Revenue by Region`).
-3. Call `plt.tight_layout()` then save the figure to `output/revenue_by_region.png`. Confirm the file exists with `Path("output/revenue_by_region.png").exists()`.
+3. Call `plt.tight_layout()` then save the figure to `output_dir / 'revenue_by_region.png'` using the `output_dir` variable defined in the setup block. Confirm the file exists with `(output_dir / 'revenue_by_region.png').exists()`.
 
 ## Success criteria
 
-- `output/revenue_by_region.png` is created.
-- `Path("output/revenue_by_region.png").exists()` prints `True`.
+- `revenue_by_region.png` is created inside the `output/` folder next to the script.
+- `(output_dir / 'revenue_by_region.png').exists()` prints `True`.
 - The chart has three bars: one per region (BE, DE, NL).
 
 ## Note

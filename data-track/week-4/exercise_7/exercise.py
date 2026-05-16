@@ -24,7 +24,8 @@ _csv = StringIO(
 )
 orders = pd.read_csv(_csv)
 orders["amount"] = orders["amount"].fillna(0)
-Path(__file__).resolve().parent.joinpath("output").mkdir(exist_ok=True)
+output_dir = Path(__file__).resolve().parent / "output"
+output_dir.mkdir(exist_ok=True)
 
 # TODO 1: Group orders by 'region' and sum 'amount'.
 # Plot the result as a bar chart using .plot(kind='bar').
@@ -35,8 +36,8 @@ Path(__file__).resolve().parent.joinpath("output").mkdir(exist_ok=True)
 # y-axis label: 'Total Revenue (€)'
 # Title: 'Revenue by Region'
 
-# TODO 3: Call plt.tight_layout() then save to 'output/revenue_by_region.png'.
-# Confirm the file exists by printing Path("output/revenue_by_region.png").exists().
+# TODO 3: Call plt.tight_layout() then save to output_dir / 'revenue_by_region.png'.
+# Confirm the file exists by printing (output_dir / 'revenue_by_region.png').exists().
 
 # Expected: output/revenue_by_region.png is created and .exists() returns True.
 # Bar heights: NL=170, DE=200, BE=90 (NL has three orders, one with amount=0).

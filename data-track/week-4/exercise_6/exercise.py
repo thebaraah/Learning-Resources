@@ -45,7 +45,7 @@ orders["order_date"] = pd.to_datetime(orders["order_date"])
 #    order_id              email
 # 0         1  alice@example.com
 # 1         2    bob@example.com
-# 2         3               None  (NaN)
+# 2         3                NaN
 # 3         4    daan@example.nl
 # 4         5  alice@example.com
 

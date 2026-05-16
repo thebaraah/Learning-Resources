@@ -3,8 +3,8 @@
 You have a small orders dataset with a missing value. Explore it with
 pandas and fix the gap before moving on to later exercises.
 
-Exercises 2-5 build on the `orders` DataFrame you create here. Run
-this file first (or paste the setup block into your own script).
+Each exercise is self-contained with its own embedded dataset.
+You do not need to run this file before attempting the others.
 """
 from io import StringIO
 

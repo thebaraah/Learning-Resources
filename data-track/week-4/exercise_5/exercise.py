@@ -22,17 +22,18 @@ orders = pd.read_csv(_csv)
 orders["amount"] = orders["amount"].fillna(0)
 orders["order_date"] = pd.to_datetime(orders["order_date"])
 
-Path(__file__).resolve().parent.joinpath("output").mkdir(exist_ok=True)
+output_dir = Path(__file__).resolve().parent / "output"
+output_dir.mkdir(exist_ok=True)
 
 # TODO 1: Create a pivot table of total 'amount' by 'region' (rows) and
 # 'order_date' (columns). Use pd.pivot_table() with aggfunc='sum'.
 # Assign the result to pivot and print it.
 
-# TODO 2: Save pivot to 'output/pivot.csv' and 'output/pivot.parquet'.
+# TODO 2: Save pivot to output_dir / 'pivot.csv' and output_dir / 'pivot.parquet'.
 # Use to_csv() and to_parquet() respectively.
 
-# TODO 3: Read back the Parquet file and confirm the row count matches.
-# Print the row count of the re-read DataFrame.
+# TODO 3: Read back the Parquet file from output_dir / 'pivot.parquet' and
+# confirm the row count matches. Print the row count of the re-read DataFrame.
 
 # Expected pivot shape: 3 rows (BE, DE, NL), columns = unique order dates.
 # Expected Parquet row count: 3
