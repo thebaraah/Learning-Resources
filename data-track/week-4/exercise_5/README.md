@@ -24,5 +24,5 @@ The setup block in `exercise.py` creates `orders`, parses `order_date` as dateti
 
 ## Stretch
 
-- Open `output/pivot.csv` in a text editor. What does pandas write for missing date/region combinations (NaN)?
+- Open `output/pivot.csv` in a text editor. What does pandas write for missing date/region combinations (empty cells, not the literal string `NaN`)?
 - Compare file sizes: `pivot.csv` vs `pivot.parquet`. Which is smaller and why?

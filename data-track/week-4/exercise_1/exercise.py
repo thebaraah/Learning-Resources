@@ -22,14 +22,15 @@ csv_data = StringIO(
 
 orders = pd.read_csv(csv_data)
 
-# TODO 1: Call orders.info() and orders.describe() and print the results.
+# TODO 1: Print '--- info ---', then call orders.info().
+# Print '--- describe ---', then print(orders.describe()).
 # What dtype does pandas infer for 'amount'? What does describe() say about it?
 
-# TODO 2: Count missing values per column.
+# TODO 2: Print '--- missing values ---', then count missing values per column.
 # Hint: combine .isnull() and .sum().
 
-# TODO 3: Fill missing 'amount' values with 0.
-# Use fillna() and reassign (or use inplace=True).
+# TODO 3: Fill missing 'amount' values with 0 using fillna() and reassign.
+# Print '--- after fill ---', then print orders.isnull().sum() to confirm.
 
 # Expected output after all three TODOs:
 # --- info ---
