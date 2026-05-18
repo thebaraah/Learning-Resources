@@ -39,6 +39,21 @@ def section_1_join_types():
     print(left)
 
 
+def section_1b_join_multiplication():
+    print("\n--- Section: Join is Multiplication ---")
+    # 3 orders for customer 42, 3 addresses for customer 42 → 9 rows, not 3
+    orders = pd.DataFrame({"order_id": [1, 2, 3], "customer_id": [42, 42, 42], "amount": [100, 200, 50]})
+    addresses = pd.DataFrame({"customer_id": [42, 42, 42], "city": ["Amsterdam", "Rotterdam", "Utrecht"]})
+
+    print("Check before merging:")
+    print("orders customer_id counts:\n", orders["customer_id"].value_counts().to_string())
+    print("addresses customer_id counts:\n", addresses["customer_id"].value_counts().to_string())
+
+    merged = orders.merge(addresses, on="customer_id")
+    print(f"\nResult: {len(orders)} orders × {len(addresses)} addresses = {len(merged)} rows (not {len(orders)})")
+    print(merged)
+
+
 def section_2_indicator():
     print("\n--- Section: Tracking Matches with indicator ---")
     orders, customers, _ = _make_tables()
@@ -84,6 +99,7 @@ def section_5_concat():
 
 if __name__ == "__main__":
     section_1_join_types()
+    section_1b_join_multiplication()
     section_2_indicator()
     section_3_multi_key_join()
     section_4_index_join()

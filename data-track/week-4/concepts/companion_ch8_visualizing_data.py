@@ -36,10 +36,15 @@ def section_2_group_then_plot():
             "amount": [120, 80, 200, 50, 90],
         }
     )
-    # Aggregating before plotting ensures one bar per region
-    by_region = orders.groupby("region", as_index=False)["amount"].sum()
-    ax = by_region.plot(x="region", y="amount", kind="bar", title="Revenue by region")
-    print("Aggregated before plotting.")
+    # Aggregate first, then sort — DataFrame.plot draws bars in row order.
+    # Unsorted: bars appear in insertion order, not value order.
+    by_region = (
+        orders.groupby("region", as_index=False)["amount"]
+        .sum()
+        .sort_values("amount", ascending=False)
+    )
+    ax = by_region.plot(x="region", y="amount", kind="bar", title="Revenue by region (sorted)")
+    print("Sorted before plotting (highest bar first):")
     print(by_region)
     plt.close()
 

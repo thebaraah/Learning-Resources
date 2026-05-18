@@ -49,8 +49,14 @@ def section_3_boolean_filtering():
     print("Orders with amount > 100:")
     print(big_orders)
 
+    # Python `and` tries to reduce the whole Series to a single bool — raises ValueError.
+    try:
+        _ = orders[orders["country"] == "NL" and orders["amount"] > 100]
+    except ValueError as e:
+        print(f"\nBAD — `and` raises ValueError: {e}")
+
     nl_big = orders[(orders["country"] == "NL") & (orders["amount"] > 100)]
-    print("\nNL orders with amount > 100:")
+    print("\nGOOD — `&` with parentheses works:")
     print(nl_big)
 
     # query alternative
