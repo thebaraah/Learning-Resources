@@ -19,15 +19,14 @@ def section_1_string_operations():
 
 def section_2_pattern_matching():
     print("\n--- Section: Pattern Matching and Extraction ---")
-    phones = pd.DataFrame(
+    emails = pd.DataFrame(
         {
-            "phone": ["06 12345678", "06 23456789", "020 7654321"],
+            "email": ["alice@gmail.com", "bob@company.nl", "invalid-email", "chloe@outlook.com"],
         }
     )
-    phones["phone_clean"] = phones["phone"].str.replace(" ", "", regex=False)
-    # Extract the first 2-3 digit area code
-    phones["area_code"] = phones["phone_clean"].str.extract(r"(\d{2,3})")
-    print(phones)
+    emails["domain"] = emails["email"].str.extract(r"@([\w.]+)")
+    emails["is_gmail"] = emails["email"].str.contains(r"@gmail\.com", na=False)
+    print(emails)
 
 
 def section_3_parsing_dates():

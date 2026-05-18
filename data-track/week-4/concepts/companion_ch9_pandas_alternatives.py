@@ -55,11 +55,11 @@ def section_2_duckdb():
     orders_pd = pd.DataFrame(
         {"region": ["NL", "NL", "BE", "DE"], "amount": [120, 80, 90, 200]}
     )
-    con = duckdb.connect()
-    con.register("orders", orders_pd)
-    duckdb_result = con.execute(
-        "SELECT region, SUM(amount) AS total_revenue FROM orders GROUP BY region ORDER BY region"
-    ).df()
+    with duckdb.connect() as con:
+        con.register("orders", orders_pd)
+        duckdb_result = con.execute(
+            "SELECT region, SUM(amount) AS total_revenue FROM orders GROUP BY region ORDER BY region"
+        ).df()
     print("\nDuckDB query on registered Pandas DataFrame:")
     print(duckdb_result)
 
@@ -102,11 +102,11 @@ def section_4_comparison():
         .reset_index().rename(columns={"amount": "total"}).sort_values("region")
     )
 
-    con = duckdb.connect()
-    con.register("orders", pd.DataFrame(data))
-    duck_result = con.execute(
-        "SELECT region, SUM(amount) AS total FROM orders GROUP BY region ORDER BY region"
-    ).df()
+    with duckdb.connect() as con:
+        con.register("orders", pd.DataFrame(data))
+        duck_result = con.execute(
+            "SELECT region, SUM(amount) AS total FROM orders GROUP BY region ORDER BY region"
+        ).df()
 
     print("Pandas:"); print(pandas_result.to_string(index=False))
     print("Polars:"); print(polars_result.to_string(index=False))
