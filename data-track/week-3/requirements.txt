@@ -1,0 +1,12 @@
+# Week 3 — HYF Data Track
+#
+# Install everything needed for the week's six exercises:
+#
+#   pip install -r data-track/week-3/requirements.txt
+#
+# Per-exercise requirements.txt files still exist for students who
+# want to install just-in-time per exercise. This per-week file is
+# the convenience union.
+
+pydantic>=2.0
+requests>=2.31

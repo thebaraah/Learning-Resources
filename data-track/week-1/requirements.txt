@@ -1,0 +1,11 @@
+# Week 1 — HYF Data Track
+#
+# No external packages required. Week 1 exercises use the Python
+# standard library only (lists, dicts, strings, files, csv, json).
+#
+# This file exists so the per-week convention is consistent across
+# Weeks 1-N. From the repo root in a fresh Codespace you can run:
+#
+#   pip install -r data-track/week-1/requirements.txt
+#
+# and the command will succeed as a no-op.
