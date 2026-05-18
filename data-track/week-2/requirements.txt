@@ -1,0 +1,12 @@
+# Week 2 — HYF Data Track
+#
+# Install everything needed for the week's six exercises:
+#
+#   pip install -r data-track/week-2/requirements.txt
+#
+# Per-exercise requirements.txt files still exist for students who
+# want to install just-in-time per exercise. This per-week file is
+# the convenience union.
+
+pytest>=7.0
+python-dotenv>=1.0.0
