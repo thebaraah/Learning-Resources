@@ -1,6 +1,6 @@
 # Week 4 — HYF Data Track
 #
-# Install everything needed for the week's seven exercises:
+# Install everything needed for the week's exercises and concept scripts:
 #
 #   pip install -r data-track/week-4/requirements.txt
 #
@@ -8,6 +8,12 @@
 # want to install just-in-time per exercise. This per-week file is
 # the convenience union.
 
+# Core — exercises + concept scripts ch1-ch8
 matplotlib>=3.7
 pandas>=2.0
-pyarrow>=14.0
+pyarrow>=14.0        # Parquet support (ch7, exercise 5/7)
+
+# Alternatives — concept script ch9 only
+duckdb>=0.10
+polars>=0.20
+dask[dataframe]>=2024.1
