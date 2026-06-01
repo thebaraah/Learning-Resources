@@ -22,7 +22,7 @@ docker build -t pipeline-practice:6.0 .
 
 2. Build with a `BUILD_SHA` argument and confirm it appears in the build log:
    ```bash
-   docker build --build-arg BUILD_SHA=abc123 -t pipeline-practice:6.0 .
+   docker build --no-cache --progress=plain --build-arg BUILD_SHA=abc123 -t pipeline-practice:6.0 .
    ```
    Look for `Building SHA: abc123` in the output.
 
@@ -44,7 +44,7 @@ docker build -t pipeline-practice:6.0 .
    ```
    Expected: `API key present: False` and `Log level: INFO`.
 
-6. Add `RUN echo $BUILD_SHA` after `CMD` in the Dockerfile. Build and run the container. Is `BUILD_SHA` visible at runtime? Why not?
+6. Add `RUN echo "$BUILD_SHA"` after `CMD` in the Dockerfile. Build with `--build-arg BUILD_SHA=abc123` and run the container. Is `BUILD_SHA` visible at runtime? Why not?
 
 ## Success criteria
 

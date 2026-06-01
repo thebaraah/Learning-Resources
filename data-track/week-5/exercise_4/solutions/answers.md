@@ -15,9 +15,10 @@
 
 `pip install -r requirements.txt` installs exactly the packages and versions listed. If `requests==2.31.0` is listed, pip installs that version. But transitive dependencies (what `requests` itself depends on, like `urllib3`) are resolved at install time and may differ between runs.
 
-`uv sync --frozen` refuses to run if `pyproject.toml` and `uv.lock` have drifted apart. This means:
-- If someone edits `pyproject.toml` without updating `uv.lock`, the install fails loudly.
-- The full transitive graph is pinned in `uv.lock`, so every run installs byte-for-byte the same environment.
+With uv, the strict CI pattern is to run `uv lock --check` before `uv sync --frozen`.
+- `uv lock --check` fails if `pyproject.toml` and `uv.lock` have drifted apart.
+- `uv sync --frozen` installs from the existing lock file without re-resolving.
+- The full transitive graph is pinned in `uv.lock`, so every run can reproduce the same environment.
 
 In CI, this is the right behaviour: a stale lock file is a bug, and you want CI to catch it immediately rather than silently installing a slightly different environment.
 

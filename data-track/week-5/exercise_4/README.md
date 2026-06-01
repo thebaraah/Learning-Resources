@@ -14,7 +14,7 @@ Answer the following questions in writing (a text file, a comment, or just think
 
 2. Why does the uv Dockerfile need to copy two files before the install step, while the requirements.txt Dockerfile only needs one?
 
-3. `uv sync --frozen` is stricter than `pip install -r requirements.txt`. Explain what "stricter" means here and why that matters in CI.
+3. `uv lock --check` + `uv sync --frozen` is stricter than `pip install -r requirements.txt`. Explain what "stricter" means here and why that matters in CI.
 
 4. Your team already has a `requirements.txt` and a working Dockerfile. A colleague suggests switching to `uv`. List one concrete reason to switch and one concrete reason to stay.
 
@@ -22,6 +22,6 @@ Answer the following questions in writing (a text file, a comment, or just think
 
 ## Success criteria
 
-You can explain the caching difference and the `--frozen` guarantee without looking at the chapter.
+You can explain the caching difference and how `uv lock --check` plus `--frozen` protects CI reproducibility without looking at the chapter.
 
 Check your answers against `solutions/answers.md`.

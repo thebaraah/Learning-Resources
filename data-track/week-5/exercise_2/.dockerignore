@@ -1,0 +1,12 @@
+# Exercise toggle for build-context demo:
+# Uncomment the next line to intentionally break the build by excluding requirements.txt
+# requirements.txt
+
+# Usual local noise
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.git/
+.gitignore
+.DS_Store

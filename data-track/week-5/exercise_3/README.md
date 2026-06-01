@@ -33,16 +33,17 @@ uv lock
    ```
 4. Edit only `src/pipeline.py` (add a comment) and build again. Confirm the `uv sync` layer stays cached.
 5. Add a second dependency to `pyproject.toml`, run `uv lock` to update `uv.lock`, and build again. Confirm `uv sync` now reruns.
-6. **Intentional failure:** bump the version in `pyproject.toml` without running `uv lock`. Try `uv sync --frozen` locally. Read the error — this is exactly what CI should throw when a lock file is stale.
+6. **Intentional failure:** change a dependency version in `pyproject.toml` without running `uv lock` (for example, bump `requests`). Then run `uv lock --check` locally. Read the error — this is exactly what CI should throw when a lock file is stale.
 
 ## Success criteria
 
 - Image builds and runs with the expected output.
 - Editing source code does not invalidate the `uv sync` layer.
 - Changing `pyproject.toml` + updating `uv.lock` does invalidate the layer.
-- Running `uv sync --frozen` after editing `pyproject.toml` (without `uv lock`) produces an error.
+- Running `uv lock --check` after editing `pyproject.toml` (without `uv lock`) produces an error.
+- You can explain why CI should use `uv lock --check && uv sync --frozen` rather than only one of the two commands.
 
 ## Stretch
 
 - Compare the image size of Exercise 2 (pip) vs Exercise 3 (uv): `docker images pipeline-practice`.
-- What would happen if you forgot `--frozen` in the `RUN` step?
+- What would happen if CI ran only `uv sync --frozen` but skipped `uv lock --check`?
