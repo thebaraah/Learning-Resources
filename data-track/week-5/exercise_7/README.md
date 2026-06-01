@@ -7,10 +7,10 @@ Practice tagging the same image with multiple identifiers and understand why exp
 You need the image from Exercise 1 (or any image you have built this week):
 
 ```bash
-docker build -t pipeline-practice:1.0 -f ../exercise_1/solutions/Dockerfile ../exercise_1
+docker build -t pipeline-practice:1.0 .
 ```
 
-(Run this command from the `exercise_7/` folder. If you already have `pipeline-practice:1.0`, you can skip this build.)
+(Run from the `exercise_1/` folder, or use an image you already have.)
 
 ## Task
 
@@ -22,10 +22,6 @@ docker build -t pipeline-practice:1.0 -f ../exercise_1/solutions/Dockerfile ../e
    ```
 
 2. Run `docker images pipeline-practice` and confirm all four tags (`1.0`, `dev`, `staging`, `prod`) show the same `IMAGE ID`.
-   If your Docker output format is different, you can also run:
-   ```bash
-   docker images --format '{{.Repository}}:{{.Tag}} {{.ID}}' | grep '^pipeline-practice:'
-   ```
 
 3. Answer the following questions:
    - Two engineers both push `pipeline-practice:latest` to a shared registry an hour apart. What happens to the first engineer's image?
