@@ -41,9 +41,9 @@ uv lock
 - Editing source code does not invalidate the `uv sync` layer.
 - Changing `pyproject.toml` + updating `uv.lock` does invalidate the layer.
 - Running `uv lock --check` after editing `pyproject.toml` (without `uv lock`) produces an error.
-- You can explain why CI should use `uv lock --check && uv sync --frozen` rather than only one of the two commands.
+- You can explain what each CI command validates (`uv lock --check` and `uv sync --frozen`) and why both may be useful together.
 
 ## Stretch
 
 - Compare the image size of Exercise 2 (pip) vs Exercise 3 (uv): `docker images pipeline-practice`.
-- What would happen if CI ran only `uv sync --frozen` but skipped `uv lock --check`?
+- What would happen if CI ran only one of these commands: `uv lock --check` or `uv sync --frozen`?
