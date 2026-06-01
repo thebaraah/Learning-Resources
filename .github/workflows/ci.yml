@@ -21,7 +21,7 @@ jobs:
       # TODO 2: Add a step to install pytest.
       #         Use: pip install pytest
       - name: Install pytest
-      - run: pip install pytest
+        run: pip install pytest
 
 
       # TODO 3: Add a step to run pytest.
