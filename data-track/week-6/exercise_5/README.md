@@ -1,35 +1,36 @@
-# Exercise 5: Cost Estimation Challenge
+# Exercise 5: Cost Analysis in the Azure Portal
 
-Estimate the monthly cost of three Azure configurations and quantify the saving from stopping the shared Postgres server outside class hours. Pure Python arithmetic: no Azure access required.
+View real costs for the shared resource group `rg-hyf-data` in the Azure Portal and document what you find. This matches the hands-on section in Chapter 6 (Cost Awareness) — no Python SDK required.
 
 ## Setup
 
-No extra dependencies. The starter uses only the standard library.
+```bash
+az login --use-device-code --tenant 07a14c4e-d88c-42f7-83b3-13af7e57ff3d
+```
+
+Your group has **Cost Management Reader** on `rg-hyf-data`, so you can open Cost Analysis but cannot edit budgets.
 
 ## Task
 
-The constants at the top of `exercise.py` are illustrative West Europe EUR prices from the [Azure pricing calculator](https://azure.microsoft.com/en-us/pricing/calculator/). Use them as-is so the self-check numbers reproduce.
-
-1. Implement `postgres_compute_cost(hours_running)` (TODO 1).
-2. Implement `postgres_storage_cost()` (TODO 2).
-3. Implement `container_job_cost(executions_per_day, seconds_per_execution)` (TODO 3). Use vCPU-seconds and GiB-seconds across a 30-day month.
-4. Implement `class_postgres_saving(class_hours_per_day, class_days_per_week)` (TODO 4). Convert "8 hours/day, 5 days/week" into total monthly hours, then compare against always-on (730 h/month).
-5. Run `python3 exercise.py`. Confirm the four scenarios print numbers close to the `# Expected output:` block at the bottom of the file.
+1. Run `bash exercise.sh` — it verifies your CLI session and prints the portal link.
+2. In the portal, open **Cost Management → Cost Analysis** for `rg-hyf-data`.
+3. Set timeframe to **Month to date**. Try grouping by **Service name** or **Resource**.
+4. Fill in every section of `cost_findings.md` from what you see.
+5. Compare with `solutions/cost_findings.md` after attempting.
 
 ## Success criteria
 
-- All four functions return values without raising.
-- Scenario A (24/7 Postgres) totals about EUR 19.74/month.
-- Scenario B (stopped 16h/day) totals about EUR 8.96/month.
-- Scenario C (Container Job 5×/day for 60s) totals about EUR 0.19/month.
-- Scenario D shows a saving of about EUR 12/month from class-only operation.
+- `cost_findings.md` has a month-to-date total, three cost drivers, and the idle-billing table filled in.
+- Your idle-billing answers match the Chapter 6 table (Postgres and ACR = yes; jobs and environment = no).
+- You can explain in one sentence which resource drives most of the spend.
 
-## Stretch
+## Pre-flight widget
 
-- The numbers shift if you switch from West Europe to North Europe (cheaper compute, similar storage). Look up the actual North Europe figures and run a "should we move regions?" comparison.
-- Add a fifth scenario: what if the class shared one Postgres across two cohorts (still 8h/day but 10 days/week)? Use `class_postgres_saving()` with new parameters.
-- Compare the Container Job to a Container App revision running 24/7 with min-replicas=1. What is the break-even number of executions per day?
+The widget trains the *arithmetic* behind stop-vs-run savings — useful context before reading live portal numbers.
 
-## After this exercise
+> 🚀 [Monthly cost in EUR exercise](https://lasse.be/simple-hyf-teach-widget/?exercise=w6_cost_awareness__monthly_cost_eur&lang=python)
 
-Write a 3 to 4 sentence paragraph (paper, README, or a quiz answer) describing how you would structure costs in a real project. Reference at least one specific number from your scenarios. This is the explanation step from the practice chapter.
+## Documentation
+
+- [Azure cost management documentation](https://learn.microsoft.com/azure/cost-management-billing/)
+- [Azure pricing calculator](https://azure.microsoft.com/pricing/calculator/)

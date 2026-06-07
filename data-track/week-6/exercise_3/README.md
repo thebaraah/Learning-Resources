@@ -1,37 +1,39 @@
-# Exercise 3: Debug a Broken Connection String
+# Exercise 3: Connect to Postgres, Create Table, Ingest CSV and Query
 
-Take a Postgres connection string with three problems, identify each one, and produce a fixed version. Pure Python: no network call needed.
+Connect to the shared Azure Database for PostgreSQL, create a practice table in your own schema, ingest rows from a local CSV file, and query them using Python and `psycopg2`.
 
 ## Setup
 
-No extra dependencies. The starter uses only `urllib.parse` from the standard library.
+1. Install dependencies:
+   ```bash
+   uv sync
+   ```
+2. Retrieve the connection string from Key Vault (same flow as Chapter 5):
+   ```bash
+   export POSTGRES_URL="$(az keyvault secret show --vault-name kv-hyf-data --name postgres-url --query value -o tsv)"
+   ```
 
 ## Task
 
-The broken string is hard-coded at the top of `exercise.py`:
-
-```text
-postgresql://admin:password@hyf-data-pg/weather_db
-```
-
-1. Run `python3 exercise.py` and read the `NotImplementedError` traceback.
-2. Implement `diagnose(url)` (TODO 1 + TODO 2). It returns a list of short sentences naming each problem. There are three.
-3. Implement `fix(url)` (TODO 3). It returns the same URL with all three problems fixed.
-4. Run the script. Confirm the output matches the `# Expected output:` block at the bottom of the file.
-
-The three problems, in case you get stuck:
-
-- Host is missing the Azure FQDN suffix (`.postgres.database.azure.com`).
-- No port. Azure Postgres listens on `5432`, and some client libraries refuse to default.
-- `sslmode=require` is missing. Azure Postgres rejects unencrypted connections.
+1. Open `exercise.py` and implement `run_postgres_ops(url, csv_path)`.
+2. Complete the five TODOs in order:
+   * **TODO 1:** Connect with `psycopg2.connect(url)` inside `contextlib.closing()`.
+   * **TODO 2:** Create a student-specific schema (e.g. `dev_lasse`), `SET search_path` to it, then run `cur.execute(CREATE_PRACTICE_READINGS_SQL)` — the table DDL is pre-written at the top of the file.
+   * **TODO 3:** Read `weather_data.csv` with `csv.DictReader` and insert each row with a parameterised `INSERT`.
+   * **TODO 4:** `SELECT` and print the inserted rows.
+   * **TODO 5:** `conn.commit()`.
+3. Run the script:
+   ```bash
+   uv run python exercise.py
+   ```
 
 ## Success criteria
 
-- `diagnose(BROKEN_URL)` returns exactly three problems, in order: host, port, SSL.
-- `fix(BROKEN_URL)` returns `postgresql://admin:password@hyf-data-pg.postgres.database.azure.com:5432/weather_db?sslmode=require`.
-- The script runs without raising and prints the expected output.
+- Without `POSTGRES_URL`, the script exits with a clear error message.
+- With Key Vault credentials set, the script creates your schema, ingests the three CSV rows, and prints query results.
+- Re-running the script appends duplicate rows (expected) — your personal schema keeps your data separate from other students.
 
 ## Stretch
 
-- Pair with the widget version of this exercise, [Parse Postgres URL](https://lasse.be/simple-hyf-teach-widget/?exercise=w6_azure_postgresql__parse_postgres_url&lang=python), to see the same problem from a different angle.
-- Extend `diagnose()` to also flag a default `admin` username (Azure recommends per-environment usernames), and a password that looks like a placeholder.
+- Add `ON CONFLICT DO NOTHING` on `(station, timestamp)` so reruns are idempotent.
+- Change the schema name to `dev_<your_name>` and verify in psql that your table lives there, not in `public`.
