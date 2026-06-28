@@ -3,8 +3,6 @@
 
 A simple Spring Boot REST API built as an **in-class exercise** for Week 9 of the Backend Track.
 
----
-
 ## 🚀 Getting Started
 
 ### Prerequisites
