@@ -3,10 +3,8 @@ package net.hackyourfuture.hyfshop.product;
 import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import net.hackyourfuture.hyfshop.product.dto.ProductResponse;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import net.hackyourfuture.hyfshop.product.dto.SetSizeRequest;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,6 +25,11 @@ public class ProductController {
             return productService.getAllProducts();
         }
         return productService.searchProducts(color);
+    }
+
+    @PutMapping("/{id}/size")
+    public ProductResponse setProductSize(@PathVariable int id, @RequestBody SetSizeRequest request) {
+        return productService.setProductSize(id, request.size());
     }
 }
 

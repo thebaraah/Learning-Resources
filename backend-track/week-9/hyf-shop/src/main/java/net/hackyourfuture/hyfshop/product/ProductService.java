@@ -18,4 +18,9 @@ public class ProductService {
     public List<ProductResponse> searchProducts(String color) {
         return productRepository.findByColor(color).stream().map(ProductResponse::from).toList();
     }
+
+    public ProductResponse setProductSize(int id, String size) {
+        productRepository.setSize(id, size);
+        return ProductResponse.from(productRepository.findById(id));
+    }
 }

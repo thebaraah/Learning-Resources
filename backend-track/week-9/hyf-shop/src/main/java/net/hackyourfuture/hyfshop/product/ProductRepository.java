@@ -28,7 +28,21 @@ public class ProductRepository {
 
     }
 
+    public Product findById(int id) {
+        return jdbcClient
+                .sql("SELECT id, title, price, category FROM products WHERE id=:id")
+                .param("id", id)
+                .query(PRODUCT_ROW_MAPPER)
+                .single();
+
+    }
+
     public List<Product> findByColor(String color) {
+        // TODO: Implement
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    public Product setSize(int id, String size) {
         // TODO: Implement
         throw new UnsupportedOperationException("Not implemented yet");
     }
