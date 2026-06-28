@@ -3,6 +3,7 @@ package net.hackyourfuture.hyfshop.product;
 import lombok.RequiredArgsConstructor;
 import net.hackyourfuture.hyfshop.product.dto.ProductResponse;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -22,5 +23,17 @@ public class ProductService {
     public ProductResponse setProductSize(int id, String size) {
         productRepository.setSize(id, size);
         return ProductResponse.from(productRepository.findById(id));
+    }
+
+    public ProductResponse setProductImage(int id, MultipartFile file) {
+        // TODO: Implement
+        // call ProductRepository.setImageUrl() afterwards with the new URL
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    public ProductResponse deleteProductImage(int id) {
+        // TODO: Implement
+        // call ProductRepository.setImageUrl() to set the image url to null
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 }

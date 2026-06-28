@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import net.hackyourfuture.hyfshop.product.dto.ProductResponse;
 import net.hackyourfuture.hyfshop.product.dto.SetSizeRequest;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -30,6 +31,16 @@ public class ProductController {
     @PutMapping("/{id}/size")
     public ProductResponse setProductSize(@PathVariable int id, @RequestBody SetSizeRequest request) {
         return productService.setProductSize(id, request.size());
+    }
+
+    @PutMapping("/{id}/image")
+    public ProductResponse setProductImage(@PathVariable int id, @RequestBody MultipartFile file) {
+        return productService.setProductImage(id, file);
+    }
+
+    @DeleteMapping("/{id}/image")
+    public ProductResponse deleteProductImage(@PathVariable int id) {
+        return productService.deleteProductImage(id);
     }
 }
 

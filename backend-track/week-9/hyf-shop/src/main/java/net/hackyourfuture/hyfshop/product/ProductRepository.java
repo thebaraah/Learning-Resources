@@ -31,11 +31,21 @@ public class ProductRepository {
 
     public Product findById(int id) {
         return jdbcClient
-                .sql("SELECT id, title, price, category, image_url FROM products WHERE id=:id")
+                .sql("SELECT id, title, price, category, image_url FROM products WHERE id = :id")
                 .param("id", id)
                 .query(PRODUCT_ROW_MAPPER)
                 .single();
+    }
 
+    public void setImageUrl(int id, String imageUrl) {
+        jdbcClient.sql("""
+                        UPDATE products
+                        SET image_url = :imageUrl
+                        WHERE id = :id
+                        """)
+                .param("id", id)
+                .param("imageUrl", imageUrl)
+                .update();
     }
 
     public List<Product> findByColor(String color) {

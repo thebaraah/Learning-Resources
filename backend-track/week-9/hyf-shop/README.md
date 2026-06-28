@@ -44,6 +44,9 @@ The server starts on **port 8080**.
 | --- | --- | --- |
 | `GET` | `/products` | List all products |
 | `GET` | `/products/search?color=<color>` | Filter products by color |
+| `PUT` | `/products/{id}/size` | Set the size of a product |
+| `PUT` | `/products/{id}/image` | Upload a product image |
+| `DELETE` | `/products/{id}/image` | Remove a product image |
 
 ## 🛠️ Tech Stack
 
