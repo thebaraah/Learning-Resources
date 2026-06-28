@@ -14,4 +14,8 @@ public class ProductService {
     public List<ProductResponse> getAllProducts() {
         return productRepository.getAllProducts().stream().map(ProductResponse::from).toList();
     }
+
+    public List<ProductResponse> searchProducts(String color) {
+        return productRepository.findByColor(color).stream().map(ProductResponse::from).toList();
+    }
 }

@@ -1,4 +1,3 @@
-
 # HYF Shop
 
 A simple Spring Boot REST API built as an **in-class exercise** for Week 9 of the Backend Track.
@@ -13,34 +12,40 @@ A simple Spring Boot REST API built as an **in-class exercise** for Week 9 of th
 
 ### Database Setup
 
-Run the provided `database.sql` file against your PostgreSQL database to create and populate the schema:
+Run the provided `database.sql` file against your PostgreSQL database:
 
 ```bash
 psql -U <your_user> -d <your_database> -f database.sql
 ```
 
-This will:
-- Create the `products` table (if it doesn't already exist)
-- Create a GIN index on the `details` column for efficient JSONB querying
-- Insert **115 sample products** across 7 categories
+This creates the `products` table, adds a GIN index on the `details` JSONB column, and inserts **115 sample products** across 7 categories.
 
 ### Configuration
-The application reads its database connection from environment variables. Set the following before running:
+
+Set the following environment variables before running:
 
 | Variable | Description |
 | --- | --- |
-| `DB_URL` | JDBC connection URL (e.g. `jdbc:postgresql://localhost:5432/hyfshop`) |
+| `DB_URL` | JDBC URL (e.g. `jdbc:postgresql://localhost:5432/hyfshop`) |
 | `DB_USERNAME` | PostgreSQL username |
 | `DB_PASSWORD` | PostgreSQL password |
 
-### Running the Application
-``` bash
+### Running
+
+```bash
 ./mvnw spring-boot:run
 ```
-The server starts on port 8080.
+
+The server starts on **port 8080**.
+
+## 📡 API Endpoints
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| `GET` | `/products` | List all products |
+| `GET` | `/products/search?color=<color>` | Filter products by color |
 
 ## 🛠️ Tech Stack
-- **Java 25**
-- **Spring Boot 4.1.0** (Spring Web MVC, Spring JDBC)
-- **PostgreSQL** (via `JdbcClient`)
-- **Lombok** (boilerplate reduction)
+
+- **Java 25** · **Spring Boot 4.1.0** (Web MVC, JDBC)
+- **PostgreSQL** (via `JdbcClient`) · **Lombok**

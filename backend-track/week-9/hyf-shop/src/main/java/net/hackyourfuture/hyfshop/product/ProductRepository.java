@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
-import java.util.Collection;
+import java.util.List;
 
 @Repository
 @AllArgsConstructor
@@ -20,11 +20,16 @@ public class ProductRepository {
         return product;
     };
 
-    public Collection<Product> getAllProducts() {
+    public List<Product> getAllProducts() {
         return jdbcClient
                 .sql("SELECT id, title, price, category FROM products")
                 .query(PRODUCT_ROW_MAPPER)
                 .list();
 
+    }
+
+    public List<Product> findByColor(String color) {
+        // TODO: Implement
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 }
