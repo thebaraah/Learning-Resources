@@ -1,9 +1,10 @@
 CREATE TABLE IF NOT EXISTS products (
-    id       SERIAL          PRIMARY KEY,
-    title    TEXT            NOT NULL,
-    price    NUMERIC(10, 2)  NOT NULL,
-    category TEXT            NOT NULL,
-    details  JSONB           NOT NULL
+    id        SERIAL          PRIMARY KEY,
+    title     TEXT            NOT NULL,
+    price     NUMERIC(10, 2)  NOT NULL,
+    category  TEXT            NOT NULL,
+    image_url TEXT            NULL,
+    details   JSONB           NOT NULL
 );
 
 CREATE INDEX IF NOT EXISTS idx_products_details ON products USING GIN (details);

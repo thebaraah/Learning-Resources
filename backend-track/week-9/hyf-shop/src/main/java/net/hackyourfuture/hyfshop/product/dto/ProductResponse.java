@@ -8,14 +8,16 @@ public record ProductResponse (
         int id,
         String title,
         BigDecimal price,
-        String category
+        String category,
+        String imageUrl
 ){
     public static ProductResponse from(Product product) {
         return new ProductResponse(
                 product.getId(),
                 product.getTitle(),
                 product.getPrice(),
-                product.getCategory()
+                product.getCategory(),
+                product.getImageUrl()
         );
     }
 }

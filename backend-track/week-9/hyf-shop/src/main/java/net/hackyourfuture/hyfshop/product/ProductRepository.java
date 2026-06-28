@@ -17,12 +17,13 @@ public class ProductRepository {
         product.setTitle(rs.getString("title"));
         product.setPrice(rs.getBigDecimal("price"));
         product.setCategory(rs.getString("category"));
+        product.setImageUrl(rs.getString("image_url"));
         return product;
     };
 
     public List<Product> getAllProducts() {
         return jdbcClient
-                .sql("SELECT id, title, price, category FROM products")
+                .sql("SELECT id, title, price, category, image_url FROM products")
                 .query(PRODUCT_ROW_MAPPER)
                 .list();
 
@@ -30,7 +31,7 @@ public class ProductRepository {
 
     public Product findById(int id) {
         return jdbcClient
-                .sql("SELECT id, title, price, category FROM products WHERE id=:id")
+                .sql("SELECT id, title, price, category, image_url FROM products WHERE id=:id")
                 .param("id", id)
                 .query(PRODUCT_ROW_MAPPER)
                 .single();
