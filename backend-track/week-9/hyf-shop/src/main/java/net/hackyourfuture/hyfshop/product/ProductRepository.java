@@ -11,12 +11,14 @@ import java.util.Collection;
 public class ProductRepository {
     private final JdbcClient jdbcClient;
 
-    public static final RowMapper<Product> PRODUCT_ROW_MAPPER = (rs, _) -> Product.builder()
-            .id(rs.getInt("id"))
-            .title(rs.getString("title"))
-            .price(rs.getBigDecimal("price"))
-            .category(rs.getString("category"))
-            .build();
+    public static final RowMapper<Product> PRODUCT_ROW_MAPPER = (rs, _) -> {
+        var product = new Product();
+        product.setId(rs.getInt("id"));
+        product.setTitle(rs.getString("title"));
+        product.setPrice(rs.getBigDecimal("price"));
+        product.setCategory(rs.getString("category"));
+        return product;
+    };
 
     public Collection<Product> getAllProducts() {
         return jdbcClient
