@@ -1,4 +1,4 @@
--- Exercise 7 (stretch): Compare a cartesian join to a filtered join
+-- Exercise 5 (stretch): Compare a cartesian join to a filtered join
 --
 -- A missing join condition produces a cartesian product: every trip matched to
 -- every zone. Use EXPLAIN to see how the planner treats the two queries
@@ -16,7 +16,12 @@
 
 -- Cartesian product: no join condition
 -- TODO: EXPLAIN a CROSS JOIN of nyc_taxi.raw_trips and nyc_taxi.raw_zones (no ON clause).
+-- Starter skeleton: (uncomment and prepend EXPLAIN)
+-- SELECT * FROM nyc_taxi.raw_trips t CROSS JOIN nyc_taxi.raw_zones z;
 
 
 -- Filtered join: one zone per trip
 -- TODO: EXPLAIN an INNER JOIN of nyc_taxi.raw_trips and nyc_taxi.raw_zones on pickup_location_id = location_id.
+-- Starter skeleton: (uncomment and prepend EXPLAIN)
+-- SELECT * FROM nyc_taxi.raw_trips t INNER JOIN nyc_taxi.raw_zones z ON t.pickup_location_id = z.location_id;
+
