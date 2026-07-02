@@ -2,6 +2,7 @@
 node_modules/
 .vscode/
 playground/
+.idea
 
 # Python
 __pycache__/
@@ -17,3 +18,4 @@ data-track/**/report.txt
 data-track/**/cleaned.json
 data-track/**/weather.db
 data-track/**/output/
+
